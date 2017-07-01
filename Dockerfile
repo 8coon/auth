@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Serge Peshkoff
+MAINTAINER 8coon
 
 ENV PGVER 9.5
 RUN apt-get -y update && apt-get install -y postgresql-$PGVER && apt-get clean all
@@ -17,8 +17,8 @@ RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$PGVER/main/pg_hba
 RUN echo "listen_addresses = '*'" >> /etc/postgresql/$PGVER/main/postgresql.conf
 RUN echo "synchronous_commit = off" >> /etc/postgresql/$PGVER/main/postgresql.conf
 
-
 EXPOSE 5432
+
 
 USER root
 
