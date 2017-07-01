@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<properties>
@@ -23,9 +23,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<flyway.url>jdbc:postgresql://localhost:5432/docker</flyway.url>
-		<flyway.user>docker</flyway.user>
-		<flyway.password>docker</flyway.password>
+		<flyway.url>jdbc:postgresql://localhost:5432/minecraftshire</flyway.url>
+		<flyway.user>auth</flyway.user>
 
 		<flyway.schemas>users</flyway.schemas>
 	</properties>
@@ -34,11 +33,13 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
+			<version>3.2.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>1.5.4.RELEASE</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
@@ -49,6 +50,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jetty</artifactId>
+			<version>1.5.4.RELEASE</version>
 		</dependency>
 
 		<dependency>
