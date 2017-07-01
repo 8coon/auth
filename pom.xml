@@ -25,6 +25,7 @@
 
 		<flyway.url>jdbc:postgresql://localhost:5432/minecraftshire</flyway.url>
 		<flyway.user>auth</flyway.user>
+		<flyway.password></flyway.password>
 
 		<flyway.schemas>users</flyway.schemas>
 	</properties>
