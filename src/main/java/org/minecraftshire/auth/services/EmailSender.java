@@ -11,11 +11,11 @@ public class EmailSender {
 
 
     public void sendEmailConfirmation(String email, long code, String linkHref) {
-        sentEmail(email, "Подтверждение адреса электронной почты", String.valueOf(code));
+        sendEmail(email, "Подтверждение адреса электронной почты", String.valueOf(code));
     }
 
 
-    private void sentEmail(String to, String subject, String text) {
+    private void sendEmail(String to, String subject, String text) {
         String cmd = "echo \"" + text.replace("\"", "\\\"") + "\" | mail -s \"" + subject +
                 "\" -a \"From: no-reply@minecraftshire.ru\" " + to;
 

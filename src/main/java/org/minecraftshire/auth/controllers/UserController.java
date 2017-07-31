@@ -29,7 +29,7 @@ public class UserController {
     public ResponseEntity<SimpleResponse> create(
             @RequestBody UserData user
     ) {
-        return new ResponseEntity<SimpleResponse>(
+        return new ResponseEntity<>(
                 new SimpleResponse(
                         this.users.create(user.getUsername(), user.getEmail(), user.getPassword())
                 ),
@@ -43,13 +43,13 @@ public class UserController {
             @RequestParam("code") long code
     ) {
         if (this.confirmations.confirmSignUp(code)) {
-            ResponseEntity result = new ResponseEntity<String>(HttpStatus.PERMANENT_REDIRECT);
+            ResponseEntity<String> result = new ResponseEntity<>(HttpStatus.PERMANENT_REDIRECT);
             result.getHeaders().set("Location", "http://minecraftshire.ru/");
 
             return result;
         }
 
-        return new ResponseEntity<String>(
+        return new ResponseEntity<>(
                 "Ошибка: неверный код.",
                 HttpStatus.OK
         );
