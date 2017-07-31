@@ -1,10 +1,10 @@
 package org.minecraftshire.auth.controllers;
 
 
-import org.flywaydb.core.internal.dbsupport.JdbcTemplate;
 import org.minecraftshire.auth.data.UserData;
 import org.minecraftshire.auth.utils.ErrorCodes;
 import org.minecraftshire.auth.utils.SimpleResponse;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
