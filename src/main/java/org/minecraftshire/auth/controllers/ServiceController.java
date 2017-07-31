@@ -33,13 +33,8 @@ public class ServiceController {
     public ResponseEntity<SimpleResponse> create(
             @RequestBody UserData user
     ) {
-        try {
-            this.jdbc.update("DELETE FROM Users");
-            this.jdbc.update("DELETE FROM Confirmations");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new SimpleResponse("fail", ErrorCodes.INTERNAL_ERROR), HttpStatus.OK);
-        }
+        this.jdbc.update("DELETE FROM Users");
+        this.jdbc.update("DELETE FROM Confirmations");
 
         return new ResponseEntity<>(new SimpleResponse("success", ErrorCodes.OK), HttpStatus.OK);
     }
