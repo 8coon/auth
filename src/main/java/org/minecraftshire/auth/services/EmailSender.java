@@ -22,9 +22,10 @@ public class EmailSender {
             "MIME-Version: 1.0\\n" +
             "Content-Type: text/html\\n" +
             "Subject: " + subject + "\\n" +
-            "\\n" + text;
+            "\\n" + text.replace("\n", "<br>");
 
         String cmd = "echo \"" + s + "\" | sendmail -t";
+        System.out.println(cmd);
 
         try {
             Runtime.getRuntime().exec(cmd);
