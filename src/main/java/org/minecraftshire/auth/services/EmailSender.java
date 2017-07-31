@@ -16,8 +16,15 @@ public class EmailSender {
 
 
     private void sendEmail(String to, String subject, String text) {
-        String cmd = "echo \"" + text.replace("\"", "\\\"") + "\" | mail -s \"" + subject +
-                "\" -a \"From: no-reply@minecraftshire.ru\" " + to;
+        String s = "" +
+            "From: github-trigger-server@minecraftshire.ru\\n" +
+            "To: " + to + "\\n" +
+            "MIME-Version: 1.0\\n" +
+            "Content-Type: text/html\\n" +
+            "Subject: " + subject + "\\n" +
+            "\\n" + text;
+
+        String cmd = "echo \"" + s + "\" | sendmail -t";
 
         try {
             Runtime.getRuntime().exec(cmd);
