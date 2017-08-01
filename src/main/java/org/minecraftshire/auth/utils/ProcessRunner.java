@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class ProcessRunner {
 
-    private static Logger log = Logger.getGlobal();
+    private static Logger log = LoggerFactory.getLogger(ProcessRunner.class);
 
 
     public static long getPid() {
@@ -33,7 +35,7 @@ public class ProcessRunner {
         try {
             pr.waitFor();
         } catch (InterruptedException e) {
-            log.warning(e.getLocalizedMessage());
+            log.error("ProcessRunner", e);
         }
 
         return lines;
@@ -57,7 +59,7 @@ public class ProcessRunner {
         try {
             return ProcessRunner.out(command);
         } catch (IOException e) {
-            log.severe(e.getLocalizedMessage());
+            log.error("ProcessRunner", e);
         }
 
         return "";

@@ -5,13 +5,14 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Service
 public class EmailSender {
 
-    private Logger log = Logger.getGlobal();
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
 
     public void sendEmailConfirmation(String email, long code, String linkHref) {
@@ -34,7 +35,7 @@ public class EmailSender {
         try {
             Runtime.getRuntime().exec(URLEncoder.encode(cmd,"utf-8"));
         } catch (IOException e) {
-            log.severe(e.getLocalizedMessage());
+            log.error("EmailSender", e);
         }
     }
 

@@ -13,14 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @RestController
 @RequestMapping("/service")
 public class ServiceController {
 
-    private Logger log = Logger.getGlobal();
+    private Logger log;
     private JdbcTemplate jdbc;
     private Environment env;
 
@@ -29,6 +30,7 @@ public class ServiceController {
     public ServiceController(JdbcTemplate jdbc, Environment env) {
         this.jdbc = jdbc;
         this.env = env;
+        this.log = LoggerFactory.getLogger(this.getClass());
     }
 
 

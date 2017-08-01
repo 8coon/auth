@@ -6,7 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.*;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @SpringBootApplication
@@ -15,7 +16,7 @@ public class MinecraftshireAuthApplication {
 	private static String secretToken;
 	private static String buildNumber;
 	private static String path;
-	private static Logger log = Logger.getGlobal();
+	private static Logger log = LoggerFactory.getLogger(MinecraftshireAuthApplication.class);
 
 
 	public static String getSecretToken() {
@@ -55,7 +56,7 @@ public class MinecraftshireAuthApplication {
 		try {
 			cmd = parser.parse(options, args);
 		} catch (ParseException e) {
-			log.severe(e.getLocalizedMessage());
+			log.error("MinecraftshireAuthApplication", e);
 
 			System.exit(-1);
 			return;
@@ -75,7 +76,7 @@ public class MinecraftshireAuthApplication {
 		try {
 			out = new PrintWriter(path + "/server.pid");
 		} catch (FileNotFoundException e) {
-			log.severe(e.getLocalizedMessage());
+			log.error("MinecraftshireAuthApplication", e);
 			return;
 		}
 

@@ -14,10 +14,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Random;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Repository
@@ -30,10 +30,10 @@ public class UserRepository {
 
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbc, ConfirmationRepository confirmationRepository, Logger log) {
+    public UserRepository(JdbcTemplate jdbc, ConfirmationRepository confirmationRepository) {
         this.jdbc = jdbc;
         this.confirmationRepository = confirmationRepository;
-        this.log = log;
+        this.log = LoggerFactory.getLogger(this.getClass());
     }
 
 
@@ -84,7 +84,7 @@ public class UserRepository {
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            log.severe(e.getLocalizedMessage());
+            log.error("UserRepository", e);
             System.exit(-1);
         }
 
@@ -93,7 +93,7 @@ public class UserRepository {
         try {
             intermediate = password.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            log.severe(e.getLocalizedMessage());
+            log.error("UserRepository", e);
             System.exit(-1);
         }
 
