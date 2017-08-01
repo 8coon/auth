@@ -3,6 +3,7 @@ mvnw
 mvnw.cmd
 .mvn
 !.mvn/wrapper/maven-wrapper.jar
+*.pid
 
 ### STS ###
 .apt_generated

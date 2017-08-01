@@ -9,6 +9,12 @@ import java.util.List;
 
 public class ProcessRunner {
 
+    public static long getPID() {
+        String processName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+        return Long.parseLong(processName.split("@")[0]);
+    }
+
+
     public static List<String> outList(String... command) throws IOException {
         ProcessBuilder ps = new ProcessBuilder(command);
         ps.redirectErrorStream(true);
