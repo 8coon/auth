@@ -6,6 +6,7 @@ import org.minecraftshire.auth.data.SecretTokenData;
 import org.minecraftshire.auth.responses.VersionResponse;
 import org.minecraftshire.auth.utils.ErrorCodes;
 import org.minecraftshire.auth.responses.SimpleResponse;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,13 @@ import org.springframework.web.bind.annotation.*;
 public class ServiceController {
 
     private JdbcTemplate jdbc;
+    private Environment env;
 
 
     @Autowired
-    public ServiceController(JdbcTemplate jdbc) {
+    public ServiceController(JdbcTemplate jdbc, Environment env) {
         this.jdbc = jdbc;
+        this.env = env;
     }
 
 
@@ -62,9 +65,10 @@ public class ServiceController {
     public ResponseEntity<VersionResponse> version() {
         return new ResponseEntity<>(
                 new VersionResponse(
-                        MinecraftshireAuthApplication.getName(),
-                        MinecraftshireAuthApplication.getVersion(),
-                        MinecraftshireAuthApplication.getDescription()
+                        env.getProperty("minecraftshire.name"),
+                        env.getProperty("minecraftshire.version") +
+                                MinecraftshireAuthApplication.getBuildNumber(),
+                        env.getProperty("minecraftshire.description")
                 ),
                 HttpStatus.OK
         );

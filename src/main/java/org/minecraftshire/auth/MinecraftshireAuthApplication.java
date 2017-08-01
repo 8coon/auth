@@ -14,38 +14,21 @@ import java.util.Properties;
 public class MinecraftshireAuthApplication {
 
 	private static String SECRET_TOKEN;
-	private static ConfigurableApplicationContext context;
-	private static String name;
-	private static String description;
-	private static String version;
+	private static String buildNumber;
 
 
 	public static String getSecretToken() {
 		return SECRET_TOKEN;
 	}
 
-	public static String getName() {
-		return name;
-	}
-
-	public static String getDescription() {
-		return description;
-	}
-
-	public static String getVersion() {
-		return version;
+	public static String getBuildNumber() {
+		return buildNumber;
 	}
 
 
 	public static void stop() {
-		// context.stop();
 		System.err.println("Stopping via System.exit(0)...");
 		System.exit(0);
-	}
-
-
-	private static String getBuildNumber() {
-		return ProcessRunner.exec("git", "rev-list", "HEAD" , "--count").replace("\n", "");
 	}
 
 
@@ -74,20 +57,7 @@ public class MinecraftshireAuthApplication {
 
 
 	private static void loadMetaInf() {
-		Properties properties = new Properties();
-
-		try {
-			properties.load(context.getResource("application.properties").getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-
-			System.exit(-1);
-			return;
-		}
-
-		name = properties.getProperty("minecraftshire.name");
-		description = properties.getProperty("minecraftshire.description");
-		version = properties.getProperty("minecraftshire.version") + "." + getBuildNumber();
+		buildNumber = ProcessRunner.exec("git", "rev-list", "HEAD" , "--count").replace("\n", "");
 	}
 
 
@@ -109,9 +79,9 @@ public class MinecraftshireAuthApplication {
 	public static void main(String[] args) {
 		writePid();
 		loadArgs(args);
-
-		context = SpringApplication.run(MinecraftshireAuthApplication.class, args);
 		loadMetaInf();
+
+		SpringApplication.run(MinecraftshireAuthApplication.class, args);
 	}
 
 }
