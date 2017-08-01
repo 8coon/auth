@@ -43,14 +43,15 @@ public class ServiceController {
 
 
     @PostMapping("/stop")
-    public void stop(
+    public String stop(
             @RequestBody SecretTokenData token
     ) {
         if (token.isNot()) {
-            return;
+            return "{}";
         }
 
         System.exit(0);
+        return "{}";
     }
 
 }
