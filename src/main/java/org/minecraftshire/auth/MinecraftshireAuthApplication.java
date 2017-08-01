@@ -6,9 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Properties;
 
 
@@ -93,7 +91,23 @@ public class MinecraftshireAuthApplication {
 	}
 
 
+	private static void writePid() {
+		PrintWriter out;
+
+		try {
+			out = new PrintWriter("server.pid");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		out.println(ProcessRunner.getPid());
+		out.close();
+	}
+
+
 	public static void main(String[] args) {
+		writePid();
 		loadArgs(args);
 
 		context = SpringApplication.run(MinecraftshireAuthApplication.class, args);

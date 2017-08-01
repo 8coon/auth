@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProcessRunner {
 
-    public static long getPID() {
+    public static long getPid() {
         String processName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
         return Long.parseLong(processName.split("@")[0]);
     }
