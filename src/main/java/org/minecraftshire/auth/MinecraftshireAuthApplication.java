@@ -45,9 +45,12 @@ public class MinecraftshireAuthApplication {
 		Option path = new Option("p", "path", true, "Server root path");
 		path.setRequired(true);
 
+		Option build = new Option("b", "build", true, "Build number");
+
 		Options options = new Options();
 		options.addOption(secret);
 		options.addOption(path);
+		options.addOption(build);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd;
@@ -63,13 +66,7 @@ public class MinecraftshireAuthApplication {
 
 		MinecraftshireAuthApplication.secretToken = cmd.getOptionValue("secret");
 		MinecraftshireAuthApplication.path = cmd.getOptionValue("path");
-	}
-
-
-	private static void loadMetaInf() {
-		buildNumber = ProcessRunner.exec(
-				"git", "--git-dir=" + path, "rev-list", "HEAD" , "--count"
-		).replace("\n", "");
+		MinecraftshireAuthApplication.buildNumber = cmd.getOptionValue("build");
 	}
 
 
@@ -90,7 +87,6 @@ public class MinecraftshireAuthApplication {
 
 	public static void main(String[] args) {
 		loadArgs(args);
-		loadMetaInf();
 		writePid();
 
 		SpringApplication.run(MinecraftshireAuthApplication.class, args);
