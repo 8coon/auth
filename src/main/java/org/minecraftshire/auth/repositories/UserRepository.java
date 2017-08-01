@@ -17,11 +17,13 @@ import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Random;
+import java.util.logging.Logger;
 
 
 @Repository
 public class UserRepository {
 
+    private Logger log = Logger.getGlobal();
     private JdbcTemplate jdbc;
     private SecureRandom random = new SecureRandom();
     private ConfirmationRepository confirmationRepository;
@@ -81,7 +83,7 @@ public class UserRepository {
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.severe(e.getLocalizedMessage());
             System.exit(-1);
         }
 
@@ -90,7 +92,7 @@ public class UserRepository {
         try {
             intermediate = password.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.severe(e.getLocalizedMessage());
             System.exit(-1);
         }
 

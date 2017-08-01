@@ -13,11 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 
 @RestController
 @RequestMapping("/service")
 public class ServiceController {
 
+    private Logger log = Logger.getGlobal();
     private JdbcTemplate jdbc;
     private Environment env;
 
@@ -49,14 +52,11 @@ public class ServiceController {
             @RequestBody SecretTokenData token
     ) {
         if (token.isNot()) {
-            System.err.println("App was given wrong security token");
-
+            log.info("App was given wrong security token");
             return "{}";
         }
 
-        System.err.println("Stopping application...");
         MinecraftshireAuthApplication.stop();
-
         return "{}";
     }
 

@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 
 @Service
 public class EmailSender {
+
+    private Logger log = Logger.getGlobal();
 
 
     public void sendEmailConfirmation(String email, long code, String linkHref) {
@@ -27,12 +29,12 @@ public class EmailSender {
             "\n" + text.replace("\n", "<br>");
 
         String cmd = "echo \"" + s + "\" | sendmail -t";
-        System.out.println(cmd);
+        log.info(cmd);
 
         try {
             Runtime.getRuntime().exec(URLEncoder.encode(cmd,"utf-8"));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.severe(e.getLocalizedMessage());
         }
     }
 

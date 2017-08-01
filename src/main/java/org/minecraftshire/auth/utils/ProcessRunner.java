@@ -6,8 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ProcessRunner {
+
+    private static Logger log = Logger.getGlobal();
+
 
     public static long getPid() {
         String processName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
@@ -29,7 +33,7 @@ public class ProcessRunner {
         try {
             pr.waitFor();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.warning(e.getLocalizedMessage());
         }
 
         return lines;
@@ -53,7 +57,7 @@ public class ProcessRunner {
         try {
             return ProcessRunner.out(command);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.severe(e.getLocalizedMessage());
         }
 
         return "";

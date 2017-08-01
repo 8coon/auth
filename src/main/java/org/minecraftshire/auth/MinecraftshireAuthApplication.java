@@ -4,10 +4,9 @@ import org.apache.commons.cli.*;
 import org.minecraftshire.auth.utils.ProcessRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.*;
-import java.util.Properties;
+import java.util.logging.Logger;
 
 
 @SpringBootApplication
@@ -16,6 +15,7 @@ public class MinecraftshireAuthApplication {
 	private static String secretToken;
 	private static String buildNumber;
 	private static String path;
+	private static Logger log = Logger.getGlobal();
 
 
 	public static String getSecretToken() {
@@ -32,7 +32,7 @@ public class MinecraftshireAuthApplication {
 
 
 	public static void stop() {
-		System.err.println("Stopping via System.exit(0)...");
+		log.info("Stopping via System.exit(0)...");
 		System.exit(0);
 	}
 
@@ -55,7 +55,7 @@ public class MinecraftshireAuthApplication {
 		try {
 			cmd = parser.parse(options, args);
 		} catch (ParseException e) {
-			System.err.println(e.getMessage());
+			log.severe(e.getLocalizedMessage());
 
 			System.exit(-1);
 			return;
@@ -71,12 +71,11 @@ public class MinecraftshireAuthApplication {
 
 	private static void writePid() {
 		PrintWriter out;
-		//cd #{JAVA_PATH}/ && git rev-list HEAD --count
 
 		try {
 			out = new PrintWriter(path + "/server.pid");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.severe(e.getLocalizedMessage());
 			return;
 		}
 
