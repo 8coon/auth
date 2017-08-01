@@ -18,7 +18,9 @@ public class MinecraftshireAuthApplication {
 
 
 	public static void stop() {
-		context.stop();
+		// context.stop();
+		System.err.println("Stopping via System.exit(0)...");
+		System.exit(0);
 	}
 
 
