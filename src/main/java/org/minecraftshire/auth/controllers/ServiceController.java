@@ -1,6 +1,7 @@
 package org.minecraftshire.auth.controllers;
 
 
+import org.minecraftshire.auth.MinecraftshireAuthApplication;
 import org.minecraftshire.auth.data.SecretTokenData;
 import org.minecraftshire.auth.utils.ErrorCodes;
 import org.minecraftshire.auth.utils.SimpleResponse;
@@ -50,7 +51,7 @@ public class ServiceController {
             return "{}";
         }
 
-        System.exit(0);
+        MinecraftshireAuthApplication.stop();
         return "{}";
     }
 
