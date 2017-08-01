@@ -13,7 +13,7 @@ public class SecretTokenData {
 
     @JsonCreator
     public SecretTokenData(
-            @JsonProperty String secret
+            @JsonProperty("secret") String secret
     ) {
         this.secret = secret;
     }
