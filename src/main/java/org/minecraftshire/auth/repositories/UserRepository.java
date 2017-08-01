@@ -23,16 +23,17 @@ import java.util.logging.Logger;
 @Repository
 public class UserRepository {
 
-    private Logger log = Logger.getGlobal();
+    private Logger log;
     private JdbcTemplate jdbc;
     private SecureRandom random = new SecureRandom();
     private ConfirmationRepository confirmationRepository;
 
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbc, ConfirmationRepository confirmationRepository) {
+    public UserRepository(JdbcTemplate jdbc, ConfirmationRepository confirmationRepository, Logger log) {
         this.jdbc = jdbc;
         this.confirmationRepository = confirmationRepository;
+        this.log = log;
     }
 
 
