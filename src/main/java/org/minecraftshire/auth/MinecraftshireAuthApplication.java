@@ -45,12 +45,9 @@ public class MinecraftshireAuthApplication {
 		Option path = new Option("p", "path", true, "Server root path");
 		path.setRequired(true);
 
-		Option build = new Option("b", "build", true, "Build number");
-
 		Options options = new Options();
 		options.addOption(secret);
 		options.addOption(path);
-		options.addOption(build);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd;
@@ -66,12 +63,15 @@ public class MinecraftshireAuthApplication {
 
 		MinecraftshireAuthApplication.secretToken = cmd.getOptionValue("secret");
 		MinecraftshireAuthApplication.path = cmd.getOptionValue("path");
-		MinecraftshireAuthApplication.buildNumber = cmd.getOptionValue("build");
+		MinecraftshireAuthApplication.buildNumber = ProcessRunner.exec(
+				"cd " + MinecraftshireAuthApplication.path + "/ && git rev-list HEAD --count"
+		);
 	}
 
 
 	private static void writePid() {
 		PrintWriter out;
+		//cd #{JAVA_PATH}/ && git rev-list HEAD --count
 
 		try {
 			out = new PrintWriter(path + "/server.pid");

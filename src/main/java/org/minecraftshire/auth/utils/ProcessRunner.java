@@ -15,11 +15,8 @@ public class ProcessRunner {
     }
 
 
-    public static List<String> outList(String... command) throws IOException {
-        ProcessBuilder ps = new ProcessBuilder(command);
-        ps.redirectErrorStream(true);
-
-        Process pr = ps.start();
+    public static List<String> outList(String command) throws IOException {
+        Process pr = Runtime.getRuntime().exec(command);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
         List<String> lines = new ArrayList<>();
@@ -39,7 +36,7 @@ public class ProcessRunner {
     }
 
 
-    public static String out(String... command) throws IOException {
+    public static String out(String command) throws IOException {
         StringBuilder sb = new StringBuilder();
         List<String> lines = ProcessRunner.outList(command);
 
@@ -52,7 +49,7 @@ public class ProcessRunner {
     }
 
 
-    public static String exec(String... command) {
+    public static String exec(String command) {
         try {
             return ProcessRunner.out(command);
         } catch (IOException e) {
