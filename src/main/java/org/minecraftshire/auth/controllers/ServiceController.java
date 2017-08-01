@@ -66,7 +66,7 @@ public class ServiceController {
         return new ResponseEntity<>(
                 new VersionResponse(
                         env.getProperty("minecraftshire.name"),
-                        env.getProperty("minecraftshire.version") +
+                        env.getProperty("minecraftshire.version") + "." +
                                 MinecraftshireAuthApplication.getBuildNumber(),
                         env.getProperty("minecraftshire.description")
                 ),
