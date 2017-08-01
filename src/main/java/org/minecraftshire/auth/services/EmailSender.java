@@ -19,7 +19,7 @@ public class EmailSender {
 
     private void sendEmail(String to, String subject, String text) {
         String s = "" +
-            "From: github-trigger-server@minecraftshire.ru\n" +
+            "From: no-reply@minecraftshire.ru\n" +
             "To: " + to + "\n" +
             "MIME-Version: 1.0\n" +
             "Content-Type: text/html; charset=\\\"utf-8\\\"\n" +
