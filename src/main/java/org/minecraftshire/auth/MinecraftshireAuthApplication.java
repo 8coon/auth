@@ -13,16 +13,21 @@ import java.util.Properties;
 @SpringBootApplication
 public class MinecraftshireAuthApplication {
 
-	private static String SECRET_TOKEN;
+	private static String secretToken;
 	private static String buildNumber;
+	private static String path;
 
 
 	public static String getSecretToken() {
-		return SECRET_TOKEN;
+		return secretToken;
 	}
 
 	public static String getBuildNumber() {
 		return buildNumber;
+	}
+
+	public static String getPath() {
+		return path;
 	}
 
 
@@ -37,8 +42,12 @@ public class MinecraftshireAuthApplication {
 				"Secret token for administrative methods");
 		secret.setRequired(true);
 
+		Option path = new Option("p", "path", true, "Server root path");
+		path.setRequired(true);
+
 		Options options = new Options();
 		options.addOption(secret);
+		options.addOption(path);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd;
@@ -52,12 +61,15 @@ public class MinecraftshireAuthApplication {
 			return;
 		}
 
-		SECRET_TOKEN = cmd.getOptionValue("secret");
+		MinecraftshireAuthApplication.secretToken = cmd.getOptionValue("secret");
+		MinecraftshireAuthApplication.path = cmd.getOptionValue("path");
 	}
 
 
 	private static void loadMetaInf() {
-		buildNumber = ProcessRunner.exec("git", "rev-list", "HEAD" , "--count").replace("\n", "");
+		buildNumber = ProcessRunner.exec(
+				"git", "--git-dir=" + path, "rev-list", "HEAD" , "--count"
+		).replace("\n", "");
 	}
 
 
@@ -65,7 +77,7 @@ public class MinecraftshireAuthApplication {
 		PrintWriter out;
 
 		try {
-			out = new PrintWriter("server.pid");
+			out = new PrintWriter(path + "/server.pid");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
@@ -77,9 +89,9 @@ public class MinecraftshireAuthApplication {
 
 
 	public static void main(String[] args) {
-		writePid();
 		loadArgs(args);
 		loadMetaInf();
+		writePid();
 
 		SpringApplication.run(MinecraftshireAuthApplication.class, args);
 	}
