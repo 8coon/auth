@@ -11,4 +11,5 @@ public class ErrorCodes {
     public static final int WRONG_USER_OR_PASSWORD = 800;
     public static final int WRONG_PLAYER = 801;
     public static final int INTERNAL_ERROR = 900;
+    public static final int ACCESS_DENIED = 501;
 }
