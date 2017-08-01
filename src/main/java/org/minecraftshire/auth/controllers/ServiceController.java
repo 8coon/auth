@@ -36,8 +36,8 @@ public class ServiceController {
             return new ResponseEntity<>(new SimpleResponse(ErrorCodes.ACCESS_DENIED), HttpStatus.OK);
         }
 
-        this.jdbc.update("DELETE FROM Users");
         this.jdbc.update("DELETE FROM Confirmations");
+        this.jdbc.update("DELETE FROM Users");
 
         return new ResponseEntity<>(new SimpleResponse("success", ErrorCodes.OK), HttpStatus.OK);
     }
