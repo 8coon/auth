@@ -1,4 +1,4 @@
-package org.minecraftshire.auth.utils;
+package org.minecraftshire.auth.responses;
 
 
 public class SimpleResponse {

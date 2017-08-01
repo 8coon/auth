@@ -3,7 +3,7 @@ package org.minecraftshire.auth.controllers;
 import org.minecraftshire.auth.data.UserData;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
-import org.minecraftshire.auth.utils.SimpleResponse;
+import org.minecraftshire.auth.responses.SimpleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

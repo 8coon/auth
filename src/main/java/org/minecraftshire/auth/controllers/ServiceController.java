@@ -3,16 +3,14 @@ package org.minecraftshire.auth.controllers;
 
 import org.minecraftshire.auth.MinecraftshireAuthApplication;
 import org.minecraftshire.auth.data.SecretTokenData;
+import org.minecraftshire.auth.responses.VersionResponse;
 import org.minecraftshire.auth.utils.ErrorCodes;
-import org.minecraftshire.auth.utils.SimpleResponse;
+import org.minecraftshire.auth.responses.SimpleResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -57,6 +55,19 @@ public class ServiceController {
         MinecraftshireAuthApplication.stop();
 
         return "{}";
+    }
+
+
+    @PostMapping("/version")
+    public ResponseEntity<VersionResponse> version() {
+        return new ResponseEntity<>(
+                new VersionResponse(
+                        MinecraftshireAuthApplication.getName(),
+                        MinecraftshireAuthApplication.getVersion(),
+                        MinecraftshireAuthApplication.getDescription()
+                ),
+                HttpStatus.OK
+        );
     }
 
 }
