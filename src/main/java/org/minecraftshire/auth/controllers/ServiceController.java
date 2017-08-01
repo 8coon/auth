@@ -48,10 +48,14 @@ public class ServiceController {
             @RequestBody SecretTokenData token
     ) {
         if (token.isNot()) {
+            System.err.println("App was given wrong security token");
+
             return "{}";
         }
 
+        System.err.println("Stopping application...");
         MinecraftshireAuthApplication.stop();
+
         return "{}";
     }
 
