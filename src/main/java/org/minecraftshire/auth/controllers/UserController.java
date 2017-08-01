@@ -43,7 +43,7 @@ public class UserController {
             @RequestParam("code") long code
     ) {
         if (this.confirmations.confirmSignUp(code)) {
-            ResponseEntity<String> result = new ResponseEntity<>(HttpStatus.PERMANENT_REDIRECT);
+            ResponseEntity<String> result = new ResponseEntity<>(HttpStatus.TEMPORARY_REDIRECT);
             result.getHeaders().set("Location", "http://minecraftshire.ru/");
 
             return result;
