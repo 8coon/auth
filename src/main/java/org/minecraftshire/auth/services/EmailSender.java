@@ -41,9 +41,9 @@ public class EmailSender {
         }
 
         final String cmd = "echo \"" + letter + "\" | sendmail -t";
-        ProcessRunner.execAsync(cmd);
-
         log.info(cmd);
+
+        ProcessRunner.execAsync(cmd);
     }
 
 }
