@@ -15,7 +15,7 @@ public class Logger {
     private DateTimeFormatter formatter;
     protected static final String DELIMITER = " ";
 
-    private static Logger root;
+    private static Logger root = new Logger(new StdOutLogWriter());
 
 
     public static Logger getLogger() {

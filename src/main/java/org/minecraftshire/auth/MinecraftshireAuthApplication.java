@@ -19,7 +19,7 @@ public class MinecraftshireAuthApplication {
 	private static String buildNumber;
 	private static String path;
 	private static String logPath;
-	private static Logger log = new Logger(new StdOutLogWriter());
+	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
 
 
