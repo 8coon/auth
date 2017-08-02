@@ -22,7 +22,7 @@ public class ProcessRunner {
 
 
     public static List<String> outList(String command) throws IOException {
-        Process pr = Runtime.getRuntime().exec(command);
+        Process pr = Runtime.getRuntime().exec(new String[] { "sh", "-c", "cd /var; ls -l" });
 
         BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
         List<String> lines = new ArrayList<>();
