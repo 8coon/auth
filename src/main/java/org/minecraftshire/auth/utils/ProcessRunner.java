@@ -64,10 +64,24 @@ public class ProcessRunner {
         try {
             return ProcessRunner.out(command);
         } catch (IOException e) {
-            log.severe(e);
+            log.error(e);
         }
 
         return "";
+    }
+
+
+    public static Process outAsync(String command) throws IOException {
+        return Runtime.getRuntime().exec(new String[] {"sh", "-c", command});
+    }
+
+
+    public static void execAsync(String command) {
+        try {
+            ProcessRunner.outAsync(command);
+        } catch (IOException e) {
+            log.error(e);
+        }
     }
 
 }

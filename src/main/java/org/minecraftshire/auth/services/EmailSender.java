@@ -1,10 +1,12 @@
 package org.minecraftshire.auth.services;
 
 
+import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 
@@ -28,14 +30,20 @@ public class EmailSender {
             "Subject: " + subject + "\n" +
             "\n" + text.replace("\n", "<br>");
 
-        String cmd = "echo \"" + s + "\" | sendmail -t";
-        log.info(cmd);
+        String letter = "";
 
         try {
-            Runtime.getRuntime().exec(URLEncoder.encode(cmd,"utf-8"));
-        } catch (IOException e) {
+            letter = URLEncoder.encode(s, "utf-8");
+        } catch (UnsupportedEncodingException e) {
             log.error(e);
+
+            return;
         }
+
+        final String cmd = "echo \"" + letter + "\" | sendmail -t";
+        ProcessRunner.execAsync(cmd);
+
+        log.info(cmd);
     }
 
 }
