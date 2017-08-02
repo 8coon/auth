@@ -115,7 +115,7 @@ public class MinecraftshireAuthApplication {
 		try {
 			out = new PrintWriter(path + "/server.pid");
 		} catch (FileNotFoundException e) {
-			log.error(e);
+			log.severe(e);
 			return;
 		}
 

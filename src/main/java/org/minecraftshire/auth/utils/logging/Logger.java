@@ -2,6 +2,7 @@ package org.minecraftshire.auth.utils.logging;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,9 +14,11 @@ public class Logger {
 
     private ILogWriter writer;
     private DateTimeFormatter formatter;
+
+    private static boolean loggerChanged = false;
     protected static final String DELIMITER = " ";
 
-    private static Logger root = new Logger(new StdOutLogWriter());
+    private static Logger root = new Logger(new BufferedLogWriter());
 
 
     public static Logger getLogger() {
@@ -23,6 +26,21 @@ public class Logger {
     }
 
     public static void setLogger(Logger logger) {
+        if (!Logger.loggerChanged) {
+            byte[] bytes = ((BufferedLogWriter) Logger.root.getWriter()).getBytes();
+
+            try {
+                for (byte b: bytes) {
+                    logger.getWriter().write(b);
+                }
+
+                logger.getWriter().flush();
+            } catch (IOException e) {
+            }
+
+            Logger.loggerChanged = true;
+        }
+
         Logger.root = logger;
     }
 
