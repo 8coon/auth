@@ -45,10 +45,15 @@ public class ProcessRunner {
     public static String out(String command) throws IOException {
         StringBuilder sb = new StringBuilder();
         List<String> lines = ProcessRunner.outList(command);
+        int i = 0;
 
         for (String line: lines) {
             sb.append(line);
-            sb.append("\n");
+            i++;
+
+            if (i != lines.size()) {
+                sb.append("\n");
+            }
         }
 
         return sb.toString();
@@ -59,7 +64,7 @@ public class ProcessRunner {
         try {
             return ProcessRunner.out(command);
         } catch (IOException e) {
-            log.error(e);
+            log.severe(e);
         }
 
         return "";
