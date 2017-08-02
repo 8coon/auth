@@ -22,6 +22,8 @@ public class EmailSender {
 
 
     private void sendEmail(String to, String subject, String text) {
+        log.info("sendEmail called");
+
         String s = "" +
             "From: no-reply@minecraftshire.ru\n" +
             "To: " + to + "\n" +
@@ -34,6 +36,7 @@ public class EmailSender {
 
         try {
             letter = URLEncoder.encode(s, "utf-8");
+            log.info(letter);
         } catch (UnsupportedEncodingException e) {
             log.error(e);
 
