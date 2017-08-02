@@ -121,6 +121,10 @@ public class Logger {
         this.log(LogLevel.INFO, line);
     }
 
+    public void info(Throwable throwable) {
+        this.log(LogLevel.INFO, throwable);
+    }
+
 
     public void warning(String msg) {
         this.log(LogLevel.WARNING, msg);
@@ -128,6 +132,10 @@ public class Logger {
 
     public void warning(Object... line) {
         this.log(LogLevel.WARNING, line);
+    }
+
+    public void warning(Throwable throwable) {
+        this.log(LogLevel.WARNING, throwable);
     }
 
 
@@ -139,6 +147,10 @@ public class Logger {
         this.log(LogLevel.ERROR, line);
     }
 
+    public void error(Throwable throwable) {
+        this.log(LogLevel.ERROR, throwable);
+    }
+
 
     public void severe(String msg) {
         this.log(LogLevel.SEVERE, msg);
@@ -148,6 +160,10 @@ public class Logger {
         this.log(LogLevel.SEVERE, line);
     }
 
+    public void severe(Throwable throwable) {
+        this.log(LogLevel.SEVERE, throwable);
+    }
+
 
     public void debug(String msg) {
         this.log(LogLevel.DEBUG, msg);
@@ -155,6 +171,10 @@ public class Logger {
 
     public void debug(Object... line) {
         this.log(LogLevel.DEBUG, line);
+    }
+
+    public void debug(Throwable throwable) {
+        this.log(LogLevel.DEBUG, throwable);
     }
 
 }

@@ -1,18 +1,18 @@
 package org.minecraftshire.auth.utils;
 
 
+import org.minecraftshire.auth.utils.logging.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class ProcessRunner {
 
-    private static Logger log = LoggerFactory.getLogger(ProcessRunner.class);
+    private static Logger log = Logger.getLogger();
 
 
     public static long getPid() {
@@ -35,7 +35,7 @@ public class ProcessRunner {
         try {
             pr.waitFor();
         } catch (InterruptedException e) {
-            log.error("ProcessRunner", e);
+            log.warning(e);
         }
 
         return lines;
@@ -59,7 +59,7 @@ public class ProcessRunner {
         try {
             return ProcessRunner.out(command);
         } catch (IOException e) {
-            log.error("ProcessRunner", e);
+            log.error(e);
         }
 
         return "";
