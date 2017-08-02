@@ -8,7 +8,9 @@ public interface ILogWriter {
 
     Charset getCharset();
 
+    void flush() throws IOException;
     void write(int b) throws IOException;
+
     void write(String string);
     void write(String[] lines);
     void write(Iterable<String> lines);

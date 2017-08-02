@@ -18,6 +18,7 @@ public class MinecraftshireAuthApplication {
 	private static String secretToken;
 	private static String buildNumber;
 	private static String path;
+	private static String logPath;
 	private static Logger log = new Logger(new StdOutLogWriter());
 	private static SystemRedirectStream redirectStream;
 
@@ -50,9 +51,12 @@ public class MinecraftshireAuthApplication {
 		Option path = new Option("p", "path", true, "Server root path");
 		path.setRequired(true);
 
+		Option logPath = new Option("l", "log", true, "Log file path");
+
 		Options options = new Options();
 		options.addOption(secret);
 		options.addOption(path);
+		options.addOption(logPath);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd;
@@ -71,12 +75,22 @@ public class MinecraftshireAuthApplication {
 		MinecraftshireAuthApplication.buildNumber = ProcessRunner.exec(
 				"cd " + MinecraftshireAuthApplication.path + "/ && git rev-list HEAD --count"
 		);
+
+		MinecraftshireAuthApplication.logPath = cmd.getOptionValue("log", null);
 	}
 
 
 	private static void initLogger() {
-		log.info("Switching to file logging...");
-		String fileName = path + "/java.log";
+		String fileName = MinecraftshireAuthApplication.logPath;
+
+		if (fileName == null) {
+			Logger.setLogger(log);
+
+			log.info("Logging into System.err");
+			return;
+		}
+
+		log.info("Switching to logging into file \"" + fileName + "\"...");
 
 		try {
 			Logger.setLogger(new Logger(new FileLogWriter(fileName)));
@@ -88,6 +102,7 @@ public class MinecraftshireAuthApplication {
 		}
 
 		redirectStream = new SystemRedirectStream(Logger.getLogger(), System.out, System.err);
+		redirectStream.setVerbose(false);
 		log = Logger.getLogger();
 
 		log.info("Switched to file \"", fileName ,"\" successfully");

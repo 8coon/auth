@@ -80,4 +80,9 @@ public class FileLogWriter implements ILogWriter {
         }
     }
 
+    @Override
+    public void flush() throws IOException {
+        this.os.flush();
+    }
+
 }

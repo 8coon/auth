@@ -33,4 +33,10 @@ public class StdOutLogWriter implements ILogWriter {
             this.write(line);
         }
     }
+
+    @Override
+    public void flush() {
+        System.out.flush();
+    }
+
 }

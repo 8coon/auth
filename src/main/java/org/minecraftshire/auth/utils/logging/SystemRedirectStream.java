@@ -62,4 +62,13 @@ public class SystemRedirectStream extends OutputStream {
         }
     }
 
+    @Override
+    public void flush() throws IOException {
+        log.getWriter().flush();
+
+        if (this.isVerbose()) {
+            err.flush();
+        }
+    }
+
 }
