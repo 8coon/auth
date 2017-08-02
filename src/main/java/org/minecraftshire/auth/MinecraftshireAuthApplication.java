@@ -2,12 +2,14 @@ package org.minecraftshire.auth;
 
 import org.apache.commons.cli.*;
 import org.minecraftshire.auth.utils.ProcessRunner;
+import org.minecraftshire.auth.utils.logging.FileLogWriter;
+import org.minecraftshire.auth.utils.logging.Logger;
+import org.minecraftshire.auth.utils.logging.StdOutLogWriter;
+import org.minecraftshire.auth.utils.logging.SystemRedirectStream;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @SpringBootApplication
@@ -16,7 +18,9 @@ public class MinecraftshireAuthApplication {
 	private static String secretToken;
 	private static String buildNumber;
 	private static String path;
-	private static Logger log = LoggerFactory.getLogger(MinecraftshireAuthApplication.class);
+	private static Logger log = new Logger(new StdOutLogWriter());
+	private static SystemRedirectStream redirectStream;
+
 
 
 	public static String getSecretToken() {
@@ -56,7 +60,7 @@ public class MinecraftshireAuthApplication {
 		try {
 			cmd = parser.parse(options, args);
 		} catch (ParseException e) {
-			log.error("MinecraftshireAuthApplication", e);
+			log.severe(e);
 
 			System.exit(-1);
 			return;
@@ -70,13 +74,33 @@ public class MinecraftshireAuthApplication {
 	}
 
 
+	private static void initLogger() {
+		log.info("Switching to file logging...");
+		String fileName = path + "/java.log";
+
+		try {
+			Logger.setLogger(new Logger(new FileLogWriter(fileName)));
+		} catch (FileNotFoundException e) {
+			log.severe(e);
+
+			System.exit(-1);
+			return;
+		}
+
+		redirectStream = new SystemRedirectStream(Logger.getLogger(), System.out, System.err);
+		log = Logger.getLogger();
+
+		log.info("Switched to file \"", fileName ,"\" successfully");
+	}
+
+
 	private static void writePid() {
 		PrintWriter out;
 
 		try {
 			out = new PrintWriter(path + "/server.pid");
 		} catch (FileNotFoundException e) {
-			log.error("MinecraftshireAuthApplication", e);
+			log.error(e);
 			return;
 		}
 
@@ -87,6 +111,7 @@ public class MinecraftshireAuthApplication {
 
 	public static void main(String[] args) {
 		loadArgs(args);
+		initLogger();
 		writePid();
 
 		SpringApplication.run(MinecraftshireAuthApplication.class, args);

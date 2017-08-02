@@ -3,6 +3,7 @@ package org.minecraftshire.auth.repositories;
 
 import org.minecraftshire.auth.utils.ErrorCodes;
 import org.minecraftshire.auth.utils.UserGroups;
+import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,14 +17,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Random;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @Repository
 public class UserRepository {
 
-    private Logger log;
+    private Logger log = Logger.getLogger();
     private JdbcTemplate jdbc;
     private SecureRandom random = new SecureRandom();
     private ConfirmationRepository confirmationRepository;
@@ -33,7 +32,6 @@ public class UserRepository {
     public UserRepository(JdbcTemplate jdbc, ConfirmationRepository confirmationRepository) {
         this.jdbc = jdbc;
         this.confirmationRepository = confirmationRepository;
-        this.log = LoggerFactory.getLogger(this.getClass());
     }
 
 
@@ -84,7 +82,7 @@ public class UserRepository {
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            log.error("UserRepository", e);
+            log.error(e);
             System.exit(-1);
         }
 
@@ -93,7 +91,7 @@ public class UserRepository {
         try {
             intermediate = password.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            log.error("UserRepository", e);
+            log.error( e);
             System.exit(-1);
         }
 

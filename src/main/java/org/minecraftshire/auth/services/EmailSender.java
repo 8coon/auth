@@ -1,18 +1,17 @@
 package org.minecraftshire.auth.services;
 
 
+import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @Service
 public class EmailSender {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger log = Logger.getLogger();
 
 
     public void sendEmailConfirmation(String email, long code, String linkHref) {
@@ -35,7 +34,7 @@ public class EmailSender {
         try {
             Runtime.getRuntime().exec(URLEncoder.encode(cmd,"utf-8"));
         } catch (IOException e) {
-            log.error("EmailSender", e);
+            log.error(e);
         }
     }
 
