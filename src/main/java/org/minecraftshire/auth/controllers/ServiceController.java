@@ -36,6 +36,7 @@ public class ServiceController {
             @RequestBody SecretTokenData token
     ) {
         if (token.isNot()) {
+            log.info("App was given wrong security token");
             return new ResponseEntity<>(new SimpleResponse(ErrorCodes.ACCESS_DENIED), HttpStatus.OK);
         }
 

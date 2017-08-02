@@ -28,7 +28,7 @@ public class ConfirmationRepository {
 
 
     public void requestSignUpConfirmation(String username, String email) {
-        long code = this.random.nextLong();
+        long code = Math.abs(this.random.nextLong());
 
         this.jdbc.update(
                 "INSERT INTO Confirmations (username, operation, code, email) VALUES (?, ?, ?, ?)",
