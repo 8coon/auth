@@ -1,5 +1,6 @@
 package org.minecraftshire.auth.controllers;
 
+import org.minecraftshire.auth.data.ConfirmationData;
 import org.minecraftshire.auth.data.UserData;
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
@@ -47,9 +48,9 @@ public class UserController {
 
     @PostMapping("/email_verify")
     public ResponseEntity emailVerify(
-            @RequestParam("code") long code
+            @RequestBody ConfirmationData confirmation
     ) {
-        if (this.confirmations.confirmSignUp(code)) {
+        if (this.confirmations.confirmSignUp(confirmation.getCode())) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
 
