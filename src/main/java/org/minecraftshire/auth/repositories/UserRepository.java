@@ -105,7 +105,7 @@ public class UserRepository extends Repository {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.USERNAME_OR_PASSWORD);
         }
 
-        return UserRepository.getAuthToken(credentials, user);
+        return getAuthToken(credentials, user);
     }
 
 
@@ -119,7 +119,7 @@ public class UserRepository extends Repository {
     }
 
 
-    public static String getAuthToken(CredentialsData credentials, UserData user) {
+    public String getAuthToken(CredentialsData credentials, UserData user) {
         Algorithm algorithm;
 
         try {
@@ -137,13 +137,13 @@ public class UserRepository extends Repository {
                 .withClaim("group", user.getGroup())
                 .sign(algorithm);
 
-        UserRepository.saveToken(token);
+        saveToken(token);
         return token;
     }
 
 
-    public static SessionData verifyAuthToken(String authToken, String appToken) {
-        if (!UserRepository.hasToken(authToken)) {
+    public SessionData verifyAuthToken(String authToken, String appToken) {
+        if (!hasToken(authToken)) {
             throw new UnauthorizedException();
         }
 
@@ -162,30 +162,30 @@ public class UserRepository extends Repository {
         } catch (UnsupportedEncodingException e) {
             Logger.getLogger().severe(e);
         } catch (JWTVerificationException e1) {
-            UserRepository.dropToken(authToken);
+            dropToken(authToken);
         }
 
         throw new UnauthorizedException();
     }
 
 
-    public static void saveToken(String authToken) {
-        Server.getJdbc().update(
+    public void saveToken(String authToken) {
+        jdbc.update(
                 "INSERT INTO Tokens (token) VALUES (?)",
                 authToken
         );
     }
 
-    public static void dropToken(String authToken) {
-        Server.getJdbc().update(
+    public void dropToken(String authToken) {
+        jdbc.update(
                 "DELETE FROM Tokens WHERE token = ?",
                 authToken
         );
     }
 
-    public static boolean hasToken(String authToken) {
+    public boolean hasToken(String authToken) {
         try {
-            Server.getJdbc().queryForObject(
+            jdbc.queryForObject(
                     "SELECT token FROM Tokens WHERE token = ? LIMIT 1",
                     String.class,
                     authToken

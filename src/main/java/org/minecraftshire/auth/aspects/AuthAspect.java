@@ -6,14 +6,19 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.minecraftshire.auth.data.AuthTokenData;
 import org.minecraftshire.auth.repositories.UserRepository;
-import org.minecraftshire.auth.utils.AuthTargets;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Aspect
 public class AuthAspect {
 
-    public AuthAspect() {
+    private UserRepository users;
+
+    @Autowired
+    public AuthAspect(UserRepository users) {
+        this.users = users;
     }
+
 
     @Around("execution(public * *(..)) && @annotation(org.minecraftshire.auth.aspects.AuthRequired)")
     public Object fire(ProceedingJoinPoint pjp) throws Throwable {
@@ -26,7 +31,7 @@ public class AuthAspect {
         return pjp.proceed(new Object[]{
                 args[0],
                 args[1],
-                UserRepository.verifyAuthToken(
+                users.verifyAuthToken(
                         ((AuthTokenData) args[0]).getAuthToken(),
                         args[1].toString()
                 )
