@@ -43,6 +43,7 @@ public class FileLogWriter implements ILogWriter {
     @Override
     public void write(int b) throws IOException {
         this.os.write(b);
+        this.flush();
     }
 
 
