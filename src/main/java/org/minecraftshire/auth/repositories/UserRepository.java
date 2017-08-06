@@ -19,6 +19,7 @@ import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
@@ -128,17 +129,24 @@ public class UserRepository extends Repository {
             return "";
         }
 
-        return JWT.create()
+        String token = JWT.create()
                 .withIssuer(Server.getIssuer())
                 .withIssuedAt(Date.from(Instant.now()))
                 .withExpiresAt(Date.from(ZonedDateTime.now().plusMonths(3).toInstant()))
                 .withClaim("username", credentials.getUsername())
                 .withClaim("group", user.getGroup())
                 .sign(algorithm);
+
+        UserRepository.saveToken(token);
+        return token;
     }
 
 
     public static SessionData verifyAuthToken(String authToken, String appToken) {
+        if (!UserRepository.hasToken(authToken)) {
+            throw new UnauthorizedException();
+        }
+
         try {
             Algorithm algorithm = Algorithm.HMAC512(UserRepository.getSignature(appToken));
 
@@ -153,9 +161,39 @@ public class UserRepository extends Repository {
             );
         } catch (UnsupportedEncodingException e) {
             Logger.getLogger().severe(e);
-            throw new UnauthorizedException();
         } catch (JWTVerificationException e1) {
-            throw new UnauthorizedException();
+            UserRepository.dropToken(authToken);
+        }
+
+        throw new UnauthorizedException();
+    }
+
+
+    public static void saveToken(String authToken) {
+        Server.getJdbc().update(
+                "INSERT INTO Tokens (token) VALUES (?)",
+                authToken
+        );
+    }
+
+    public static void dropToken(String authToken) {
+        Server.getJdbc().update(
+                "DELETE FROM Tokens WHERE token = ?",
+                authToken
+        );
+    }
+
+    public static boolean hasToken(String authToken) {
+        try {
+            Server.getJdbc().queryForObject(
+                    "SELECT token FROM Tokens WHERE token = ? LIMIT 1",
+                    String.class,
+                    authToken
+            );
+
+            return true;
+        } catch (DataAccessException e) {
+            return false;
         }
     }
 

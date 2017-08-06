@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.*;
 
@@ -26,6 +27,7 @@ public class Server {
 	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
 	private static Environment env;
+	private static ConfigurableApplicationContext context;
 
 
 
@@ -52,6 +54,14 @@ public class Server {
 	public static String getIssuer() {
 		return env.getProperty("minecraftshire.name") + " " +
 				env.getProperty("minecraftshire.version");
+	}
+
+	public static ConfigurableApplicationContext getContext() {
+		return context;
+	}
+
+	public static JdbcTemplate getJdbc() {
+		return getContext().getBean(JdbcTemplate.class);
 	}
 
 
@@ -148,8 +158,7 @@ public class Server {
 		initLogger();
 		writePid();
 
-		ConfigurableApplicationContext context =
-				SpringApplication.run(Server.class, args);
+		context = SpringApplication.run(Server.class, args);
 		env = context.getEnvironment();
 	}
 

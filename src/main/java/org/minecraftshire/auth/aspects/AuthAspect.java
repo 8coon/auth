@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.minecraftshire.auth.data.AuthTokenData;
 import org.minecraftshire.auth.repositories.UserRepository;
+import org.minecraftshire.auth.utils.AuthTargets;
 
 
 @Aspect

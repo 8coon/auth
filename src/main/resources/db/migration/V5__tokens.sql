@@ -1,0 +1,4 @@
+
+CREATE TABLE Tokens (
+    token TEXT UNIQUE PRIMARY KEY
+);
