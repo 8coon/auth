@@ -24,7 +24,8 @@ public class ServiceController {
 
 
     @Autowired
-    public ServiceController(Environment env) {
+    public ServiceController(JdbcTemplate jdbc, Environment env) {
+        this.jdbc = jdbc;
         this.env = env;
     }
 
@@ -75,7 +76,7 @@ public class ServiceController {
 
     @PostMapping("/stats")
     public ResponseEntity stats() {
-        return new ResponseEntity<StatsResponse>(
+        return new ResponseEntity<>(
                 new StatsResponse(
                     this.jdbc.queryForObject("SELECT count(*) FROM Users", Integer.class),
                     this.jdbc.queryForObject("SELECT count(*) FROM Confirmations", Integer.class)
