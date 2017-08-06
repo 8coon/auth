@@ -3,6 +3,7 @@ package org.minecraftshire.auth;
 
 import org.minecraftshire.auth.aspects.AuthAspect;
 import org.minecraftshire.auth.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +16,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class ServerConfig {
 
     @Bean
-    public AuthAspect getAuthAspect() {
-        return new AuthAspect(Server.getContext().getBean(UserRepository.class));
+    @Autowired
+    public AuthAspect getAuthAspect(UserRepository users) {
+        return new AuthAspect(users);
     }
 
 }
