@@ -17,7 +17,7 @@ public class ConfirmationData implements RowMapper<ConfirmationData> {
 
     public ConfirmationData(
             String username,
-            Integer operation,
+            int operation,
             long code,
             String email
     ) {
@@ -25,6 +25,12 @@ public class ConfirmationData implements RowMapper<ConfirmationData> {
         this.operation = operation;
         this.code = code;
         this.email = email;
+    }
+
+    public ConfirmationData(
+            long code
+    ) {
+        this.code = code;
     }
 
 
