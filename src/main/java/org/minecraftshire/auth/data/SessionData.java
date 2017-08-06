@@ -6,12 +6,16 @@ public class SessionData {
     private String username;
     private int group;
 
+
     public SessionData(
             String username,
             int group
     ) {
         this.username = username;
         this.group = group;
+    }
+
+    public SessionData() {
     }
 
 
