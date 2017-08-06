@@ -103,7 +103,7 @@ public class MinecraftshireAuthApplication {
 		redirectStream.setVerbose(true);
 		log = Logger.getLogger();
 
-		log.info("Switched to file \"", fileName ,"\" successfully");
+		log.info("Successfully switched to file \"", fileName ,"\"");
 	}
 
 

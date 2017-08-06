@@ -24,7 +24,7 @@ public class Logger {
 
 
     public static Logger getLogger() {
-        return Logger.root;
+        return Logger.root.getParent();
     }
 
     public static void setLogger(Logger logger) {
