@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.minecraftshire.auth</groupId>
-	<artifactId>minecraftshire-auth</artifactId>
+	<groupId>org.minecraftshire.api-server</groupId>
+	<artifactId>minecraftshire-api-server</artifactId>
 	<version>2.0</version>
 	<packaging>jar</packaging>
 
-	<name>minecraftshire-auth</name>
-	<description>Minecraftshire Authorization Server</description>
+	<name>minecraftshire-api-server</name>
+	<description>Minecraftshire API Server</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
