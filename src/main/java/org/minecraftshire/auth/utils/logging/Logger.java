@@ -29,7 +29,7 @@ public class Logger {
 
     public static void setLogger(Logger logger) {
         if (!Logger.loggerChanged) {
-            byte[] bytes = ((BufferedLogWriter) Logger.root.getWriter()).getBytes();
+            byte[] bytes = ((BufferedLogWriter) Logger.root.getParent().getWriter()).getBytes();
 
             try {
                 for (byte b: bytes) {
