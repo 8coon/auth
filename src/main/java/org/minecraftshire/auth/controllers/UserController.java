@@ -5,6 +5,7 @@ import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
+import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public class UserController {
 
     private UserRepository users;
     private ConfirmationRepository confirmations;
+    private Logger log = Logger.getLogger();
 
 
     @Autowired
@@ -32,6 +34,7 @@ public class UserController {
     ) {
         try {
             this.users.create(user.getUsername(), user.getEmail(), user.getPassword());
+            this.log.info("New user");
 
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (ExistsException e) {
