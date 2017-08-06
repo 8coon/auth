@@ -1,8 +1,10 @@
 package org.minecraftshire.auth.controllers;
 
 import org.minecraftshire.auth.data.UserData;
+import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
+import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
 import org.minecraftshire.auth.responses.SimpleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,33 +28,31 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<SimpleResponse> create(
+    public ResponseEntity create(
             @RequestBody UserData user
     ) {
-        return new ResponseEntity<>(
-                new SimpleResponse(
-                        this.users.create(user.getUsername(), user.getEmail(), user.getPassword())
-                ),
-                HttpStatus.OK
-        );
+        try {
+            this.users.create(user.getUsername(), user.getEmail(), user.getPassword());
+
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (ExistsException e) {
+            return new ResponseEntity<ErrorWithCauseResponse>(
+                    new ErrorWithCauseResponse("exists", e.getExistsCause()),
+                    HttpStatus.CONFLICT
+            );
+        }
     }
 
 
-    @GetMapping("/email_verify")
-    public ResponseEntity<String> emailVerify(
+    @PostMapping("/email_verify")
+    public ResponseEntity emailVerify(
             @RequestParam("code") long code
     ) {
         if (this.confirmations.confirmSignUp(code)) {
-            ResponseEntity<String> result = new ResponseEntity<>(HttpStatus.TEMPORARY_REDIRECT);
-            result.getHeaders().set("Location", "http://minecraftshire.ru/");
-
-            return result;
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(
-                "Ошибка: неверный код.",
-                HttpStatus.OK
-        );
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
 

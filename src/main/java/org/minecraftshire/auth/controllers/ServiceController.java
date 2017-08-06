@@ -3,9 +3,8 @@ package org.minecraftshire.auth.controllers;
 
 import org.minecraftshire.auth.MinecraftshireAuthApplication;
 import org.minecraftshire.auth.data.SecretTokenData;
+import org.minecraftshire.auth.responses.StatsResponse;
 import org.minecraftshire.auth.responses.VersionResponse;
-import org.minecraftshire.auth.utils.ErrorCodes;
-import org.minecraftshire.auth.responses.SimpleResponse;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,25 +24,24 @@ public class ServiceController {
 
 
     @Autowired
-    public ServiceController(JdbcTemplate jdbc, Environment env) {
-        this.jdbc = jdbc;
+    public ServiceController(Environment env) {
         this.env = env;
     }
 
 
     @PostMapping("/drop")
-    public ResponseEntity<SimpleResponse> create(
+    public ResponseEntity create(
             @RequestBody SecretTokenData token
     ) {
         if (token.isNot()) {
             log.info("App was given wrong security token");
-            return new ResponseEntity<>(new SimpleResponse(ErrorCodes.ACCESS_DENIED), HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
         this.jdbc.update("DELETE FROM Confirmations");
         this.jdbc.update("DELETE FROM Users");
 
-        return new ResponseEntity<>(new SimpleResponse("success", ErrorCodes.OK), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 
@@ -69,6 +67,18 @@ public class ServiceController {
                         env.getProperty("minecraftshire.version") + "." +
                                 MinecraftshireAuthApplication.getBuildNumber(),
                         env.getProperty("minecraftshire.description")
+                ),
+                HttpStatus.OK
+        );
+    }
+
+
+    @PostMapping("/stats")
+    public ResponseEntity stats() {
+        return new ResponseEntity<StatsResponse>(
+                new StatsResponse(
+                    this.jdbc.queryForObject("SELECT count(*) FROM Users", Integer.class),
+                    this.jdbc.queryForObject("SELECT count(*) FROM Confirmations", Integer.class)
                 ),
                 HttpStatus.OK
         );

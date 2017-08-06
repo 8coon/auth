@@ -13,16 +13,14 @@ import java.security.SecureRandom;
 
 
 @Repository
-public class ConfirmationRepository {
+public class ConfirmationRepository extends org.minecraftshire.auth.repositories.Repository {
 
-    private JdbcTemplate jdbc;
     private EmailSender mail;
     private SecureRandom random = new SecureRandom();
 
 
     @Autowired
-    public ConfirmationRepository(JdbcTemplate jdbc, EmailSender mail) {
-        this.jdbc = jdbc;
+    public ConfirmationRepository(EmailSender mail) {
         this.mail = mail;
     }
 
