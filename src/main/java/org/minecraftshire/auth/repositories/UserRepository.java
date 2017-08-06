@@ -26,6 +26,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Base64;
@@ -129,7 +130,7 @@ public class UserRepository extends Repository {
         return JWT.create()
                 .withIssuer(MinecraftshireAuthApplication.getIssuer())
                 .withIssuedAt(Date.from(Instant.now()))
-                .withExpiresAt(Date.from(Instant.now().plus(3, ChronoUnit.MONTHS)))
+                .withExpiresAt(Date.from(ZonedDateTime.now().plusMonths(3).toInstant()))
                 .withClaim("username", credentials.getUsername())
                 .withClaim("group", String.valueOf(user.getGroup()))
                 .sign(algorithm);
