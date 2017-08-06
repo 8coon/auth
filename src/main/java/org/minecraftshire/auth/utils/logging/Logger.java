@@ -38,6 +38,8 @@ public class Logger {
 
                 logger.getWriter().flush();
             } catch (IOException e) {
+                Logger.root.severe(e);
+                logger.severe(e);
             }
 
             Logger.loggerChanged = true;
