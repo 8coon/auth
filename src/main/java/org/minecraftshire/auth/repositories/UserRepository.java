@@ -115,13 +115,16 @@ public class UserRepository extends Repository {
     }
 
 
+    public static String getSignature(String appToken) {
+        return MinecraftshireAuthApplication.getSecretToken() + "." + appToken;
+    }
+
+
     public static String getAuthToken(CredentialsData credentials, UserData user) {
         Algorithm algorithm;
 
         try {
-            algorithm = Algorithm.HMAC512(
-                    MinecraftshireAuthApplication.getSecretToken() + "." + credentials.getAppToken()
-            );
+            algorithm = Algorithm.HMAC512(UserRepository.getSignature(credentials.getAppToken()));
         } catch (UnsupportedEncodingException e) {
             Logger.getLogger().severe(e);
             return "";
@@ -139,9 +142,7 @@ public class UserRepository extends Repository {
 
     public static SessionData verifyAuthToken(String authToken, String appToken) {
         try {
-            Algorithm algorithm = Algorithm.HMAC512(
-                    MinecraftshireAuthApplication.getSecretToken() + "." + appToken
-            );
+            Algorithm algorithm = Algorithm.HMAC512(UserRepository.getSignature(appToken));
 
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(MinecraftshireAuthApplication.getIssuer())

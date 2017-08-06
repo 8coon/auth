@@ -12,7 +12,7 @@ public class AuthTokenData {
 
     @JsonCreator
     public AuthTokenData(
-            @JsonProperty  String authToken
+            @JsonProperty("authToken") String authToken
     ) {
         this.authToken = authToken;
     }
