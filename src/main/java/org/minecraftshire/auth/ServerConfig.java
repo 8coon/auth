@@ -2,6 +2,7 @@ package org.minecraftshire.auth;
 
 
 import org.minecraftshire.auth.aspects.AuthAspect;
+import org.minecraftshire.auth.repositories.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ public class ServerConfig {
 
     @Bean
     public AuthAspect getAuthAspect() {
-        return new AuthAspect();
+        return new AuthAspect(Server.getContext().getBean(UserRepository.class));
     }
 
 }
