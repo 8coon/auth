@@ -5,6 +5,7 @@ mvnw.cmd
 !.mvn/wrapper/maven-wrapper.jar
 *.pid
 java.log
+assets/geo-db
 
 ### STS ###
 .apt_generated

@@ -1,8 +1,9 @@
 package org.minecraftshire.auth.controllers;
 
-import org.minecraftshire.auth.data.ConfirmationData;
-import org.minecraftshire.auth.data.UserData;
+import org.minecraftshire.auth.aspects.AuthRequired;
+import org.minecraftshire.auth.data.*;
 import org.minecraftshire.auth.exceptions.ExistsException;
+import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
@@ -54,6 +55,30 @@ public class UserController {
         }
 
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+
+    @AuthRequired
+    @PostMapping("/change_password")
+    public ResponseEntity changePassword(
+            @RequestBody ChangePasswordData passwordData,
+            @RequestHeader("User-Agent") String userAgent,
+            SessionData sessionData
+    ) {
+        try {
+            this.users.changePassword(
+                    sessionData.getUsername(),
+                    passwordData.getOldPassword(),
+                    passwordData.getNewPassword()
+            );
+
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (WrongCredentialsException e) {
+            return new ResponseEntity<>(
+                    new ErrorWithCauseResponse(Errors.WRONG_CREDENTIALS, e.getCausedBy()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
 

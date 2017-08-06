@@ -19,7 +19,6 @@ import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
@@ -109,6 +108,31 @@ public class UserRepository extends Repository {
     }
 
 
+    public void changePassword(String username, String oldPassword, String newPassword) throws WrongCredentialsException {
+        UserData user = this.jdbc.queryForObject(
+                "SELECT username, email, password, salt, \"group\", is_confirmed, is_banned FROM Users WHERE username = ? LIMIT 1",
+                new UserData(),
+                username
+        );
+
+        if (oldPassword.equals(newPassword)) {
+            throw new WrongCredentialsException(WrongCredentialsExceptionCause.SAME_PASSWORD);
+        }
+
+        oldPassword = UserRepository.makeSalty(oldPassword, user.getSalt());
+        newPassword = UserRepository.makeSalty(newPassword, user.getSalt());
+
+        if (!oldPassword.equals(user.getPassword())) {
+            throw new WrongCredentialsException(WrongCredentialsExceptionCause.PASSWORD);
+        }
+
+        this.jdbc.update(
+                "UPDATE Users SET password = ? WHERE username = ?",
+                newPassword, username
+        );
+    }
+
+
     public int generateSalt() {
         return this.random.nextInt();
     }
@@ -137,7 +161,7 @@ public class UserRepository extends Repository {
                 .withClaim("group", user.getGroup())
                 .sign(algorithm);
 
-        saveToken(token);
+        saveToken(token, credentials.getUsername(), "");
         return token;
     }
 
@@ -169,10 +193,10 @@ public class UserRepository extends Repository {
     }
 
 
-    public void saveToken(String authToken) {
+    public void saveToken(String authToken, String username, String ip) {
         jdbc.update(
-                "INSERT INTO Tokens (token) VALUES (?)",
-                authToken
+                "INSERT INTO Tokens (token, username, ip, \"location\") VALUES (?, ?, ?, ?)",
+                authToken, username, ip
         );
     }
 
