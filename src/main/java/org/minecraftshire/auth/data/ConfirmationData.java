@@ -1,6 +1,8 @@
 package org.minecraftshire.auth.data;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.flywaydb.core.internal.util.jdbc.RowMapper;
 
 import java.sql.ResultSet;
@@ -27,8 +29,10 @@ public class ConfirmationData implements RowMapper<ConfirmationData> {
         this.email = email;
     }
 
+
+    @JsonCreator
     public ConfirmationData(
-            long code
+            @JsonProperty("code") long code
     ) {
         this.code = code;
     }
