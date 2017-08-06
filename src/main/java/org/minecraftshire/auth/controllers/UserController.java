@@ -38,7 +38,7 @@ public class UserController {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (ExistsException e) {
             return new ResponseEntity<>(
-                    new ErrorWithCauseResponse(Errors.EXISTS, e.getExistsCause()),
+                    new ErrorWithCauseResponse(Errors.EXISTS, e.getCausedBy()),
                     HttpStatus.CONFLICT
             );
         }

@@ -48,6 +48,11 @@ public class MinecraftshireAuthApplication {
 		return env;
 	}
 
+	public static String getIssuer() {
+		return env.getProperty("minecraftshire.name") + " " +
+				env.getProperty("minecraftshire.version");
+	}
+
 
 	public static void stop() {
 		log.info("Stopping via System.exit(0)...");

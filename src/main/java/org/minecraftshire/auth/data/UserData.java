@@ -3,7 +3,7 @@ package org.minecraftshire.auth.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.flywaydb.core.internal.util.jdbc.RowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +16,9 @@ public class UserData implements RowMapper<UserData> {
     private String email;
     private int salt;
     private boolean salty = false;
+    private int group;
+    private boolean confirmed;
+    private boolean banned;
 
 
     @JsonCreator
@@ -29,9 +32,22 @@ public class UserData implements RowMapper<UserData> {
         this.email = email;
     }
 
+    @JsonCreator
+    public UserData(
+            @JsonProperty("username") String username,
+            @JsonProperty("password") String password
+    ) {
+        this.username = username;
+        this.password = password;
+    }
+
+
+    public UserData() {
+    }
+
 
     @Override
-    public UserData mapRow(ResultSet resultSet) throws SQLException {
+    public UserData mapRow(ResultSet resultSet, int i) throws SQLException {
         UserData userData = new UserData(
                 resultSet.getString("username"),
                 resultSet.getString("password"),
@@ -39,6 +55,9 @@ public class UserData implements RowMapper<UserData> {
         );
 
         userData.setSalt(resultSet.getInt("salt"));
+        userData.setBanned(resultSet.getBoolean("is_banned"));
+        userData.setConfirmed(resultSet.getBoolean("is_confirmed"));
+        userData.setGroup(resultSet.getInt("group"));
 
         return userData;
     }
@@ -75,6 +94,30 @@ public class UserData implements RowMapper<UserData> {
     public void setSalt(int salt) {
         this.salt = salt;
         this.salty = true;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
