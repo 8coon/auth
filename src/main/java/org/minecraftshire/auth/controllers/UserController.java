@@ -5,6 +5,7 @@ import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
+import org.minecraftshire.auth.utils.Errors;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,13 +34,11 @@ public class UserController {
     ) {
         try {
             this.users.create(user.getUsername(), user.getEmail(), user.getPassword());
-            Logger.getLogger().info("New user");
-            System.err.println("New user!");
 
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (ExistsException e) {
             return new ResponseEntity<>(
-                    new ErrorWithCauseResponse("exists", e.getExistsCause()),
+                    new ErrorWithCauseResponse(Errors.EXISTS, e.getExistsCause()),
                     HttpStatus.CONFLICT
             );
         }

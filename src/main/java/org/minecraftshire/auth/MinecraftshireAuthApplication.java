@@ -108,7 +108,7 @@ public class MinecraftshireAuthApplication {
 		}
 
 		redirectStream = new SystemRedirectStream(Logger.getLogger(), System.out, System.err);
-		redirectStream.setVerbose(true);
+		redirectStream.setVerbose(false);
 		log = Logger.getLogger();
 
 		log.info("Successfully switched to file \"", fileName ,"\"");

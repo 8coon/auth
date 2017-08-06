@@ -29,18 +29,7 @@ public class EmailSender {
             "Subject: " + subject + "\n" +
             "\n" + text.replace("\n", "<br>");
 
-        String letter = "";
-
-        try {
-            letter = URLEncoder.encode(s, "utf-8");
-            Logger.getLogger().info(letter);
-        } catch (UnsupportedEncodingException e) {
-            Logger.getLogger().error(e);
-
-            return;
-        }
-
-        final String cmd = "echo \"" + letter + "\" | sendmail -t";
+        String cmd = "echo \"" + s + "\" | sendmail -t";
         Logger.getLogger().info(cmd);
 
         ProcessRunner.execAsync(cmd);
