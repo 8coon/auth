@@ -133,7 +133,7 @@ public class UserRepository extends Repository {
                 .withIssuedAt(Date.from(Instant.now()))
                 .withExpiresAt(Date.from(ZonedDateTime.now().plusMonths(3).toInstant()))
                 .withClaim("username", credentials.getUsername())
-                .withClaim("group", String.valueOf(user.getGroup()))
+                .withClaim("group", user.getGroup())
                 .sign(algorithm);
     }
 
