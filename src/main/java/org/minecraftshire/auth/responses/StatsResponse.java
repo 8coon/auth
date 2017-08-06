@@ -5,10 +5,12 @@ public class StatsResponse {
 
     private int users;
     private int confirmations;
+    private int tokens;
 
-    public StatsResponse(int users, int confirmations) {
+    public StatsResponse(int users, int confirmations, int tokens) {
         this.users = users;
         this.confirmations = confirmations;
+        this.tokens = tokens;
     }
 
     public int getUsers() {
@@ -17,6 +19,10 @@ public class StatsResponse {
 
     public int getConfirmations() {
         return this.confirmations;
+    }
+
+    public int getTokens() {
+        return this.tokens;
     }
 
 }

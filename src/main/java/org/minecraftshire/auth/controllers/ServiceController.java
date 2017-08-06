@@ -79,7 +79,8 @@ public class ServiceController {
         return new ResponseEntity<>(
                 new StatsResponse(
                     this.jdbc.queryForObject("SELECT count(*) FROM Users", Integer.class),
-                    this.jdbc.queryForObject("SELECT count(*) FROM Confirmations", Integer.class)
+                    this.jdbc.queryForObject("SELECT count(*) FROM Confirmations", Integer.class),
+                    this.jdbc.queryForObject("SELECT count(*) FROM Tokens", Integer.class)
                 ),
                 HttpStatus.OK
         );
