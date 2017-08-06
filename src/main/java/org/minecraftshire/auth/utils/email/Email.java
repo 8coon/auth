@@ -1,6 +1,9 @@
 package org.minecraftshire.auth.utils.email;
 
 
+import java.nio.charset.Charset;
+import java.util.Base64;
+
 public class Email {
 
     private String body = "";
@@ -25,8 +28,9 @@ public class Email {
                 "To: " + this.getTo() + "\n" +
                 "MIME-Version: 1.0\n" +
                 "Content-Type: text/html; charset=\\\"utf-8\\\"\n" +
+                "Content-Transfer-Encoding: base64\n" +
                 "Subject: " + this.getSubject() + "\n" +
-                "\n" + this.getBody().replace("\n", "<br>");
+                "\n" + Base64.getEncoder().encodeToString(this.getBody().getBytes(Charset.forName("utf-8")));
     }
 
 

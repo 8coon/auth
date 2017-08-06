@@ -55,7 +55,6 @@ public class FileLogWriter implements ILogWriter {
 
         try {
             this.os.write(string.getBytes(this.charset));
-            this.flush();
         } catch (IOException e) {
         }
     }

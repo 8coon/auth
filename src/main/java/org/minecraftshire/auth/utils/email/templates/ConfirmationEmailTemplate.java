@@ -12,7 +12,7 @@ public class ConfirmationEmailTemplate extends MinecraftshireEmailTemplate {
 
     @Override
     public String getSubject() {
-        return "Регистрация на minecraftshire.ru";
+        return "Signing Up For minecraftshire.ru";
     }
 
 }

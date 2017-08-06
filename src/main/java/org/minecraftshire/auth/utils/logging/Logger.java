@@ -125,8 +125,18 @@ public class Logger {
         String value = sb.toString();
         this.getWriter().write(value);
 
+        try {
+            this.getWriter().flush();
+        } catch (IOException e) {
+        }
+
         if (this.hasParent()) {
             this.getParent().getWriter().write(value);
+
+            try {
+                this.getParent().getWriter().flush();
+            } catch (IOException e) {
+            }
         }
     }
 
