@@ -7,6 +7,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.minecraftshire.auth.MinecraftshireAuthApplication;
+import org.minecraftshire.auth.aspects.UnauthorizedException;
 import org.minecraftshire.auth.data.CredentialsData;
 import org.minecraftshire.auth.data.SessionData;
 import org.minecraftshire.auth.data.UserData;
@@ -152,9 +153,9 @@ public class UserRepository extends Repository {
             );
         } catch (UnsupportedEncodingException e) {
             Logger.getLogger().severe(e);
-            return null;
+            throw new UnauthorizedException();
         } catch (JWTVerificationException e1) {
-            return null;
+            throw new UnauthorizedException();
         }
     }
 
