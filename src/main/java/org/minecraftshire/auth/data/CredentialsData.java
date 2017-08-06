@@ -12,8 +12,8 @@ public class CredentialsData {
 
     @JsonCreator
     public CredentialsData(
-            @JsonProperty String username,
-            @JsonProperty String password
+            @JsonProperty("username") String username,
+            @JsonProperty("password") String password
     ) {
         this.username = username;
         this.password = password;
