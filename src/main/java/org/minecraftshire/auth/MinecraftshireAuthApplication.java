@@ -84,8 +84,6 @@ public class MinecraftshireAuthApplication {
 		String fileName = MinecraftshireAuthApplication.logPath;
 
 		if (fileName == null) {
-			Logger.setLogger(log);
-
 			log.info("Logging into System.err");
 			return;
 		}

@@ -15,7 +15,7 @@ public class Logger {
 
     private ILogWriter writer;
     private DateTimeFormatter formatter;
-    private Logger parent;
+    private Logger parent = null;
 
     private static boolean loggerChanged = false;
     protected static final String DELIMITER = " ";
