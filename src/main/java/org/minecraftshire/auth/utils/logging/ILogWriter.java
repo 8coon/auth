@@ -4,6 +4,7 @@ package org.minecraftshire.auth.utils.logging;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+
 public interface ILogWriter {
 
     Charset getCharset();

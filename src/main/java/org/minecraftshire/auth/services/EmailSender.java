@@ -5,7 +5,6 @@ import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 

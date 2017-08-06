@@ -4,7 +4,6 @@ package org.minecraftshire.auth.utils.logging;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 
 
 public class SystemRedirectStream extends OutputStream {

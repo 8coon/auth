@@ -10,6 +10,7 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Logger {
 
     private ILogWriter writer;

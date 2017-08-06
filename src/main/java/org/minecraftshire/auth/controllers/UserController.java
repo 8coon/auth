@@ -5,7 +5,6 @@ import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
-import org.minecraftshire.auth.responses.SimpleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -3,13 +3,9 @@ package org.minecraftshire.auth.repositories;
 
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.ExistsExceptionCause;
-import org.minecraftshire.auth.utils.ErrorCodes;
 import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;

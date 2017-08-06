@@ -3,6 +3,7 @@ package org.minecraftshire.auth.utils.logging;
 
 import java.nio.charset.Charset;
 
+
 public class StdOutLogWriter implements ILogWriter {
 
     @Override
