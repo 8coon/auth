@@ -12,8 +12,6 @@ import java.net.URLEncoder;
 @Service
 public class EmailSender {
 
-    private Logger log = Logger.getLogger();
-
 
     public void sendEmailConfirmation(String email, long code, String linkHref) {
         sendEmail(email, "Подтверждение адреса электронной почты", String.valueOf(code));
@@ -21,7 +19,7 @@ public class EmailSender {
 
 
     private void sendEmail(String to, String subject, String text) {
-        log.info("sendEmail called");
+        Logger.getLogger().info("sendEmail called");
 
         String s = "" +
             "From: no-reply@minecraftshire.ru\n" +
@@ -35,15 +33,15 @@ public class EmailSender {
 
         try {
             letter = URLEncoder.encode(s, "utf-8");
-            log.info(letter);
+            Logger.getLogger().info(letter);
         } catch (UnsupportedEncodingException e) {
-            log.error(e);
+            Logger.getLogger().error(e);
 
             return;
         }
 
         final String cmd = "echo \"" + letter + "\" | sendmail -t";
-        log.info(cmd);
+        Logger.getLogger().info(cmd);
 
         ProcessRunner.execAsync(cmd);
     }

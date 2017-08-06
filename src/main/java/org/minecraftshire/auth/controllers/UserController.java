@@ -18,7 +18,6 @@ public class UserController {
 
     private UserRepository users;
     private ConfirmationRepository confirmations;
-    private Logger log = Logger.getLogger();
 
 
     @Autowired
@@ -34,7 +33,7 @@ public class UserController {
     ) {
         try {
             this.users.create(user.getUsername(), user.getEmail(), user.getPassword());
-            this.log.info("New user");
+            Logger.getLogger().info("New user");
 
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (ExistsException e) {

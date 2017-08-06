@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/service")
 public class ServiceController {
 
-    private Logger log = Logger.getLogger();
     private JdbcTemplate jdbc;
     private Environment env;
 
@@ -35,7 +34,7 @@ public class ServiceController {
             @RequestBody SecretTokenData token
     ) {
         if (token.isNot()) {
-            log.info("App was given wrong security token");
+            Logger.getLogger().info("App was given wrong security token");
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
@@ -51,7 +50,7 @@ public class ServiceController {
             @RequestBody SecretTokenData token
     ) {
         if (token.isNot()) {
-            log.info("App was given wrong security token");
+            Logger.getLogger().info("App was given wrong security token");
             return "{}";
         }
 
