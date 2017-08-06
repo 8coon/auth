@@ -58,7 +58,7 @@ public class Logger {
     }
 
 
-    protected ILogWriter getWriter() {
+    private ILogWriter getWriter() {
         return this.writer;
     }
 
@@ -220,6 +220,22 @@ public class Logger {
 
     public void debug(Throwable throwable) {
         this.log(LogLevel.DEBUG, throwable);
+    }
+
+    public void writeByte(int b) throws IOException {
+        this.getWriter().write(b);
+
+        if (this.hasParent()) {
+            this.getParent().writeByte(b);
+        }
+    }
+
+    public void flush() throws IOException {
+        this.getWriter().flush();
+
+        if (this.hasParent()) {
+            this.getParent().flush();
+        }
     }
 
 }

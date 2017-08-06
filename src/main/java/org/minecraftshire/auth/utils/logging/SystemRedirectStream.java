@@ -54,7 +54,7 @@ public class SystemRedirectStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        log.getWriter().write(b);
+        log.writeByte(b);
 
         if (this.isVerbose()) {
             err.write(b);
@@ -63,7 +63,7 @@ public class SystemRedirectStream extends OutputStream {
 
     @Override
     public void flush() throws IOException {
-        log.getWriter().flush();
+        log.flush();
 
         if (this.isVerbose()) {
             err.flush();

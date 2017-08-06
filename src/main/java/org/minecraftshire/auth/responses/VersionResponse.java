@@ -6,14 +6,16 @@ public class VersionResponse {
     private String name;
     private String version;
     private String description;
+    private String buildDate;
 
 
     public VersionResponse(
-            String name, String version, String description
+            String name, String version, String description, String buildDate
     ) {
         this.name = name;
         this.version = version;
         this.description = description;
+        this.buildDate = buildDate;
     }
 
 
@@ -27,6 +29,10 @@ public class VersionResponse {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getBuildDate() {
+        return this.buildDate;
     }
 
 }

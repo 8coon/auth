@@ -17,6 +17,7 @@ public class MinecraftshireAuthApplication {
 
 	private static String secretToken;
 	private static String buildNumber;
+	private static String buildDate;
 	private static String path;
 	private static String logPath;
 	private static Logger log = Logger.getLogger();
@@ -34,6 +35,10 @@ public class MinecraftshireAuthApplication {
 
 	public static String getPath() {
 		return path;
+	}
+
+	public static String getBuildDate() {
+		return buildDate;
 	}
 
 
@@ -74,6 +79,9 @@ public class MinecraftshireAuthApplication {
 		MinecraftshireAuthApplication.path = cmd.getOptionValue("path");
 		MinecraftshireAuthApplication.buildNumber = ProcessRunner.exec(
 				"cd " + MinecraftshireAuthApplication.path + "/ && git rev-list HEAD --count"
+		);
+		MinecraftshireAuthApplication.buildDate = ProcessRunner.exec(
+				"cd " + MinecraftshireAuthApplication.path + "/ && git log -1 --format=%cd "
 		);
 
 		MinecraftshireAuthApplication.logPath = cmd.getOptionValue("log", null);

@@ -67,7 +67,8 @@ public class ServiceController {
                         env.getProperty("minecraftshire.name"),
                         env.getProperty("minecraftshire.version") + "." +
                                 MinecraftshireAuthApplication.getBuildNumber(),
-                        env.getProperty("minecraftshire.description")
+                        env.getProperty("minecraftshire.description"),
+                        MinecraftshireAuthApplication.getBuildDate()
                 ),
                 HttpStatus.OK
         );
