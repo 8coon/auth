@@ -27,7 +27,7 @@ public abstract class Repository {
     public boolean hasObject(String table, String key, Object value) {
         try {
             this.jdbc.queryForObject(
-                    "SELECT " + key + " FROM " + table + " WHERE " + value + " = ? LIMIT 1",
+                    "SELECT " + key + " FROM " + table + " WHERE " + key + " = ? LIMIT 1",
                     value.getClass(),
                     value
             );
