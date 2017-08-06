@@ -32,7 +32,7 @@ public class ConfirmationRepository extends org.minecraftshire.auth.repositories
                 username, EmailOperations.EMAIL_CONFIRM, code, email
         );
 
-        this.mail.sendEmailConfirmation(email, code, "");
+        this.mail.sendEmailConfirmation(email, code);
     }
 
 
