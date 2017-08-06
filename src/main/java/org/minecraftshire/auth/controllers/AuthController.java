@@ -49,6 +49,18 @@ public class AuthController {
 
 
     @AuthRequired
+    @PostMapping("/logout")
+    public ResponseEntity logout(
+            @RequestBody AuthTokenData authTokenData,
+            @RequestHeader("User-Agent") String userAgent,
+            SessionData sessionData
+    ) {
+        this.users.dropToken(authTokenData.getAuthToken());
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+
+    @AuthRequired
     @PostMapping("/test")
     public String test(
             @RequestBody AuthTokenData authTokenData,
@@ -57,8 +69,5 @@ public class AuthController {
     ) {
         return sessionData.getUsername() + " " + sessionData.getGroup();
     }
-
-
-
 
 }
