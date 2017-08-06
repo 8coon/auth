@@ -13,12 +13,10 @@ public class CredentialsData {
     @JsonCreator
     public CredentialsData(
             @JsonProperty String username,
-            @JsonProperty String password,
-            @JsonProperty String appToken
+            @JsonProperty String password
     ) {
         this.username = username;
         this.password = password;
-        this.appToken = appToken;
     }
 
     public String getUsername() {

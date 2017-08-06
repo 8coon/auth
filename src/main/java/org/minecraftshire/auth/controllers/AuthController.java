@@ -29,9 +29,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(
-            @RequestBody CredentialsData credentials
+            @RequestBody CredentialsData credentials,
+            @RequestHeader("User-Agent") String userAgent
     ) {
         try {
+            credentials.setAppToken(userAgent);
+
             return new ResponseEntity<>(
                     new AuthTokenData(this.users.login(credentials)),
                     HttpStatus.OK
