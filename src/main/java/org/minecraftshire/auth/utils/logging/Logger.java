@@ -15,11 +15,12 @@ public class Logger {
 
     private ILogWriter writer;
     private DateTimeFormatter formatter;
+    private Logger parent;
 
     private static boolean loggerChanged = false;
     protected static final String DELIMITER = " ";
 
-    private static Logger root = new Logger(new BufferedLogWriter());
+    private static Logger root = new Logger(new NullWriter(), new Logger(new BufferedLogWriter()));
 
 
     public static Logger getLogger() {
@@ -42,7 +43,16 @@ public class Logger {
             Logger.loggerChanged = true;
         }
 
-        Logger.root = logger;
+        Logger.root.setParent(logger);
+    }
+
+
+    public Logger getParent() {
+        return this.parent;
+    }
+
+    public void setParent(Logger parent) {
+        this.parent = parent;
     }
 
 
@@ -93,6 +103,15 @@ public class Logger {
         this.formatter = formatter;
     }
 
+    public Logger(ILogWriter writer, Logger parent) {
+        this(writer);
+        this.parent = parent;
+    }
+
+    protected boolean hasParent() {
+        return this.getParent() != null;
+    }
+
 
     public void write(String... line) {
         StringBuilder sb = new StringBuilder();
@@ -101,7 +120,12 @@ public class Logger {
             sb.append(part);
         }
 
-        this.getWriter().write(sb.toString());
+        String value = sb.toString();
+        this.getWriter().write(value);
+
+        if (this.hasParent()) {
+            this.getParent().getWriter().write(value);
+        }
     }
 
 
