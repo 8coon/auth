@@ -6,7 +6,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.minecraftshire.auth.MinecraftshireAuthApplication;
+import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.aspects.UnauthorizedException;
 import org.minecraftshire.auth.data.CredentialsData;
 import org.minecraftshire.auth.data.SessionData;
@@ -27,8 +27,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Random;
@@ -116,7 +114,7 @@ public class UserRepository extends Repository {
 
 
     public static String getSignature(String appToken) {
-        return MinecraftshireAuthApplication.getSecretToken() + "." + appToken;
+        return Server.getSecretToken() + "." + appToken;
     }
 
 
@@ -131,7 +129,7 @@ public class UserRepository extends Repository {
         }
 
         return JWT.create()
-                .withIssuer(MinecraftshireAuthApplication.getIssuer())
+                .withIssuer(Server.getIssuer())
                 .withIssuedAt(Date.from(Instant.now()))
                 .withExpiresAt(Date.from(ZonedDateTime.now().plusMonths(3).toInstant()))
                 .withClaim("username", credentials.getUsername())
@@ -145,7 +143,7 @@ public class UserRepository extends Repository {
             Algorithm algorithm = Algorithm.HMAC512(UserRepository.getSignature(appToken));
 
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(MinecraftshireAuthApplication.getIssuer())
+                    .withIssuer(Server.getIssuer())
                     .build();
             DecodedJWT decoded = verifier.verify(authToken);
 

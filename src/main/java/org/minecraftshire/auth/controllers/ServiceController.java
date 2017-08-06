@@ -1,7 +1,7 @@
 package org.minecraftshire.auth.controllers;
 
 
-import org.minecraftshire.auth.MinecraftshireAuthApplication;
+import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.data.SecretTokenData;
 import org.minecraftshire.auth.responses.StatsResponse;
 import org.minecraftshire.auth.responses.VersionResponse;
@@ -54,7 +54,7 @@ public class ServiceController {
             return "{}";
         }
 
-        MinecraftshireAuthApplication.stop();
+        Server.stop();
         return "{}";
     }
 
@@ -65,9 +65,9 @@ public class ServiceController {
                 new VersionResponse(
                         env.getProperty("minecraftshire.name"),
                         env.getProperty("minecraftshire.version") + "." +
-                                MinecraftshireAuthApplication.getBuildNumber(),
+                                Server.getBuildNumber(),
                         env.getProperty("minecraftshire.description"),
-                        MinecraftshireAuthApplication.getBuildDate()
+                        Server.getBuildDate()
                 ),
                 HttpStatus.OK
         );

@@ -3,7 +3,7 @@ package org.minecraftshire.auth.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.minecraftshire.auth.MinecraftshireAuthApplication;
+import org.minecraftshire.auth.Server;
 
 
 public class SecretTokenData {
@@ -24,7 +24,7 @@ public class SecretTokenData {
     }
 
     public boolean is() {
-        return secret.equals(MinecraftshireAuthApplication.getSecretToken());
+        return secret.equals(Server.getSecretToken());
     }
 
     public boolean isNot() {

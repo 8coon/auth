@@ -1,7 +1,7 @@
 package org.minecraftshire.auth.services;
 
 
-import org.minecraftshire.auth.MinecraftshireAuthApplication;
+import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.email.Email;
 import org.minecraftshire.auth.utils.email.templates.ConfirmationEmailTemplate;
@@ -20,7 +20,7 @@ public class EmailSender {
 
     public EmailSender() {
         confirmationTemplate = new ConfirmationEmailTemplate(
-                MinecraftshireAuthApplication.getPath() + "/assets/emails/confirmation.html",
+                Server.getPath() + "/assets/emails/confirmation.html",
                 Charset.forName("utf-8")
         );
     }

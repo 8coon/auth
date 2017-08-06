@@ -4,18 +4,19 @@ import org.apache.commons.cli.*;
 import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.logging.FileLogWriter;
 import org.minecraftshire.auth.utils.logging.Logger;
-import org.minecraftshire.auth.utils.logging.StdOutLogWriter;
 import org.minecraftshire.auth.utils.logging.SystemRedirectStream;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
 
 import java.io.*;
 
 
 @SpringBootApplication
-public class MinecraftshireAuthApplication {
+public class Server {
 
 	private static String secretToken;
 	private static String buildNumber;
@@ -87,21 +88,21 @@ public class MinecraftshireAuthApplication {
 			return;
 		}
 
-		MinecraftshireAuthApplication.secretToken = cmd.getOptionValue("secret");
-		MinecraftshireAuthApplication.path = cmd.getOptionValue("path");
-		MinecraftshireAuthApplication.buildNumber = ProcessRunner.exec(
-				"cd " + MinecraftshireAuthApplication.path + "/ && git rev-list HEAD --count"
+		Server.secretToken = cmd.getOptionValue("secret");
+		Server.path = cmd.getOptionValue("path");
+		Server.buildNumber = ProcessRunner.exec(
+				"cd " + Server.path + "/ && git rev-list HEAD --count"
 		);
-		MinecraftshireAuthApplication.buildDate = ProcessRunner.exec(
-				"cd " + MinecraftshireAuthApplication.path + "/ && git log -1 --format=%cd "
+		Server.buildDate = ProcessRunner.exec(
+				"cd " + Server.path + "/ && git log -1 --format=%cd "
 		);
 
-		MinecraftshireAuthApplication.logPath = cmd.getOptionValue("log", null);
+		Server.logPath = cmd.getOptionValue("log", null);
 	}
 
 
 	private static void initLogger() {
-		String fileName = MinecraftshireAuthApplication.logPath;
+		String fileName = Server.logPath;
 
 		if (fileName == null) {
 			log.info("Logging into System.err");
@@ -148,7 +149,7 @@ public class MinecraftshireAuthApplication {
 		writePid();
 
 		ConfigurableApplicationContext context =
-				SpringApplication.run(MinecraftshireAuthApplication.class, args);
+				SpringApplication.run(Server.class, args);
 		env = context.getEnvironment();
 	}
 
