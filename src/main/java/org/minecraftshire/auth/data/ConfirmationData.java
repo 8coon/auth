@@ -17,7 +17,7 @@ public class ConfirmationData implements RowMapper<ConfirmationData> {
 
     public ConfirmationData(
             String username,
-            int operation,
+            Integer operation,
             long code,
             String email
     ) {
