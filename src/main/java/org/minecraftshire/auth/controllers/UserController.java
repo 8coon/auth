@@ -34,10 +34,11 @@ public class UserController {
         try {
             this.users.create(user.getUsername(), user.getEmail(), user.getPassword());
             Logger.getLogger().info("New user");
+            System.err.println("New user!");
 
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (ExistsException e) {
-            return new ResponseEntity<ErrorWithCauseResponse>(
+            return new ResponseEntity<>(
                     new ErrorWithCauseResponse("exists", e.getExistsCause()),
                     HttpStatus.CONFLICT
             );
