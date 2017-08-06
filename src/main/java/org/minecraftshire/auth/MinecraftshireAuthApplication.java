@@ -8,6 +8,8 @@ import org.minecraftshire.auth.utils.logging.StdOutLogWriter;
 import org.minecraftshire.auth.utils.logging.SystemRedirectStream;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 
 import java.io.*;
 
@@ -22,6 +24,7 @@ public class MinecraftshireAuthApplication {
 	private static String logPath;
 	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
+	private static Environment env;
 
 
 
@@ -39,6 +42,10 @@ public class MinecraftshireAuthApplication {
 
 	public static String getBuildDate() {
 		return buildDate;
+	}
+
+	public static Environment getEnv() {
+		return env;
 	}
 
 
@@ -135,7 +142,9 @@ public class MinecraftshireAuthApplication {
 		initLogger();
 		writePid();
 
-		SpringApplication.run(MinecraftshireAuthApplication.class, args);
+		ConfigurableApplicationContext context =
+				SpringApplication.run(MinecraftshireAuthApplication.class, args);
+		env = context.getEnvironment();
 	}
 
 }
