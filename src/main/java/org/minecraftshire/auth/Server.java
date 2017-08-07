@@ -1,18 +1,14 @@
 package org.minecraftshire.auth;
 
 import org.apache.commons.cli.*;
-import org.minecraftshire.auth.data.SecretTokenData;
 import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.logging.FileLogWriter;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.minecraftshire.auth.utils.logging.SystemRedirectStream;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -117,7 +113,7 @@ public class Server {
 		try {
 			Server.geoDbVersion = new String(Files.readAllBytes(Paths.get(
                     Server.getPath(), "assets", "geo-db", "version.info"
-            )), Charset.defaultCharset());
+            )), Charset.defaultCharset()).replace("./", "").replace("\n", "");
 		} catch (IOException e) {
 			log.severe(e);
 
