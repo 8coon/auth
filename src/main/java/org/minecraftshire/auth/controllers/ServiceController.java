@@ -67,7 +67,8 @@ public class ServiceController {
                         env.getProperty("minecraftshire.version") + "." +
                                 Server.getBuildNumber(),
                         env.getProperty("minecraftshire.description"),
-                        Server.getBuildDate()
+                        Server.getBuildDate(),
+                        Server.getGeoDbVersion()
                 ),
                 HttpStatus.OK
         );

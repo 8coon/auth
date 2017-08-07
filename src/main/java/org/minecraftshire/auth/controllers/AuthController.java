@@ -6,6 +6,7 @@ import org.minecraftshire.auth.data.AuthTokenData;
 import org.minecraftshire.auth.data.CredentialsData;
 import org.minecraftshire.auth.data.SessionData;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
+import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
 import org.minecraftshire.auth.utils.Errors;
@@ -20,10 +21,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private UserRepository users;
+    private TokenRepository tokens;
+
 
     @Autowired
-    public AuthController(UserRepository users) {
+    public AuthController(UserRepository users, TokenRepository tokens) {
         this.users = users;
+        this.tokens = tokens;
     }
 
 
@@ -56,7 +60,7 @@ public class AuthController {
             @RequestHeader("User-Agent") String userAgent,
             SessionData sessionData
     ) {
-        this.users.dropToken(authTokenData.getAuthToken());
+        this.tokens.dropToken(authTokenData.getAuthToken());
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -68,7 +72,7 @@ public class AuthController {
             @RequestHeader("User-Agent") String userAgent,
             SessionData sessionData
     ) {
-        this.users.closeAllSessions(sessionData.getUsername());
+        this.tokens.closeAllSessions(sessionData.getUsername());
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -81,7 +85,7 @@ public class AuthController {
             SessionData sessionData
     ) {
         return new ResponseEntity<>(
-                this.users.listAllSessions(sessionData.getUsername()),
+                this.tokens.listAllSessions(sessionData.getUsername()),
                 HttpStatus.OK
         );
     }

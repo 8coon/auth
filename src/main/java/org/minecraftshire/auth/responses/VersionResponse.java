@@ -7,15 +7,17 @@ public class VersionResponse {
     private String version;
     private String description;
     private String buildDate;
+    private String geoDbVersion;
 
 
     public VersionResponse(
-            String name, String version, String description, String buildDate
+            String name, String version, String description, String buildDate, String geoDbVersion
     ) {
         this.name = name;
         this.version = version;
         this.description = description;
         this.buildDate = buildDate;
+        this.geoDbVersion = geoDbVersion;
     }
 
 
@@ -33,6 +35,10 @@ public class VersionResponse {
 
     public String getBuildDate() {
         return this.buildDate;
+    }
+
+    public String getGeoDbVersion() {
+        return this.geoDbVersion;
     }
 
 }

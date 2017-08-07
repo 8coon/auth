@@ -2,7 +2,7 @@ package org.minecraftshire.auth;
 
 
 import org.minecraftshire.auth.aspects.AuthAspect;
-import org.minecraftshire.auth.repositories.UserRepository;
+import org.minecraftshire.auth.repositories.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,8 +17,8 @@ public class ServerConfig {
 
     @Bean
     @Autowired
-    public AuthAspect getAuthAspect(UserRepository users) {
-        return new AuthAspect(users);
+    public AuthAspect getAuthAspect(TokenRepository tokens) {
+        return new AuthAspect(tokens);
     }
 
 }

@@ -5,18 +5,18 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.minecraftshire.auth.data.AuthTokenData;
-import org.minecraftshire.auth.repositories.UserRepository;
+import org.minecraftshire.auth.repositories.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Aspect
 public class AuthAspect {
 
-    private UserRepository users;
+    private TokenRepository tokens;
 
     @Autowired
-    public AuthAspect(UserRepository users) {
-        this.users = users;
+    public AuthAspect(TokenRepository tokens) {
+        this.tokens = tokens;
     }
 
 
@@ -31,7 +31,7 @@ public class AuthAspect {
         return pjp.proceed(new Object[]{
                 args[0],
                 args[1],
-                users.verifyAuthToken(
+                tokens.verifyAuthToken(
                         ((AuthTokenData) args[0]).getAuthToken(),
                         args[1].toString()
                 )

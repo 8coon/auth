@@ -1,22 +1,12 @@
 package org.minecraftshire.auth.repositories;
 
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import org.minecraftshire.auth.Server;
-import org.minecraftshire.auth.aspects.UnauthorizedException;
 import org.minecraftshire.auth.data.CredentialsData;
-import org.minecraftshire.auth.data.SessionData;
-import org.minecraftshire.auth.data.SessionGeoData;
 import org.minecraftshire.auth.data.UserData;
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.ExistsExceptionCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
-import org.minecraftshire.auth.services.GeoLocator;
 import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.Base64;
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 
@@ -39,14 +25,14 @@ import java.util.Random;
 public class UserRepository extends Repository {
 
     private SecureRandom random = new SecureRandom();
-    private ConfirmationRepository confirmationRepository;
-    private GeoLocator geoLocator;
+    private ConfirmationRepository confirmations;
+    private TokenRepository tokens;
 
 
     @Autowired
-    public UserRepository(ConfirmationRepository confirmationRepository, GeoLocator geoLocator) {
-        this.confirmationRepository = confirmationRepository;
-        this.geoLocator = geoLocator;
+    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens) {
+        this.confirmations = confirmations;
+        this.tokens = tokens;
     }
 
 
@@ -78,7 +64,7 @@ public class UserRepository extends Repository {
                 username, salty, email, salt, UserGroups.STANDARD, false, false
         );
 
-        this.confirmationRepository.requestSignUpConfirmation(username, email);
+        this.confirmations.requestSignUpConfirmation(username, email);
     }
 
 
@@ -109,7 +95,7 @@ public class UserRepository extends Repository {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.USERNAME_OR_PASSWORD);
         }
 
-        return getAuthToken(credentials, user, ip);
+        return tokens.getAuthToken(credentials, user, ip);
     }
 
 
@@ -143,105 +129,6 @@ public class UserRepository extends Repository {
     }
 
 
-    public static String getSignature(String appToken) {
-        return Server.getSecretToken() + "." + appToken;
-    }
-
-
-    public String getAuthToken(CredentialsData credentials, UserData user, String ip) {
-        Algorithm algorithm;
-
-        try {
-            algorithm = Algorithm.HMAC512(UserRepository.getSignature(credentials.getAppToken()));
-        } catch (UnsupportedEncodingException e) {
-            Logger.getLogger().severe(e);
-            return "";
-        }
-
-        String token = JWT.create()
-                .withIssuer(Server.getIssuer())
-                .withIssuedAt(Date.from(Instant.now()))
-                .withExpiresAt(Date.from(ZonedDateTime.now().plusMonths(3).toInstant()))
-                .withClaim("username", credentials.getUsername())
-                .withClaim("group", user.getGroup())
-                .sign(algorithm);
-
-        saveToken(token, credentials.getUsername(), ip);
-        return token;
-    }
-
-
-    public SessionData verifyAuthToken(String authToken, String appToken) {
-        if (!hasToken(authToken)) {
-            throw new UnauthorizedException();
-        }
-
-        try {
-            Algorithm algorithm = Algorithm.HMAC512(UserRepository.getSignature(appToken));
-
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(Server.getIssuer())
-                    .build();
-            DecodedJWT decoded = verifier.verify(authToken);
-
-            return new SessionData(
-                    decoded.getClaim("username").asString(),
-                    decoded.getClaim("group").asInt()
-            );
-        } catch (UnsupportedEncodingException e) {
-            Logger.getLogger().severe(e);
-        } catch (JWTVerificationException e1) {
-            dropToken(authToken);
-        }
-
-        throw new UnauthorizedException();
-    }
-
-
-    public void closeAllSessions(String username) {
-        jdbc.update(
-                "DELETE FROM Tokens WHERE username = ?",
-                username
-        );
-    }
-
-
-    public List<SessionGeoData> listAllSessions(String username) {
-        return jdbc.query(
-                "SELECT ip, issued_at, \"location\" FROM Tokens WHERE username = ?",
-                new SessionGeoData(),
-                username
-        );
-    }
-
-
-    public void saveToken(String authToken, String username, String ip) {
-        jdbc.update(
-                "INSERT INTO Tokens (token, username, ip, \"location\") VALUES (?, ?, ?, ?)",
-                authToken, username, ip, geoLocator.lookupAddress(ip)
-        );
-    }
-
-    public void dropToken(String authToken) {
-        jdbc.update(
-                "DELETE FROM Tokens WHERE token = ?",
-                authToken
-        );
-    }
-
-    public boolean hasToken(String authToken) {
-        try {
-            jdbc.queryForObject(
-                    "SELECT token FROM Tokens WHERE token = ? LIMIT 1",
-                    String.class,
-                    authToken
-            );
-
-            return true;
-        } catch (DataAccessException e) {
-            return false;
-        }
-    }
 
 
     public static String makeSalty(String password, int salt) {
