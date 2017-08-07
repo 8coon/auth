@@ -1,3 +1,3 @@
 
 
-CREATE INDEX UsersNamePasswordSaltIndex ON Tokens (username, token);
+CREATE INDEX TokensUsernameTokenIndex ON Tokens (username, token);
