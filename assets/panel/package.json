@@ -2,6 +2,7 @@
   "name": "panel",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://minecraftshire.ru/app",
   "dependencies": {
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.0.2",
@@ -15,7 +16,7 @@
     "start-js": "react-scripts start",
     "build-js": "react-scripts build",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm-run-all -p  build-css build-js",
+    "build": "npm-run-all -p build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
