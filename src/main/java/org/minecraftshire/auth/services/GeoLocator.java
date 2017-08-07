@@ -1,11 +1,9 @@
 package org.minecraftshire.auth.services;
 
 
-import com.maxmind.db.Reader;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
-import com.maxmind.geoip2.record.Country;
 import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -14,8 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -28,14 +24,10 @@ public class GeoLocator {
     public static DatabaseReader getDatabase() {
         if (reader == null) {
             try {
-                List<String> locales = new ArrayList<>();
-                locales.add("RU-RU");
-                locales.add("EN_US");
-
                 reader = new DatabaseReader
                         .Builder(
                             new File(Server.getPath() + "/assets/geo-db/CurrentVersion/GeoLite2-City.mmdb")
-                        ).locales(locales).build();
+                        ).build();
             } catch (IOException e) {
                 Logger.getLogger().severe(e);
 
