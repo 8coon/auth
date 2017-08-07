@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -26,9 +28,13 @@ public class GeoLocator {
     public static DatabaseReader getDatabase() {
         if (reader == null) {
             try {
-                reader = new DatabaseReader.Builder(
-                        new File(Server.getPath() + "/assets/geo-db/CurrentVersion/GeoLite2-City.mmdb")
-                ).build();
+                List<String> locales = new ArrayList<>();
+                locales.add("RU");
+
+                reader = new DatabaseReader
+                        .Builder(
+                            new File(Server.getPath() + "/assets/geo-db/CurrentVersion/GeoLite2-City.mmdb")
+                        ).locales(locales).build();
             } catch (IOException e) {
                 Logger.getLogger().severe(e);
 
@@ -74,9 +80,9 @@ public class GeoLocator {
         sb.append(response.getCountry().getIsoCode());
         sb.append("; ");
         sb.append(response.getPostal().getCode());
-        sb.append(" ");
+        sb.append(", ");
         sb.append(response.getCity().getName());
-        sb.append(" ");
+        sb.append(", ");
         sb.append(response.getCountry().getName());
 
         return sb.toString();
