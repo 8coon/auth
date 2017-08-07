@@ -16,7 +16,6 @@ import org.minecraftshire.auth.services.GeoLocator;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.*;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
@@ -114,8 +113,8 @@ public class TokenRepository extends Repository {
 
         jdbc.update(
                 "INSERT INTO Tokens (token, username, ip, \"location\") VALUES (?, ?, ?, ?)" +
-                        "ON CONFLICT DO UPDATE SET username = ?, ip = ?, \"location\" = ?",
-                authToken, username, ip, location, username, ip, location
+                        "ON CONFLICT DO UPDATE SET username = ?, ip = ?, \"location\" = ? WHERE token = ?",
+                authToken, username, ip, location, username, ip, location, authToken
         );
     }
 
