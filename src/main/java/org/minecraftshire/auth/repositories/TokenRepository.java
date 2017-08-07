@@ -113,7 +113,7 @@ public class TokenRepository extends Repository {
 
         jdbc.update(
                 "INSERT INTO Tokens (token, username, ip, \"location\") VALUES (?, ?, ?, ?)" +
-                        "ON CONFLICT DO UPDATE SET username = ?, ip = ?, \"location\" = ? WHERE token = ?",
+                        "ON CONFLICT (token) DO UPDATE SET username = ?, ip = ?, \"location\" = ?",
                 authToken, username, ip, location, username, ip, location, authToken
         );
     }
