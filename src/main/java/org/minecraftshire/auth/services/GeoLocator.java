@@ -29,7 +29,8 @@ public class GeoLocator {
         if (reader == null) {
             try {
                 List<String> locales = new ArrayList<>();
-                locales.add("RU");
+                locales.add("RU-RU");
+                locales.add("EN_US");
 
                 reader = new DatabaseReader
                         .Builder(
