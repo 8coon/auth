@@ -10,11 +10,13 @@ import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.aspects.UnauthorizedException;
 import org.minecraftshire.auth.data.CredentialsData;
 import org.minecraftshire.auth.data.SessionData;
+import org.minecraftshire.auth.data.SessionGeoData;
 import org.minecraftshire.auth.data.UserData;
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.ExistsExceptionCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
+import org.minecraftshire.auth.services.GeoLocator;
 import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 
@@ -37,11 +40,13 @@ public class UserRepository extends Repository {
 
     private SecureRandom random = new SecureRandom();
     private ConfirmationRepository confirmationRepository;
+    private GeoLocator geoLocator;
 
 
     @Autowired
-    public UserRepository(ConfirmationRepository confirmationRepository) {
+    public UserRepository(ConfirmationRepository confirmationRepository, GeoLocator geoLocator) {
         this.confirmationRepository = confirmationRepository;
+        this.geoLocator = geoLocator;
     }
 
 
@@ -77,7 +82,7 @@ public class UserRepository extends Repository {
     }
 
 
-    public String login(CredentialsData credentials) throws WrongCredentialsException {
+    public String login(CredentialsData credentials, String ip) throws WrongCredentialsException {
         UserData user;
 
         try {
@@ -104,7 +109,7 @@ public class UserRepository extends Repository {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.USERNAME_OR_PASSWORD);
         }
 
-        return getAuthToken(credentials, user);
+        return getAuthToken(credentials, user, ip);
     }
 
 
@@ -143,7 +148,7 @@ public class UserRepository extends Repository {
     }
 
 
-    public String getAuthToken(CredentialsData credentials, UserData user) {
+    public String getAuthToken(CredentialsData credentials, UserData user, String ip) {
         Algorithm algorithm;
 
         try {
@@ -161,7 +166,7 @@ public class UserRepository extends Repository {
                 .withClaim("group", user.getGroup())
                 .sign(algorithm);
 
-        saveToken(token, credentials.getUsername(), "");
+        saveToken(token, credentials.getUsername(), ip);
         return token;
     }
 
@@ -193,10 +198,27 @@ public class UserRepository extends Repository {
     }
 
 
+    public void closeAllSessions(String username) {
+        jdbc.update(
+                "DELETE FROM Tokens WHERE username = ?",
+                username
+        );
+    }
+
+
+    public List<SessionGeoData> listAllSessions(String username) {
+        return jdbc.query(
+                "SELECT ip, issued_at, \"location\" FROM Tokens WHERE username = ?",
+                new SessionGeoData(),
+                username
+        );
+    }
+
+
     public void saveToken(String authToken, String username, String ip) {
         jdbc.update(
                 "INSERT INTO Tokens (token, username, ip, \"location\") VALUES (?, ?, ?, ?)",
-                authToken, username, ip
+                authToken, username, ip, geoLocator.lookupAddress(ip)
         );
     }
 

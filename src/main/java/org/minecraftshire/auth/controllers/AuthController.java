@@ -30,13 +30,14 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity login(
             @RequestBody CredentialsData credentials,
-            @RequestHeader("User-Agent") String userAgent
+            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader("X-Real-IP") String ip
     ) {
         try {
             credentials.setAppToken(userAgent);
 
             return new ResponseEntity<>(
-                    new AuthTokenData(this.users.login(credentials)),
+                    new AuthTokenData(this.users.login(credentials, ip)),
                     HttpStatus.OK
             );
         } catch (WrongCredentialsException e) {
@@ -57,6 +58,32 @@ public class AuthController {
     ) {
         this.users.dropToken(authTokenData.getAuthToken());
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+
+    @AuthRequired
+    @PostMapping("/logout_everywhere")
+    public ResponseEntity logoutEverywhere(
+            @RequestBody AuthTokenData authTokenData,
+            @RequestHeader("User-Agent") String userAgent,
+            SessionData sessionData
+    ) {
+        this.users.closeAllSessions(sessionData.getUsername());
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+
+    @AuthRequired
+    @PostMapping("/sessions")
+    public ResponseEntity sessions(
+            @RequestBody AuthTokenData authTokenData,
+            @RequestHeader("User-Agent") String userAgent,
+            SessionData sessionData
+    ) {
+        return new ResponseEntity<>(
+                this.users.listAllSessions(sessionData.getUsername()),
+                HttpStatus.OK
+        );
     }
 
 

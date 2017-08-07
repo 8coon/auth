@@ -1,6 +1,7 @@
 package org.minecraftshire.auth;
 
 import org.apache.commons.cli.*;
+import org.minecraftshire.auth.data.SecretTokenData;
 import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.logging.FileLogWriter;
 import org.minecraftshire.auth.utils.logging.Logger;
@@ -14,6 +15,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 @SpringBootApplication
@@ -24,6 +28,7 @@ public class Server {
 	private static String buildDate;
 	private static String path;
 	private static String logPath;
+	private static String geoDbVersion;
 	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
 	private static Environment env;
@@ -56,12 +61,12 @@ public class Server {
 				env.getProperty("minecraftshire.version");
 	}
 
-	public static ConfigurableApplicationContext getContext() {
-		return context;
+	public static String getGeoDbVersion() {
+		return geoDbVersion;
 	}
 
-	public static JdbcTemplate getJdbc() {
-		return getContext().getBean(JdbcTemplate.class);
+	public static ConfigurableApplicationContext getContext() {
+		return context;
 	}
 
 
@@ -108,6 +113,17 @@ public class Server {
 		);
 
 		Server.logPath = cmd.getOptionValue("log", null);
+
+		try {
+			Server.geoDbVersion = new String(Files.readAllBytes(Paths.get(
+                    Server.getPath(), "assets", "geo-db", "version.info"
+            )), Charset.defaultCharset());
+		} catch (IOException e) {
+			log.severe(e);
+
+			System.exit(-1);
+			return;
+		}
 	}
 
 

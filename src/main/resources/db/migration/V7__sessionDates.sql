@@ -1,0 +1,4 @@
+
+
+ALTER TABLE Tokens ADD COLUMN issued_at TIMESTAMPTZ DEFAULT now();
+
