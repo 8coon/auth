@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './page-login.css';
-import Logo from './../../assets/logo.png';
 
 // UI-Blocks
 import LayoutLogin from './../layout-login/layout-login';
@@ -14,10 +13,28 @@ class PageLogin extends Component {
         return (
             <LayoutLogin>
                 <Form>
-                    <img src={Logo} alt="logo"/>
+                    <div className="form-block form__title">
+                        Войти в аккаунт
+                    </div>
 
-                    <FormField type={FormFieldTypes.INPUT}/>
-                    <FormField type={FormFieldTypes.BUTTON}/>
+                    <div className="form-block">
+                        <FormField
+                            type={FormFieldTypes.INPUT}
+                            placeholder="Имя пользователя"/>
+
+                        <FormField
+                            type={FormFieldTypes.INPUT}
+                            placeholder="Пароль"
+                            password/>
+                    </div>
+
+                    <div className="form-block">
+                        <FormField type={FormFieldTypes.BUTTON}/>
+                    </div>
+
+                    <div className="form-block">
+                        <FormField type={FormFieldTypes.BUTTON}/>
+                    </div>
                 </Form>
             </LayoutLogin>
         )

@@ -1,0 +1,67 @@
+body {
+  height: 100%; }
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #343F4B;
+  color: white;
+  overflow: hidden;
+  font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 400; }
+  body #root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll; }
+    body #root > * {
+      position: static; }
+
+.input {
+  margin: 2px;
+  padding: 4px;
+  height: 35px; }
+  .input input {
+    font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+    font-size: 15px;
+    color: #5A6978;
+    height: 100%;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    border: 1px solid #5A6978;
+    border-bottom-width: 2px;
+    border-bottom-color: #343F4B;
+    border-radius: 5px;
+    padding: 5px 20px;
+    min-width: 250px; }
+    .input input::-moz-placeholder {
+      color: #5A6978;
+      opacity: 0.5; }
+    .input input::-webkit-input-placeholder {
+      color: #5A6978;
+      opacity: 0.5; }
+    .input input:-ms-input-placeholder {
+      color: #5A6978;
+      opacity: 0.5; }
+    .input input:-moz-placeholder {
+      color: #5A6978;
+      opacity: 0.5; }
+    .input input:focus {
+      opacity: 1;
+      outline: none;
+      box-shadow: 0 0 0 1px #343F4B;
+      text-overflow: clip; }
+      .input input:focus::-moz-placeholder {
+        color: transparent; }
+      .input input:focus::-webkit-input-placeholder {
+        color: transparent; }
+      .input input:focus:-ms-input-placeholder {
+        color: transparent; }
+      .input input:focus:-moz-placeholder {
+        color: transparent; }
+    @media only screen and (max-width: 575px) {
+      .input input {
+        width: 100% !important; } }

@@ -20,20 +20,10 @@ body {
     body #root > * {
       position: static; }
 
-.form__title {
-  font-size: 30px;
-  font-weight: 400;
-  color: #5A6978;
-  text-align: center; }
-
-.form .form-block {
-  display: flex;
-  flex-direction: column;
-  padding-top: 30px;
-  padding-bottom: 30px; }
-  .form .form-block:last-child {
-    padding-top: 0;
-    padding-bottom: 30px; }
-  .form .form-block:first-child {
-    padding-top: 30px;
-    padding-bottom: 0; }
+@media only screen and (max-width: 575px) {
+  .layout-login {
+    padding: 0 !important;
+    margin: 0 !important; }
+    .layout-login__outer {
+      width: 100% !important;
+      height: 100% !important; } }

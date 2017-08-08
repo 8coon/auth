@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import './form-field.css';
 
+// UI-blocks
+import Input from '../input/input';
+
 
 export const FormFieldTypes = {
     INPUT: 'input',
@@ -12,6 +15,8 @@ class FormField extends Component {
 
     static defaultProps = {
         type: FormFieldTypes.INPUT,
+        placeholder: '',
+        password: false,
     };
 
 
@@ -21,7 +26,9 @@ class FormField extends Component {
 
             case FormFieldTypes.INPUT:
                 return (
-                    <div>Input</div>
+                    <Input
+                        placeholder={this.props.placeholder}
+                        password={this.props.password}/>
                 );
 
             case FormFieldTypes.BUTTON:

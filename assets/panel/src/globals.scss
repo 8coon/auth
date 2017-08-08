@@ -5,24 +5,88 @@ $orange: #FF9052;
 $red: #F95F62;
 $white: white;
 
+$opacity-default: 1;
+$opacity-hover: 0.80;
+$opacity-placeholder: 0.50;
+
+
+$font-family-default: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+
+$base-unit: 1px;
+$input-padding: 5px 20px;
 
 $font-size-default: 15px;
 $font-size-header: 18px;
+$font-size-title: 30px;
 
 $font-weight-default: 400;
 $font-weight-header: 700;
+$font-weight-title: 400;
 
 $font-color-default: $white;
 $font-color-header: $gray;
+$font-color-title: $gray;
+
+$form-header-height: 50px;
+$form-header-padding: 5px;
+
+$form-width: 450px;
+$form-padding: 10px;
+$form-control-width: $form-width - $form-padding * 20;
+$form-block-padding: 30px;
+$form-control-height: 35px;
+$form-control-margin: 2 * $base-unit;
+$form-control-padding: 4 * $base-unit;
 
 
-html {
+$handhelds: handhelds;
+$desktop: desktop;
+$threshold: $form-width + 125;
+
+@mixin respond-to($media) {
+	@if $media == $handhelds {
+		@media only screen and (max-width: $threshold) { @content; }
+	}
+	@else if $media == $desktop {
+		@media only screen and (min-width: $threshold + 1) { @content; }
+	}
+}
+
+
+@mixin placeholder() {
+	&::-moz-placeholder { @content; }
+	&::-webkit-input-placeholder { @content; }
+	&:-ms-input-placeholder { @content; }
+	&:-moz-placeholder { @content; }
+}
+
+
+body {
+	height: 100%;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+
 	background-color: $black;
 	color: $font-color-default;
 	overflow: hidden;
 
-	font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+	font-family: $font-family-default;
 	font-size: $font-size-default;
 	font-weight: $font-weight-default;
-}
 
+	#root {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		overflow-y: scroll;
+
+		> * {
+			position: static;
+		}
+	}
+}

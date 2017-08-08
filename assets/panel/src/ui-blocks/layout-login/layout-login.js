@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './layout-login.css';
+import Logo from '../../assets/logo.png';
 
 
 class LayoutLogin extends Component {
@@ -9,7 +10,7 @@ class LayoutLogin extends Component {
             <div className="layout-login">
                 <div className="layout-login__outer">
                     <div className="layout-login__inner">
-                        <div className="logo layout-login__logo"></div>
+                        <div className="layout-login__logo" style={{backgroundImage: `url(${Logo})`}}/>
                         <div className="layout-login__content">
                             {this.props.children}
                         </div>

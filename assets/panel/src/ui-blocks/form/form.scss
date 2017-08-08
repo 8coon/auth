@@ -1,5 +1,29 @@
+@import "../../globals.scss";
 
 
 .form {
 
+	&__title {
+		font-size: $font-size-title;
+		font-weight: $font-weight-title;
+		color: $font-color-title;
+		text-align: center;
+	}
+
+	.form-block {
+		display: flex;
+		flex-direction: column;
+		padding-top: $form-block-padding;
+		padding-bottom: $form-block-padding;
+
+		&:last-child {
+			padding-top: 0;
+			padding-bottom: $form-block-padding;
+		}
+
+		&:first-child {
+			padding-top: $form-block-padding;
+			padding-bottom: 0;
+		}
+	}
 }

@@ -1,0 +1,44 @@
+@import "../../globals.scss";
+
+.input {
+	margin: $form-control-margin;
+	padding: $form-control-padding;
+	height: $form-control-height;
+
+	input {
+		font-family: $font-family-default;
+		font-size: $font-size-default;
+		color: $gray;
+		height: 100%;
+		text-overflow: ellipsis;
+		box-sizing: border-box;
+
+		border: $base-unit solid $gray;
+		border-bottom-width: 2 * $base-unit;
+		border-bottom-color: $black;
+		border-radius: 5 * $base-unit;
+
+		padding: $input-padding;
+		min-width: $form-control-width;
+
+		@include placeholder() {
+			color: $gray;
+			opacity: $opacity-placeholder;
+		}
+
+		&:focus {
+			opacity: $opacity-default;
+			outline: none;
+			box-shadow: 0 0 0 1 * $base-unit $black;
+			text-overflow: clip;
+
+			@include placeholder() {
+				color: transparent;
+			}
+		}
+
+		@include respond-to($handhelds) {
+			width: 100% !important;
+		}
+	}
+}

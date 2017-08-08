@@ -12,6 +12,7 @@ import 'open-sans-all/css/open-sans.min.css';
 
 // Globals
 import './globals.css';
+import './mobile.css';
 
 // UI-Blocks
 import Application from './ui-blocks/application/application';

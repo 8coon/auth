@@ -1,9 +1,36 @@
+@import "../../globals.scss";
 
 
 .layout-login {
 
-	&_outer {
-		background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 50px;
+
+	&__outer {
+		background-color: $gray;
+		padding-left: $form-padding;
+		padding-right: $form-padding;
+		padding-bottom: $form-header-height + $form-header-padding * 2;
+		width: $form-width;
+	}
+
+	&__inner {
+		background-color: $white;
+		color: $black;
+	}
+
+	&__logo {
+		background: $orange no-repeat center;
+		background-size: contain;
+		height: $form-header-height;
+		border: $form-header-padding solid $orange;
+		border-top-width: $form-header-padding * 2 + 1;
+	}
+
+	&__content {
+		text-align: center;
 	}
 
 }

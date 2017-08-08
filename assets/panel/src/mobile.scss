@@ -1,0 +1,16 @@
+@import "globals.scss";
+
+
+@include respond-to($handhelds) {
+
+	.layout-login {
+		padding: 0 !important;
+		margin: 0 !important;
+
+		&__outer {
+			width: 100% !important;
+			height: 100% !important;
+		}
+	}
+
+}
