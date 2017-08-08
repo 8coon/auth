@@ -21,7 +21,9 @@ import PageLogin from './ui-blocks/page-login/page-login';
 import registerServiceWorker from './registerServiceWorker';
 
 // Models
-import User from 'minecraftshire-jsapi/models/User/user';
+//import User from 'minecraftshire-jsapi/src/models/User/user';
+
+import createUser from 'minecraftshire-jsapi/src/method/user/create';
 
 
 // Application Root
@@ -41,5 +43,5 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
-console.log(new User());
+console.log(createUser);
 
