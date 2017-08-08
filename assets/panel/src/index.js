@@ -38,3 +38,4 @@ ReactDOM.render(
 
 registerServiceWorker();
 console.log(new User());
+
