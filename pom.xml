@@ -130,7 +130,7 @@
 				<configuration>
 					<executable>node</executable>
 					<arguments>
-						<argument>/root/auth/make-panel.js</argument>
+						<argument>make-panel.js</argument>
 					</arguments>
 				</configuration>
 			</plugin>
