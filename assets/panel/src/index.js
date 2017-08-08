@@ -25,7 +25,7 @@ import User from 'minecraftshire-jsapi/models/User/user';
 
 
 // Application Root
-const appRoot = location.hostname.startsWith('localhost') ? '' : '/app';
+const appRoot = window.location.hostname.startsWith('localhost') ? '' : '/app';
 
 
 ReactDOM.render(
