@@ -6,6 +6,7 @@ mvnw.cmd
 *.pid
 java.log
 assets/geo-db
+assets/minecraftshire-jsapi
 
 ### STS ###
 .apt_generated
