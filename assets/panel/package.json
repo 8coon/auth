@@ -4,11 +4,14 @@
   "private": true,
   "homepage": "https://minecraftshire.ru/app",
   "dependencies": {
+    "font-awesome": "^4.7.0",
+    "minecraftshire-jsapi": "^2.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.0.2",
-    "minecraftshire-jsapi": "^2.0",
+    "open-sans-all": "^0.1.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.10"
   },
   "scripts": {

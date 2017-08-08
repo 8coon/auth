@@ -1,0 +1,28 @@
+
+$black: #343F4B;
+$gray: #5A6978;
+$orange: #FF9052;
+$red: #F95F62;
+$white: white;
+
+
+$font-size-default: 15px;
+$font-size-header: 18px;
+
+$font-weight-default: 400;
+$font-weight-header: 700;
+
+$font-color-default: $white;
+$font-color-header: $gray;
+
+
+html {
+	background-color: $black;
+	color: $font-color-default;
+	overflow: hidden;
+
+	font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+	font-size: $font-size-default;
+	font-weight: $font-weight-default;
+}
+
