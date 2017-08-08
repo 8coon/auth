@@ -32,15 +32,6 @@ public class UserData implements RowMapper<UserData> {
         this.email = email;
     }
 
-    @JsonCreator
-    public UserData(
-            @JsonProperty("username") String username,
-            @JsonProperty("password") String password
-    ) {
-        this.username = username;
-        this.password = password;
-    }
-
 
     public UserData() {
     }
