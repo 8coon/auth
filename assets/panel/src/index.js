@@ -24,12 +24,16 @@ import registerServiceWorker from './registerServiceWorker';
 import User from 'minecraftshire-jsapi/models/User/user';
 
 
+// Application Root
+const appRoot = location.hostname.startsWith('localhost') ? '' : '/app';
+
+
 ReactDOM.render(
 
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={Application}/>
-            <Route path="/login" component={PageLogin}/>
+            <Route exact path={`${appRoot}/`} component={Application}/>
+            <Route path={`${appRoot}/login`} component={PageLogin}/>
         </Switch>
     </BrowserRouter>,
 
