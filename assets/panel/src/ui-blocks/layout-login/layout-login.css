@@ -39,6 +39,7 @@ body {
     background-size: contain;
     height: 50px;
     border: 5px solid #FF9052;
-    border-top-width: 11px; }
+    border-top-width: 11px;
+    cursor: pointer; }
   .layout-login__content {
     text-align: center; }

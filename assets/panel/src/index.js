@@ -23,11 +23,6 @@ import PageSignup from './ui-blocks/page-signup/page-signup';
 // Service Worker
 import registerServiceWorker from './registerServiceWorker';
 
-// Models
-//import User from 'minecraftshire-jsapi/src/models/User/user';
-
-import createUser from 'minecraftshire-jsapi/src/method/user/create';
-
 // Sitemap
 import Sitemap from './sitemap';
 
@@ -46,5 +41,4 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
-console.log(createUser);
 

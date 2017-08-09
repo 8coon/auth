@@ -27,6 +27,7 @@
 		height: $form-header-height;
 		border: $form-header-padding solid $orange;
 		border-top-width: $form-header-padding * 2 + 1;
+		cursor: pointer;
 	}
 
 	&__content {
