@@ -20,7 +20,7 @@ export default class LayoutLogin extends Component {
     }
 
     onLogoClick() {
-        this.context.history.push(Sitemap.root);
+        this.context.router.history.push(Sitemap.root);
     }
 
     render() {
