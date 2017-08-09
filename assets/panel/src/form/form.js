@@ -2,6 +2,7 @@
 export default class Form {
 
     fields = {};
+    errors = [];
 
     add(name) {
         return (field) => {
@@ -16,30 +17,41 @@ export default class Form {
         });
     }
 
+    map(callback) {
+        return Object.keys(this.fields).map((key, idx) => {
+            return callback(this.fields[key], idx);
+        })
+    }
+
     validate() {
         let result = true;
 
-        this.forEach(field => {
-            result = result && field.validate() === true;
+        this.errors = this.map(field => {
+            const nextResult = field.validate() === true;
+            result = result && nextResult;
+            return nextResult;
         });
 
-        this.toggleTooltip(true);
+        this.toggleTooltip();
         return result;
     }
 
-    toggleTooltip(visible) {
+    toggleTooltip(visible = null) {
+        if (visible !== null) {
+            this.forEach(field => field.toggleTooltip(visible));
+            return;
+        }
+
         let result = true;
 
-        this.forEach(field => {
-            const nextResult = result && field.state.error !== null;
-
-            if ((!nextResult && result) || visible) {
-                field.toggleTooltip(visible);
-            } else if (visible) {
+        this.forEach((field, idx) => {
+            if (result && !this.errors[idx]) {
+                field.toggleTooltip(true);
+            } else {
                 field.toggleTooltip(false);
             }
 
-            result = nextResult;
+            result = result && this.errors[idx];
         });
     }
 

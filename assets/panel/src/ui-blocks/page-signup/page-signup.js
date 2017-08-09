@@ -18,6 +18,7 @@ export default class PageSignup extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {validated: false};
 
         PageSignup.validateUsername = PageSignup.validateUsername.bind(this);
         PageSignup.validateEmail = PageSignup.validateEmail.bind(this);
@@ -68,10 +69,14 @@ export default class PageSignup extends Component {
     }
 
     onBlur() {
-        this.form.toggleTooltip(true);
+        if (this.state.validated) {
+            this.form.validate();
+        }
     }
 
     onSubmit() {
+        this.setState({validated: true});
+
         if (!this.form.validate()) {
             return;
         }
