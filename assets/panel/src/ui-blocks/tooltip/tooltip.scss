@@ -1,0 +1,44 @@
+@import "../../globals.scss";
+
+
+.tooltip {
+	position: absolute;
+	box-sizing: border-box;
+	left: 30%;
+	margin-top: 4 * $base-unit;
+	z-index: $z-index-tooltip;
+	padding: 5 * $base-unit 40 * $base-unit;
+	width: $tooltip-width;
+
+	border: 2 * $base-unit solid $red;
+	border-radius: $border-radius;
+	background-color: lighten($red, 30%);
+
+	&__arrow {
+		position: absolute;
+		left: 0.5 * $tooltip-width - 0.7 * $tooltip-arrow-size;
+		top: -0.7 * $tooltip-arrow-size;
+		z-index: $z-index-tooltip + 1;
+		height: $tooltip-arrow-size;
+		width: $tooltip-arrow-size;
+
+		background-color: lighten($red, 30%);
+		border-right: 2 * $base-unit solid $red;
+		border-top: 2 * $base-unit solid $red;
+		transform: rotate(-45deg);
+	}
+
+	&__text {
+		color: $red;
+		font-weight: $font-weight-button;
+	}
+
+	@include respond-to($handhelds) {
+		width: 100%;
+		left: 0;
+
+		&__arrow {
+			left: 50%;
+		}
+	}
+}

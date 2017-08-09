@@ -13,10 +13,11 @@
 		text-overflow: ellipsis;
 		box-sizing: border-box;
 
-		border: $base-unit solid $gray;
+		border: $base-unit solid;
+		border-color: $gray;
 		border-bottom-width: 2 * $base-unit;
 		border-bottom-color: $black;
-		border-radius: 5 * $base-unit;
+		border-radius: $border-radius;
 
 		padding: $input-padding;
 		min-width: $form-control-width;
@@ -39,6 +40,22 @@
 
 		@include respond-to($handhelds) {
 			width: 100% !important;
+		}
+	}
+
+	&_invalid input {
+		border-color: $red;
+
+		&:focus {
+			box-shadow: 0 0 0 1 * $base-unit $red;
+		}
+	}
+
+	&_valid input {
+		border-color: $green;
+
+		&:focus {
+			box-shadow: 0 0 0 1 * $base-unit $green;
 		}
 	}
 }

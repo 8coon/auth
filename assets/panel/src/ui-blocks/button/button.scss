@@ -1,0 +1,41 @@
+@import "../../globals.scss";
+
+.button {
+	margin: $form-control-margin;
+	padding: $form-control-padding;
+	height: $form-control-height + 5 * $base-unit;
+
+	button {
+		font-family: $font-family-default;
+		font-size: $font-size-default;
+		font-weight: $font-weight-button;
+		background-color: $black;
+		color: $white;
+		height: 100%;
+		text-overflow: ellipsis;
+		box-sizing: border-box;
+
+		border: $base-unit solid $gray;
+		border-radius: $border-radius;
+
+		padding: $input-padding;
+		min-width: $form-control-width;
+
+		&:hover {
+			cursor: pointer;
+			background-color: darken($gray, 10%);
+		}
+
+		&:active {
+			background-color: $black;
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		@include respond-to($handhelds) {
+			width: 100% !important;
+		}
+	}
+}

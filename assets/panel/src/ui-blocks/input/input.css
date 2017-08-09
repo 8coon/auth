@@ -31,7 +31,8 @@ body {
     height: 100%;
     text-overflow: ellipsis;
     box-sizing: border-box;
-    border: 1px solid #5A6978;
+    border: 1px solid;
+    border-color: #5A6978;
     border-bottom-width: 2px;
     border-bottom-color: #343F4B;
     border-radius: 5px;
@@ -65,3 +66,11 @@ body {
     @media only screen and (max-width: 575px) {
       .input input {
         width: 100% !important; } }
+  .input_invalid input {
+    border-color: #DA7666; }
+    .input_invalid input:focus {
+      box-shadow: 0 0 0 1px #DA7666; }
+  .input_valid input {
+    border-color: #549F5D; }
+    .input_valid input:focus {
+      box-shadow: 0 0 0 1px #549F5D; }

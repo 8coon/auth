@@ -26,14 +26,23 @@ body {
   color: #5A6978;
   text-align: center; }
 
+.form__links {
+  color: #8e9caa; }
+  .form__links > div {
+    padding: 5px; }
+  .form__links a {
+    color: #5A6978;
+    text-decoration: underline; }
+    .form__links a:hover {
+      text-decoration: none;
+      color: #343F4B; }
+
 .form .form-block {
   display: flex;
   flex-direction: column;
   padding-top: 30px;
   padding-bottom: 30px; }
-  .form .form-block:last-child {
-    padding-top: 0;
-    padding-bottom: 30px; }
   .form .form-block:first-child {
-    padding-top: 30px;
     padding-bottom: 0; }
+  .form .form-block:last-child {
+    padding-top: 0; }

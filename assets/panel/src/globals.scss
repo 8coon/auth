@@ -2,26 +2,33 @@
 $black: #343F4B;
 $gray: #5A6978;
 $orange: #FF9052;
-$red: #F95F62;
+$red: #DA7666;
+$green: #549F5D;
 $white: white;
 
 $opacity-default: 1;
 $opacity-hover: 0.80;
 $opacity-placeholder: 0.50;
 
+$z-index-tooltip: 1000;
 
 $font-family-default: "Open Sans", Helvetica, "Segoe UI", sans-serif;
 
 $base-unit: 1px;
 $input-padding: 5px 20px;
+$border-radius: 5 * $base-unit;
+
+$tooltip-arrow-size: 15 * $base-unit;
+$tooltip-width: 400 * $base-unit;
 
 $font-size-default: 15px;
 $font-size-header: 18px;
-$font-size-title: 30px;
+$font-size-title: 48px;
 
 $font-weight-default: 400;
 $font-weight-header: 700;
 $font-weight-title: 400;
+$font-weight-button: 700;
 
 $font-color-default: $white;
 $font-color-header: $gray;

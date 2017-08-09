@@ -1,0 +1,53 @@
+body {
+  height: 100%; }
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #343F4B;
+  color: white;
+  overflow: hidden;
+  font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 400; }
+  body #root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll; }
+    body #root > * {
+      position: static; }
+
+.tooltip {
+  position: absolute;
+  box-sizing: border-box;
+  left: 30%;
+  margin-top: 4px;
+  z-index: 1000;
+  padding: 5px 40px;
+  width: 400px;
+  border: 2px solid #DA7666;
+  border-radius: 5px;
+  background-color: #f8e4e1; }
+  .tooltip__arrow {
+    position: absolute;
+    left: 189.5px;
+    top: -10.5px;
+    z-index: 1001;
+    height: 15px;
+    width: 15px;
+    background-color: #f8e4e1;
+    border-right: 2px solid #DA7666;
+    border-top: 2px solid #DA7666;
+    transform: rotate(-45deg); }
+  .tooltip__text {
+    color: #DA7666;
+    font-weight: 700; }
+  @media only screen and (max-width: 575px) {
+    .tooltip {
+      width: 100%;
+      left: 0; }
+      .tooltip__arrow {
+        left: 50%; } }

@@ -12,15 +12,20 @@ export const InputState = {
 export default class Input extends Component {
 
     static defaultProps = {
+        text: '',
         placeholder: '',
         password: false,
+
+        onChange: () => {},
+        onFocus: () => {},
+        onBlur: () => {},
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            text: '',
+            text: this.props.text,
             state: InputState.INITIAL,
         };
 
@@ -28,19 +33,24 @@ export default class Input extends Component {
     }
 
     onChange(evt) {
-        this.setState({ text: evt.target.value });
+        this.setState({ text: evt.target.value, state: InputState.INITIAL });
+        this.props.onChange(evt);
+    }
+
+    validate(isValid) {
+        this.setState({ state: isValid ? InputState.VALID : InputState.INVALID });
     }
 
     render() {
-        console.log(this);
         return (
-            <div className="input">
+            <div className={`input input_${this.state.state.toLowerCase()}`}>
                 <input
-                    ref="text"
                     value={this.state.text}
                     placeholder={this.props.placeholder}
                     type={this.props.password ? 'password' : 'text'}
-                    onChange={this.onChange}/>
+                    onChange={this.onChange}
+                    onFocus={this.props.onFocus}
+                    onBlur={this.props.onBlur}/>
             </div>
         )
     }

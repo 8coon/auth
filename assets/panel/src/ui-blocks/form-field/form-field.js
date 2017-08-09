@@ -3,6 +3,8 @@ import './form-field.css';
 
 // UI-blocks
 import Input from '../input/input';
+import Button from '../button/button';
+import Tooltip from '../tooltip/tooltip';
 
 
 export const FormFieldTypes = {
@@ -16,24 +18,86 @@ class FormField extends Component {
     static defaultProps = {
         type: FormFieldTypes.INPUT,
         placeholder: '',
+        text: '',
         password: false,
+        validator: () => true,
+
+        onAction: () => {},
+        onFocus: () => {},
+        onBlur: () => {},
     };
 
+    constructor(props) {
+        super(props);
+        this.state = { error: null, tooltipVisible: true };
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    onChange(evt) {
+        this.setState({ error: null });
+    }
+
+    tooltip() {
+        if (this.state.error == null) {
+            return (<span/>);
+        }
+
+        return (
+            <Tooltip ref="tooltip" visible={this.state.tooltipVisible}>
+                {this.state.error}
+            </Tooltip>
+        );
+    }
+
+    validate() {
+        const result = this.props.validator(this.refs.text.state.text);
+
+        if (result === true) {
+            this.setState({ error: null });
+            this.refs.text.validate(true);
+        } else {
+            this.setState({ error: result });
+            this.refs.text.validate(false);
+        }
+
+        return result;
+    }
+
+    toggleTooltip(visible) {
+        this.setState({ tooltipVisible: visible });
+    }
+
+    getText() {
+        return this.refs.text.state.text;
+    }
 
     render() {
-
         switch (this.props.type) {
 
             case FormFieldTypes.INPUT:
                 return (
-                    <Input
-                        placeholder={this.props.placeholder}
-                        password={this.props.password}/>
+                    <span>
+                        <Input
+                            ref="text"
+                            placeholder={this.props.placeholder}
+                            text={this.props.text}
+                            password={this.props.password}
+                            onChange={this.onChange}
+                            onFocus={this.props.onFocus}
+                            onBlur={this.props.onBlur}/>
+                        {this.tooltip()}
+                    </span>
                 );
 
             case FormFieldTypes.BUTTON:
                 return (
-                    <div>Button <i className="fa fa-snowflake-o"/></div>
+                    <span>
+                        <Button
+                            text={this.props.text}
+                            onClick={this.props.onAction}/>
+                        {this.tooltip()}
+                    </span>
                 );
 
             default:
