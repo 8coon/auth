@@ -93,13 +93,16 @@ public class AuthController {
 
 
     @AuthRequired
-    @PostMapping("/test")
-    public String test(
+    @PostMapping("/history")
+    public ResponseEntity history(
             @RequestBody AuthTokenData authTokenData,
             @RequestHeader("User-Agent") String userAgent,
             SessionData sessionData
     ) {
-        return sessionData.getUsername() + " " + sessionData.getGroup();
+        return new ResponseEntity<>(
+                this.tokens.getHistory(sessionData.getUsername()),
+                HttpStatus.OK
+        );
     }
 
 }

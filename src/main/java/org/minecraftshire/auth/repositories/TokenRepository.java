@@ -8,14 +8,12 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.aspects.UnauthorizedException;
-import org.minecraftshire.auth.data.CredentialsData;
-import org.minecraftshire.auth.data.SessionData;
-import org.minecraftshire.auth.data.SessionGeoData;
-import org.minecraftshire.auth.data.UserData;
+import org.minecraftshire.auth.data.*;
 import org.minecraftshire.auth.services.GeoLocator;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
@@ -33,6 +31,7 @@ public class TokenRepository extends Repository {
     @Autowired
     public TokenRepository(GeoLocator geoLocator) {
         this.geoLocator = geoLocator;
+        this.truncateHistory();
     }
 
 
@@ -59,7 +58,7 @@ public class TokenRepository extends Repository {
                 .withClaim("group", user.getGroup())
                 .sign(algorithm);
 
-        saveToken(token, credentials.getUsername(), ip);
+        saveToken(token, credentials.getUsername(), ip, credentials.getAppToken());
         return token;
     }
 
@@ -108,13 +107,19 @@ public class TokenRepository extends Repository {
     }
 
 
-    public void saveToken(String authToken, String username, String ip) {
+    @Transactional
+    public void saveToken(String authToken, String username, String ip, String appToken) {
         String location = geoLocator.lookupAddress(ip);
 
         jdbc.update(
-                "INSERT INTO Tokens (token, username, ip, \"location\") VALUES (?, ?, ?, ?)" +
+                "INSERT INTO Tokens (token, username, ip, \"location\") VALUES (?, ?, ?, ?) " +
                         "ON CONFLICT (token) DO UPDATE SET username = ?, ip = ?, \"location\" = ?",
                 authToken, username, ip, location, username, ip, location
+        );
+
+        jdbc.update(
+                "INSERT INTO TokenHistory (username, ip, \"location\", appToken) VALUES (?, ?, ?)",
+                username, ip, location, appToken
         );
     }
 
@@ -137,6 +142,20 @@ public class TokenRepository extends Repository {
         } catch (DataAccessException e) {
             return false;
         }
+    }
+
+    public List<TokenHistoryData> getHistory(String username) {
+        return jdbc.query(
+                "SELECT * FROM TokenHistory WHERE username = ? LIMIT 1000",
+                new TokenHistoryData(),
+                username
+        );
+    }
+
+    public void truncateHistory() {
+        jdbc.update(
+                "DELETE FROM TokenHistory WHERE now() - time > INTERVAL '1 year'"
+        );
     }
 
 }

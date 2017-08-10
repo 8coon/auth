@@ -13,6 +13,9 @@ import Sitemap from '../../sitemap';
 // Form
 import Form from '../../form/form';
 
+// Services
+import Storage from '../../services/storage';
+
 // Requests
 import loginUser from 'minecraftshire-jsapi/src/method/auth/login';
 
@@ -48,14 +51,18 @@ export default class PageLogin extends Component {
         const password = this.form.fields.password.getText();
 
         loginUser(username, password)
-            .then(() => alert('ok!'))
+            .then(res => {
+               Storage.setUsername(username);
+               Storage.set('authToken', res.authToken);
+
+               alert('ok!');
+            })
             .catch(xhr => {
                 if (xhr.body.error !== 'wrong credentials') {
                     LayerNotify.addNotify({text: 'Что-то пошло не так!'});
                     return;
                 }
 
-                const username = this.form.fields.username;
                 const password = this.form.fields.password;
 
                 switch (xhr.body.cause) {
