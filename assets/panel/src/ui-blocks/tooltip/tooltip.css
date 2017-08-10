@@ -25,7 +25,7 @@ body {
   box-sizing: border-box;
   left: 30%;
   margin-top: 4px;
-  z-index: 1000;
+  z-index: 10000;
   padding: 5px 40px;
   width: 400px;
   border: 2px solid #DA7666;
@@ -35,7 +35,7 @@ body {
     position: absolute;
     left: 189.5px;
     top: -10.5px;
-    z-index: 1001;
+    z-index: 10001;
     height: 15px;
     width: 15px;
     background-color: #f8e4e1;

@@ -4,6 +4,7 @@ import './page-signup.css';
 // UI-Blocks
 import LayoutLogin from './../layout-login/layout-login';
 import FormField, {FormFieldTypes} from './../form-field/form-field';
+import LayerNotify from './../layer-notify/layer-notify';
 
 // Form
 import Form from '../../form/form';
@@ -75,6 +76,14 @@ export default class PageSignup extends Component {
     }
 
     onSubmit() {
+        this.counter = this.counter || 1;
+
+        LayerNotify.addNotify({
+            text: 'Submitted ' + this.counter++,
+            actionText: 'Cancel',
+            action: () => alert('canceled!'),
+        });
+
         this.setState({validated: true});
 
         if (!this.form.validate()) {

@@ -1,22 +1,30 @@
 
+$dark-black: #333333;
 $black: #343F4B;
 $gray: #5A6978;
 $orange: #FF9052;
 $red: #DA7666;
 $green: #549F5D;
+$light-gray: #EEEEEE;
 $white: white;
 
 $opacity-default: 1;
-$opacity-hover: 0.80;
-$opacity-placeholder: 0.50;
+$opacity-hover: 0.8;
+$opacity-placeholder: 0.5;
+$opacity-notify-box: 0.9;
 
-$z-index-tooltip: 1000;
+$transition-default: 0.5s ease-in-out;
+
+$z-index-notify: -10000;
+$z-index-tooltip: 10000;
+$z-index-notify-box: 10001;
 
 $font-family-default: "Open Sans", Helvetica, "Segoe UI", sans-serif;
 
 $base-unit: 1px;
 $input-padding: 5px 20px;
 $border-radius: 5 * $base-unit;
+$notify-width: 300 * $base-unit;
 
 $tooltip-arrow-size: 15 * $base-unit;
 $tooltip-width: 400 * $base-unit;

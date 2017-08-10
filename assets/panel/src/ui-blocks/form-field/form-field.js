@@ -39,12 +39,10 @@ class FormField extends Component {
     }
 
     tooltip() {
-        if (this.state.error == null) {
-            return (<span/>);
-        }
-
         return (
-            <Tooltip ref="tooltip" visible={this.state.tooltipVisible}>
+            <Tooltip ref="tooltip"
+                     opacity={this.state.error !== null ? 1 : 0}
+                     visible={this.state.tooltipVisible}>
                 {this.state.error}
             </Tooltip>
         );

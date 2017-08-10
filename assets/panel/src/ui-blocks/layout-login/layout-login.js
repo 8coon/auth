@@ -6,6 +6,9 @@ import Logo from '../../assets/logo.png';
 // Sitemap
 import Sitemap from '../../sitemap';
 
+// UI-Blocks
+import LayerNotify from '../layer-notify/layer-notify';
+
 
 export default class LayoutLogin extends Component {
 
@@ -26,6 +29,8 @@ export default class LayoutLogin extends Component {
     render() {
         return (
             <div className="layout-login">
+                <LayerNotify/>
+
                 <div className="layout-login__outer">
                     <div className="layout-login__inner">
                         <div

@@ -6,6 +6,7 @@ export default class Tooltip extends Component {
 
     defaultProps = {
         visible: false,
+        opacity: 1,
     };
 
     render() {
@@ -14,7 +15,7 @@ export default class Tooltip extends Component {
         }
 
         return (
-            <span className="tooltip">
+            <span className="tooltip" style={{opacity: this.props.opacity}}>
                 <span className="tooltip__arrow"/>
                 <span className="tooltip__text">
                     {this.props.children}

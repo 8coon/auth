@@ -1,0 +1,52 @@
+@import "../../globals.scss";
+
+$notify-padding: 4 * $base-unit;
+
+
+.layer-notify {
+	position: fixed;
+	overflow: hidden;
+	z-index: $z-index-notify;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	&__box {
+		position: fixed;
+		bottom: 20 * $base-unit;
+		left: 20 * $base-unit;
+		z-index: $z-index-notify-box;
+		background-color: $dark-black;
+		opacity: $opacity-notify-box;
+		padding: $notify-padding;
+		border-radius: 3 * $border-radius;
+		width: $notify-width;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: row;
+		border: $notify-padding solid $white;
+		border-radius: 3 * $border-radius;
+		font-family: $font-family-default;
+		font-size: $font-size-default;
+		font-weight: $font-weight-button;
+		color: $white;
+		padding: $input-padding;
+		text-overflow: ellipsis;
+	}
+
+	&__action {
+		text-align: right;
+
+		a {
+			color: $light-gray;
+
+			&_hover {
+				text-decoration: none;
+				color: $white;
+			}
+		}
+	}
+}

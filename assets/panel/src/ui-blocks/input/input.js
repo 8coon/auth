@@ -48,6 +48,7 @@ export default class Input extends Component {
                     value={this.state.text}
                     placeholder={this.props.placeholder}
                     type={this.props.password ? 'password' : 'text'}
+                    style={this.state.state === InputState.INVALID ? {animation: `input-error 0.3s`} : {}}
                     onChange={this.onChange}
                     onFocus={this.props.onFocus}
                     onBlur={this.props.onBlur}/>
