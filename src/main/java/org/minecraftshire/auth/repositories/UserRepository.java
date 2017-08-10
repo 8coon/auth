@@ -7,6 +7,7 @@ import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.ExistsExceptionCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
+import org.minecraftshire.auth.services.EmailSender;
 import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,11 +101,17 @@ public class UserRepository extends Repository {
 
 
     public void changePassword(String username, String oldPassword, String newPassword) throws WrongCredentialsException {
-        UserData user = this.jdbc.queryForObject(
-                "SELECT username, email, password, salt, \"group\", is_confirmed, is_banned FROM Users WHERE username = ? LIMIT 1",
-                new UserData(),
-                username
-        );
+        UserData user;
+
+        try {
+            user = this.jdbc.queryForObject(
+                    "SELECT username, email, password, salt, \"group\", is_confirmed, is_banned FROM Users WHERE username = ? LIMIT 1",
+                    new UserData(),
+                    username
+            );
+        } catch (DataAccessException e) {
+            throw new WrongCredentialsException(WrongCredentialsExceptionCause.NOT_FOUND);
+        }
 
         if (oldPassword.equals(newPassword)) {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.SAME_PASSWORD);
@@ -117,6 +124,44 @@ public class UserRepository extends Repository {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.PASSWORD);
         }
 
+        this.jdbc.update(
+                "UPDATE Users SET password = ? WHERE username = ?",
+                newPassword, username
+        );
+    }
+
+
+    public void resetPassword(String email) throws WrongCredentialsException {
+        String username;
+
+        try {
+            username = jdbc.queryForObject(
+                    "SELECT username FROM Users WHERE email = ? LIMIT 1",
+                    String.class,
+                    email
+            );
+        } catch (DataAccessException e) {
+            throw new WrongCredentialsException(WrongCredentialsExceptionCause.NOT_FOUND);
+        }
+
+        this.confirmations.requestChangePasswordConfirmation(username, email);
+    }
+
+
+    public void setPassword(long code, String password) throws WrongCredentialsException {
+        String username = confirmations.getUsername(code);
+
+        if (!confirmations.confirm(code)) {
+            throw new WrongCredentialsException(WrongCredentialsExceptionCause.NOT_CONFIRMED);
+        }
+
+        UserData user = this.jdbc.queryForObject(
+                "SELECT username, email, password, salt, \"group\", is_confirmed, is_banned FROM Users WHERE username = ? LIMIT 1",
+                new UserData(),
+                username
+        );
+
+        String newPassword = UserRepository.makeSalty(password, user.getSalt());
         this.jdbc.update(
                 "UPDATE Users SET password = ? WHERE username = ?",
                 newPassword, username

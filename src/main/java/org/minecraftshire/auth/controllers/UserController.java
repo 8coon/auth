@@ -51,7 +51,7 @@ public class UserController {
     public ResponseEntity emailVerify(
             @RequestBody ConfirmationData confirmation
     ) {
-        if (this.confirmations.confirmSignUp(confirmation.getCode())) {
+        if (this.confirmations.confirm(confirmation.getCode())) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
 

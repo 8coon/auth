@@ -2,9 +2,7 @@ package org.minecraftshire.auth.controllers;
 
 
 import org.minecraftshire.auth.aspects.AuthRequired;
-import org.minecraftshire.auth.data.AuthTokenData;
-import org.minecraftshire.auth.data.CredentialsData;
-import org.minecraftshire.auth.data.SessionData;
+import org.minecraftshire.auth.data.*;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
@@ -103,6 +101,39 @@ public class AuthController {
                 this.tokens.getHistory(sessionData.getUsername()),
                 HttpStatus.OK
         );
+    }
+
+
+    @PostMapping("/restore_access")
+    public ResponseEntity restoreAccess(
+            @RequestBody EmailData emailData
+    ) {
+        try {
+            this.users.resetPassword(emailData.getEmail());
+        } catch (WrongCredentialsException e) {
+            return new ResponseEntity<>(
+                    new ErrorWithCauseResponse(Errors.FAILED, e.getCausedBy()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+
+    @PostMapping("/restore_password")
+    public ResponseEntity restorePassword(
+            @RequestBody RestorePasswordData data
+    ) {
+        try {
+            this.users.setPassword(data.getCode(), data.getPassword());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (WrongCredentialsException e) {
+            return new ResponseEntity<>(
+                    new ErrorWithCauseResponse(Errors.FAILED, e.getCausedBy()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
 }
