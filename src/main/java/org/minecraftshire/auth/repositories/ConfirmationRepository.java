@@ -46,7 +46,7 @@ public class ConfirmationRepository extends org.minecraftshire.auth.repositories
                 username, EmailOperations.PASSWORD_RESET, code, email
         );
 
-        this.mail.sendEmailConfirmation(email, code);
+        this.mail.sendEmailPasswordReset(email, code);
     }
 
 
