@@ -2,38 +2,103 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import './page-login.css';
 
+// UI-Blocks
+import LayoutLogin from './../layout-login/layout-login';
+import FormField, {FormFieldTypes} from './../form-field/form-field';
+import LayerNotify from './../layer-notify/layer-notify';
+
 // Sitemap
 import Sitemap from '../../sitemap';
 
-// UI-Blocks
-import LayoutLogin from './../layout-login/layout-login';
+// Form
 import Form from '../../form/form';
-import FormField, {FormFieldTypes} from './../form-field/form-field';
+
+// Requests
+import loginUser from 'minecraftshire-jsapi/src/method/auth/login';
 
 
-class PageLogin extends Component {
+export default class PageLogin extends Component {
+
+    form = new Form();
+
+    constructor(props) {
+        super(props);
+        this.state = {validated: false};
+
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onFocus = this.onFocus.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+    }
+
+    onFocus() {
+        this.form.toggleTooltip(false);
+    }
+
+    onBlur() {
+        if (this.state.validated) {
+            this.form.validate();
+        }
+    }
+
+    onSubmit() {
+        this.setState({validated: true});
+        if (!this.form.validate()) return;
+
+        const username = this.form.fields.username.getText();
+        const password = this.form.fields.password.getText();
+
+        loginUser(username, password)
+            .then(() => alert('ok!'))
+            .catch(xhr => {
+                if (xhr.body.error !== 'wrong credentials') {
+                    LayerNotify.addNotify({text: 'Что-то пошло не так!'});
+                    return;
+                }
+
+                const username = this.form.fields.username;
+                const password = this.form.fields.password;
+
+                switch (xhr.body.cause) {
+                    case 'username or password':
+                        password.validate('Неправильный логин или пароль!');
+                        password.toggleTooltip(true);
+                        break;
+
+                    default: break;
+                }
+            });
+    }
 
     render() {
         return (
             <LayoutLogin>
-                <Form>
+                <div className="form">
                     <div className="form-block form__title">
                         Войти в аккаунт
                     </div>
 
                     <div className="form-block">
                         <FormField
+                            ref={this.form.add('username')}
                             type={FormFieldTypes.INPUT}
-                            placeholder="Имя пользователя"/>
+                            placeholder="Имя пользователя"
+                            validator={PageLogin.validateUsername}
+                            onFocus={this.onFocus}
+                            onBlur={this.onBlur}/>
 
                         <FormField
+                            ref={this.form.add('password')}
                             type={FormFieldTypes.INPUT}
                             placeholder="Пароль"
-                            password/>
+                            password
+                            validator={PageLogin.validatePassword}
+                            onFocus={this.onFocus}
+                            onBlur={this.onBlur}/>
 
                         <FormField
                             type={FormFieldTypes.BUTTON}
-                            text="Войти"/>
+                            text="Войти"
+                            onAction={this.onSubmit}/>
                     </div>
 
                     <div className="form-block form__links">
@@ -46,11 +111,9 @@ class PageLogin extends Component {
                             <Link to={Sitemap.signup}>Зарегистрироваться</Link>
                         </div>
                     </div>
-                </Form>
+                </div>
             </LayoutLogin>
         )
     }
 
 }
-
-export default PageLogin;

@@ -37,7 +37,7 @@ body {
     border-bottom-color: #343F4B;
     border-radius: 5px;
     padding: 5px 20px;
-    min-width: 250px; }
+    min-width: 350px; }
     .input input::-moz-placeholder {
       color: #5A6978;
       opacity: 0.5; }
@@ -63,7 +63,7 @@ body {
         color: transparent; }
       .input input:focus:-moz-placeholder {
         color: transparent; }
-    @media only screen and (max-width: 575px) {
+    @media only screen and (max-width: 675px) {
       .input input {
         width: 100% !important; } }
   .input_invalid input {

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import './page-signup.css';
 
 // UI-Blocks
@@ -11,6 +12,9 @@ import Form from '../../form/form';
 
 // Requests
 import createUser from 'minecraftshire-jsapi/src/method/user/create';
+
+// Sitemap
+import Sitemap from '../../sitemap';
 
 
 export default class PageSignup extends Component {
@@ -77,10 +81,7 @@ export default class PageSignup extends Component {
 
     onSubmit() {
         this.setState({validated: true});
-
-        if (!this.form.validate()) {
-            return;
-        }
+        if (!this.form.validate()) return;
 
         const username = this.form.fields.username.getText();
         const email = this.form.fields.email.getText();
@@ -153,7 +154,12 @@ export default class PageSignup extends Component {
                             onAction={this.onSubmit}/>
                     </div>
 
-                    <div className="form-block"/>
+                    <div className="form-block form__links">
+                        <div>
+                            Уже есть аккаунт?&nbsp;
+                            <Link to={Sitemap.login}>Войти</Link>
+                        </div>
+                    </div>
                 </div>
             </LayoutLogin>
         )

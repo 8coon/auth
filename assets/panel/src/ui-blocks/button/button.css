@@ -36,7 +36,7 @@ body {
     border: 1px solid #5A6978;
     border-radius: 5px;
     padding: 5px 20px;
-    min-width: 250px; }
+    min-width: 350px; }
     .button button:hover {
       cursor: pointer;
       background-color: #44505b; }
@@ -44,6 +44,6 @@ body {
       background-color: #343F4B; }
     .button button:focus {
       outline: none; }
-    @media only screen and (max-width: 575px) {
+    @media only screen and (max-width: 675px) {
       .button button {
         width: 100% !important; } }
