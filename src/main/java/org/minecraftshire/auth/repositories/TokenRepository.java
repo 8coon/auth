@@ -31,7 +31,6 @@ public class TokenRepository extends Repository {
     @Autowired
     public TokenRepository(GeoLocator geoLocator) {
         this.geoLocator = geoLocator;
-        this.truncateHistory();
     }
 
 

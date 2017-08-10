@@ -1,6 +1,7 @@
 package org.minecraftshire.auth;
 
 import org.apache.commons.cli.*;
+import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.logging.FileLogWriter;
 import org.minecraftshire.auth.utils.logging.Logger;
@@ -172,6 +173,9 @@ public class Server {
 
 		context = SpringApplication.run(Server.class, args);
 		env = context.getEnvironment();
+
+		// Truncate login history older than 1 year
+		context.getBean(TokenRepository.class).truncateHistory();
 	}
 
 }
