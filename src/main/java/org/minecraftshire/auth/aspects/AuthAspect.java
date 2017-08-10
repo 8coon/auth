@@ -38,11 +38,13 @@ public class AuthAspect {
 
         int i = 0;
         for (Object arg: args) {
-            if (arg instanceof AuthTokenData) {
-                tokenData = (AuthTokenData) arg;
-            }
 
-            if (arg instanceof String) {
+            if (arg instanceof AuthTokenData) {
+
+                tokenData = (AuthTokenData) arg;
+
+            } else if (arg instanceof String) {
+
                 RequestHeader header = (RequestHeader) AuthAspect.getArgAnnotated(method, i, RequestHeader.class);
                 String value;
 
@@ -55,9 +57,9 @@ public class AuthAspect {
                 if (value != null && value.equalsIgnoreCase("User-Agent")) {
                     userAgent = (String) arg;
                 }
-            }
 
-            if (arg instanceof SessionData) {
+            } else if (arg instanceof SessionData) {
+
                 sessionIndex = i;
             }
 
@@ -101,7 +103,12 @@ public class AuthAspect {
 
 
     private static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> annotation) {
+        Logger.getLogger().info(method);
+        Logger.getLogger().info((Object[]) method.getParameterAnnotations());
+
         for (Annotation argAnnotation: method.getParameterAnnotations()[idx]) {
+            Logger.getLogger().info("\t", annotation);
+
             if (argAnnotation.annotationType().equals(annotation)) {
                 return argAnnotation;
             }

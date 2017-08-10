@@ -99,7 +99,8 @@ public class TokenRepository extends Repository {
 
     public List<SessionGeoData> listAllSessions(String username) {
         return jdbc.query(
-                "SELECT ip, issued_at, \"location\" FROM Tokens WHERE username = ?",
+                "SELECT ip, issued_at, \"location\" FROM Tokens WHERE username = ? " +
+                        "ORDER BY issued_at ASC LIMIT 1000",
                 new SessionGeoData(),
                 username
         );
@@ -145,7 +146,7 @@ public class TokenRepository extends Repository {
 
     public List<TokenHistoryData> getHistory(String username) {
         return jdbc.query(
-                "SELECT * FROM TokenHistory WHERE username = ? LIMIT 1000",
+                "SELECT * FROM TokenHistory WHERE username = ? ORDER BY time DESC LIMIT 1000",
                 new TokenHistoryData(),
                 username
         );
