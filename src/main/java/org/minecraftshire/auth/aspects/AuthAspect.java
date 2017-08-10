@@ -94,6 +94,7 @@ public class AuthAspect {
     private static Method firstMethod(Object targetThis, String name, Class<? extends Annotation> annotation) {
         for (Method method: targetThis.getClass().getMethods()) {
             Logger.getLogger().info("METHOD ", method.getName(), name);
+
             if (method.isAnnotationPresent(annotation) && method.getName().equals(name)) {
                 return method;
             }
