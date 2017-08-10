@@ -13,6 +13,8 @@ public class ProfileAspect {
 
     @Around("execution(public * *(..)) && @annotation(org.springframework.web.bind.annotation.PostMapping)")
     public Object fire(ProceedingJoinPoint pjp) throws Throwable {
+        Logger.getLogger().info("PROFILING");
+
         long start = System.currentTimeMillis();
         Object result = pjp.proceed(pjp.getArgs());
         long end = System.currentTimeMillis();

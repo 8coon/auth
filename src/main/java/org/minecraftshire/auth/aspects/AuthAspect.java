@@ -69,7 +69,7 @@ public class AuthAspect {
         if (tokenData == null) {
             Logger.getLogger().warning(
                     "Malformed arguments of method ", pjp.getSignature().getName(),
-                    ". Authorisation aborted."
+                    ". Authorization aborted."
             );
 
             throw new UnauthorizedException();
