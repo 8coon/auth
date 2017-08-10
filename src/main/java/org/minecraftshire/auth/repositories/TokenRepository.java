@@ -117,7 +117,7 @@ public class TokenRepository extends Repository {
         );
 
         jdbc.update(
-                "INSERT INTO TokenHistory (username, ip, \"location\", appToken) VALUES (?, ?, ?)",
+                "INSERT INTO TokenHistory (username, ip, \"location\", appToken) VALUES (?, ?, ?, ?)",
                 username, ip, location, appToken
         );
     }
