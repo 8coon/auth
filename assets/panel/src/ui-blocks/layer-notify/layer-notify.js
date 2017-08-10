@@ -11,8 +11,7 @@ export class LayerNotifyOptions {
     actionText = null;
     action = () => true;
     timeout = 4000;
-    shouldAppear = false;
-    shouldDisappear = false;
+    opacity = 0;
     key = null;
 }
 
@@ -30,19 +29,24 @@ export default class LayerNotify extends Component {
      */
     static addNotify(options) {
         options = Object.assign({}, LayerNotify.defaultOptions, options, {
-            shouldAppear: true, key: LayerNotify.notifyCount++,
+            key: LayerNotify.notifyCount++,
         });
 
         LayerNotify.notifies.unshift(options);
         LayerNotify.broadcastState();
 
         window.setTimeout(() => {
+            options.opacity = 1;
+            LayerNotify.broadcastState();
+        }, 50);
+
+        window.setTimeout(() => {
             LayerNotify.closeNotify(options);
-        }, options.timeout);
+        }, options.timeout + 350);
     }
 
     static closeNotify(notify) {
-        notify.shouldDisappear = true;
+        notify.opacity = 0;
         LayerNotify.broadcastState();
 
         window.setTimeout(() => {
@@ -84,22 +88,12 @@ export default class LayerNotify extends Component {
 
     renderNotifies() {
         return this.state.notifies.map((notify, idx) => {
-            const animations = [];
-
-            if (notify.shouldAppear) {
-                animations.push('0.4s notify-appear');
-            }
-
-            if (notify.shouldDisappear) {
-                animations.push('0.4s notify-disappear');
-            }
-
             return (
                 <div key={notify.key}
                      className="layer-notify__box"
                      style={{
                           bottom: NOTIFY_BOTTOM + idx * NOTIFY_HEIGHT,
-                          animation: animations.join(','),
+                          opacity: notify.opacity,
                      }}>
                     <div className="layer-notify__content">
                         <div className="layer-notify__text">{notify.text}</div>

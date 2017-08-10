@@ -36,10 +36,11 @@ body {
     left: 20px;
     z-index: 10002;
     background-color: #333333;
-    opacity: 0.9;
     padding: 4px;
     border-radius: 15px;
-    width: 300px; }
+    width: 300px;
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0; }
   .layer-notify__content {
     display: flex;
     flex-direction: row;
@@ -49,7 +50,8 @@ body {
     font-size: 15px;
     font-weight: 700;
     color: white;
-    padding: 5px 20px; }
+    padding: 5px 20px;
+    opacity: 0.7; }
   .layer-notify__text {
     flex: 1;
     white-space: nowrap;
@@ -62,15 +64,3 @@ body {
       .layer-notify__action a_hover {
         text-decoration: none;
         color: white; }
-
-@keyframes notify-appear {
-  0% {
-    opacity: 0; }
-  100% {
-    opacity: 0.9; } }
-
-@keyframes notify-disappear {
-  0% {
-    opacity: 0.9; }
-  100% {
-    opacity: 0; } }

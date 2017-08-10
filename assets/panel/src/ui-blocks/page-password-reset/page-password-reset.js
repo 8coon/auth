@@ -67,8 +67,11 @@ export default class PagePasswordReset extends Component {
 
         restorePassword(code, password)
             .then(() => {
-                LayerNotify.addNotify({text: 'Пароль успешно изменён!'});
                 this.context.router.history.push(Sitemap.login);
+
+                window.setTimeout(() => {
+                    LayerNotify.addNotify({text: 'Пароль успешно изменён!'});
+                }, 1000);
             })
             .catch(xhr => LayerNotify.addNotify({text: 'Что-то пошло не так!'}));
     }

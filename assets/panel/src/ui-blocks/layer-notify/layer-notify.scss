@@ -22,10 +22,11 @@ $notify-height: 50;
 		left: 20 * $base-unit;
 		z-index: $z-index-notify-box;
 		background-color: $dark-black;
-		opacity: $opacity-notify-box;
 		padding: $notify-padding;
 		border-radius: 3 * $border-radius;
 		width: $notify-width;
+		transition: opacity 0.4s ease-in-out;
+		opacity: 0;
 	}
 
 	&__content {
@@ -38,6 +39,7 @@ $notify-height: 50;
 		font-weight: $font-weight-button;
 		color: $white;
 		padding: $input-padding;
+		opacity: $opacity-notify-box;
 	}
 
 	&__text {
@@ -59,15 +61,4 @@ $notify-height: 50;
 			}
 		}
 	}
-}
-
-
-@keyframes notify-appear {
-	0%   { opacity: 0 }
-	100% { opacity: $opacity-notify-box }
-}
-
-@keyframes notify-disappear {
-	0%   { opacity: $opacity-notify-box }
-	100% { opacity: 0 }
 }
