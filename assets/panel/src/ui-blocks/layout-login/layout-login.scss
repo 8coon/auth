@@ -9,6 +9,7 @@
 	padding: 50px;
 
 	&__outer {
+		z-index: 1;
 		background-color: $gray;
 		padding-left: $form-padding;
 		padding-right: $form-padding;

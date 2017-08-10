@@ -23,16 +23,18 @@ body {
 .layer-notify {
   position: fixed;
   overflow: hidden;
-  z-index: -10000;
+  z-index: 10000;
+  pointer-events: none;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0; }
   .layer-notify__box {
     position: fixed;
-    bottom: 20px;
+    pointer-events: auto;
+    bottom: 20;
     left: 20px;
-    z-index: 10001;
+    z-index: 10002;
     background-color: #333333;
     opacity: 0.9;
     padding: 4px;
@@ -41,13 +43,17 @@ body {
   .layer-notify__content {
     display: flex;
     flex-direction: row;
-    border: 4px solid white;
+    border: 2px solid white;
     border-radius: 15px;
     font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
     font-size: 15px;
     font-weight: 700;
     color: white;
-    padding: 5px 20px;
+    padding: 5px 20px; }
+  .layer-notify__text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis; }
   .layer-notify__action {
     text-align: right; }
@@ -56,3 +62,15 @@ body {
       .layer-notify__action a_hover {
         text-decoration: none;
         color: white; }
+
+@keyframes notify-appear {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 0.9; } }
+
+@keyframes notify-disappear {
+  0% {
+    opacity: 0.9; }
+  100% {
+    opacity: 0; } }

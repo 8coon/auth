@@ -1,12 +1,15 @@
 @import "../../globals.scss";
 
 $notify-padding: 4 * $base-unit;
+$notify-bottom-initial: 20;
+$notify-height: 50;
 
 
 .layer-notify {
 	position: fixed;
 	overflow: hidden;
 	z-index: $z-index-notify;
+	pointer-events: none;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -14,7 +17,8 @@ $notify-padding: 4 * $base-unit;
 
 	&__box {
 		position: fixed;
-		bottom: 20 * $base-unit;
+		pointer-events: auto;
+		bottom: $notify-bottom-initial;
 		left: 20 * $base-unit;
 		z-index: $z-index-notify-box;
 		background-color: $dark-black;
@@ -27,13 +31,19 @@ $notify-padding: 4 * $base-unit;
 	&__content {
 		display: flex;
 		flex-direction: row;
-		border: $notify-padding solid $white;
+		border: 0.5 * $notify-padding solid $white;
 		border-radius: 3 * $border-radius;
 		font-family: $font-family-default;
 		font-size: $font-size-default;
 		font-weight: $font-weight-button;
 		color: $white;
 		padding: $input-padding;
+	}
+
+	&__text {
+		flex: 1;
+		white-space: nowrap;
+		overflow: hidden;
 		text-overflow: ellipsis;
 	}
 
@@ -49,4 +59,15 @@ $notify-padding: 4 * $base-unit;
 			}
 		}
 	}
+}
+
+
+@keyframes notify-appear {
+	0%   { opacity: 0 }
+	100% { opacity: $opacity-notify-box }
+}
+
+@keyframes notify-disappear {
+	0%   { opacity: $opacity-notify-box }
+	100% { opacity: 0 }
 }

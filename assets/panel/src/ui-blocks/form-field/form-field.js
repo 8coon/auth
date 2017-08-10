@@ -48,8 +48,10 @@ class FormField extends Component {
         );
     }
 
-    validate() {
-        const result = this.props.validator(this.refs.text.state.text);
+    validate(result = null) {
+        if (result === null) {
+            result = this.props.validator(this.refs.text.state.text);
+        }
 
         if (result === true) {
             this.setState({ error: null });

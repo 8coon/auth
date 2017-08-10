@@ -26,6 +26,7 @@ body {
   align-items: center;
   padding: 50px; }
   .layout-login__outer {
+    z-index: 1;
     background-color: #5A6978;
     padding-left: 10px;
     padding-right: 10px;

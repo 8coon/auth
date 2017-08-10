@@ -76,14 +76,6 @@ export default class PageSignup extends Component {
     }
 
     onSubmit() {
-        this.counter = this.counter || 1;
-
-        LayerNotify.addNotify({
-            text: 'Submitted ' + this.counter++,
-            actionText: 'Cancel',
-            action: () => alert('canceled!'),
-        });
-
         this.setState({validated: true});
 
         if (!this.form.validate()) {
@@ -96,7 +88,29 @@ export default class PageSignup extends Component {
 
         createUser(username, password, email)
             .then(() => alert('ok!'))
-            .catch(xhr => alert('Error: ' + xhr.status));
+            .catch(xhr => {
+                if (xhr.body.error !== 'exists') {
+                    LayerNotify.addNotify({text: 'Что-то пошло не так!'});
+                    return;
+                }
+
+                const username = this.form.fields.username;
+                const email = this.form.fields.email;
+
+                switch (xhr.body.cause) {
+                    case 'username':
+                        username.validate('Такой пользователь уже существует!');
+                        username.toggleTooltip(true);
+                        break;
+
+                    case 'email':
+                        email.validate('Такой Email уже используется!');
+                        email.toggleTooltip(true);
+                        break;
+
+                    default: break;
+                }
+            });
     }
 
     render() {
