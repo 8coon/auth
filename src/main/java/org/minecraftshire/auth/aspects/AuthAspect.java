@@ -29,7 +29,7 @@ public class AuthAspect {
 
     @Around("execution(public * *(..)) && @annotation(org.minecraftshire.auth.aspects.AuthRequired)")
     public Object fire(ProceedingJoinPoint pjp) throws Throwable {
-        Method method = AuthAspect.firstMethod(pjp.getThis(), pjp.getSignature().getName(), PostMapping.class);
+        Method method = AuthAspect.firstMethod(pjp.getThis(), pjp.getSignature().getName());
         Object[] args = pjp.getArgs();
 
         AuthTokenData tokenData = null;
@@ -91,11 +91,11 @@ public class AuthAspect {
     }
 
 
-    private static Method firstMethod(Object targetThis, String name, Class<? extends Annotation> annotation) {
+    private static Method firstMethod(Object targetThis, String name) {
         for (Method method: targetThis.getClass().getMethods()) {
             Logger.getLogger().info("METHOD ", method.getName(), name);
 
-            if (method.isAnnotationPresent(annotation) && method.getName().equals(name)) {
+            if (method.getName().equals(name)) {
                 return method;
             }
         }
