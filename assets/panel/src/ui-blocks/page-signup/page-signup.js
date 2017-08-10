@@ -90,7 +90,7 @@ export default class PageSignup extends Component {
         createUser(username, password, email)
             .then(() => alert('ok!'))
             .catch(xhr => {
-                if (xhr.body.error !== 'exists') {
+                if (!xhr || !xhr.body || xhr.body.error !== 'exists') {
                     LayerNotify.addNotify({text: 'Что-то пошло не так!'});
                     return;
                 }

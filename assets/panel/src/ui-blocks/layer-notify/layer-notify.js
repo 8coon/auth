@@ -10,7 +10,7 @@ export class LayerNotifyOptions {
     text = 'Notification';
     actionText = null;
     action = () => true;
-    timeout = 400000;
+    timeout = 4000;
     shouldAppear = false;
     shouldDisappear = false;
     key = null;

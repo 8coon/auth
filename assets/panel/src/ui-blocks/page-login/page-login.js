@@ -58,7 +58,7 @@ export default class PageLogin extends Component {
                alert('ok!');
             })
             .catch(xhr => {
-                if (xhr.body.error !== 'wrong credentials') {
+                if (!xhr || !xhr.body || xhr.body.error !== 'wrong credentials') {
                     LayerNotify.addNotify({text: 'Что-то пошло не так!'});
                     return;
                 }
@@ -111,7 +111,7 @@ export default class PageLogin extends Component {
                     <div className="form-block form__links">
                         <div>
                             Не получается войти в аккаунт?&nbsp;
-                            <Link to={Sitemap.login}>Восстановить пароль</Link>
+                            <Link to={Sitemap.restoreAccess}>Восстановить пароль</Link>
                         </div>
                         <div>
                             Нет аккаунта?&nbsp;

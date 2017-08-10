@@ -26,6 +26,9 @@ body {
   color: #5A6978;
   text-align: center; }
 
+.form__desc {
+  padding-bottom: 15px !important; }
+
 .form__links {
   color: #8e9caa; }
   .form__links > div {
