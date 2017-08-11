@@ -50,6 +50,7 @@ public class AuthAspect {
 
                 try {
                     value = header.value();
+                    Logger.getLogger().info("USER-AGENT ANNOTATION", value);
 
                     if (value.equalsIgnoreCase("User-Agent")) {
                         userAgent = (String) arg;
