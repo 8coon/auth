@@ -39,26 +39,26 @@ public class AuthAspect {
         int i = 0;
         for (Object arg: args) {
 
-            if (arg instanceof AuthTokenData) {
+            if (tokenData == null && arg instanceof AuthTokenData) {
 
                 tokenData = (AuthTokenData) arg;
 
-            } else if (arg instanceof String) {
+            } else if (userAgent == null && arg instanceof String) {
 
                 RequestHeader header = (RequestHeader) AuthAspect.getArgAnnotated(method, i, RequestHeader.class);
                 String value;
 
                 try {
                     value = header.value();
+
+                    if (value.equalsIgnoreCase("User-Agent")) {
+                        userAgent = (String) arg;
+                    }
                 } catch (NullPointerException e) {
                     value = null;
                 }
 
-                if (value != null && value.equalsIgnoreCase("User-Agent")) {
-                    userAgent = (String) arg;
-                }
-
-            } else if (arg instanceof SessionData) {
+            } else if (sessionIndex == null && arg instanceof SessionData) {
 
                 sessionIndex = i;
             }
@@ -93,8 +93,6 @@ public class AuthAspect {
 
     private static Method firstMethod(Object targetThis, String name) {
         for (Method method: targetThis.getClass().getMethods()) {
-            Logger.getLogger().info("METHOD ", method.getName(), name);
-
             if (method.getName().equals(name)) {
                 return method;
             }
@@ -105,12 +103,7 @@ public class AuthAspect {
 
 
     private static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> annotation) {
-        Logger.getLogger().info(method);
-        Logger.getLogger().info((Object[]) method.getParameterAnnotations());
-
         for (Annotation argAnnotation: method.getParameterAnnotations()[idx]) {
-            Logger.getLogger().info("\t", annotation);
-
             if (argAnnotation.annotationType().equals(annotation)) {
                 return argAnnotation;
             }

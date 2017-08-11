@@ -11,23 +11,15 @@ import org.springframework.http.ResponseEntity;
 @Aspect
 public class ProfileAspect {
 
-    @Around("execution(public * *(..)) && @annotation(org.springframework.web.bind.annotation.PostMapping)")
+    @Around("execution(public org.springframework.http.ResponseEntity *(..))")
     public Object fire(ProceedingJoinPoint pjp) throws Throwable {
-        Logger.getLogger().info("PROFILING");
-
         long start = System.currentTimeMillis();
         Object result = pjp.proceed(pjp.getArgs());
         long end = System.currentTimeMillis();
 
-        if (result instanceof ResponseEntity) {
+        if (result != null) {
             String time = String.valueOf(end - start) + "ms";
             ((ResponseEntity) result).getHeaders().add("X-Execution-Time", time);
-        } else {
-            Logger.getLogger().warning(
-                    "Method ", pjp.getSignature(), " at ", pjp.getSourceLocation().getFileName(),
-                    " didn't return ResponseEntity. An object of type ", result.getClass().getName(),
-                    " was returned instead."
-            );
         }
 
         return result;
