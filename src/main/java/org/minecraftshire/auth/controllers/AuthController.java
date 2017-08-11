@@ -2,6 +2,7 @@ package org.minecraftshire.auth.controllers;
 
 
 import org.minecraftshire.auth.aspects.AuthRequired;
+import org.minecraftshire.auth.aspects.UserAgent;
 import org.minecraftshire.auth.data.*;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.TokenRepository;
@@ -56,7 +57,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity logout(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader("User-Agent") @UserAgent String userAgent,
             SessionData sessionData
     ) {
         this.tokens.dropToken(authTokenData.getAuthToken());
@@ -68,7 +69,7 @@ public class AuthController {
     @PostMapping("/logout_everywhere")
     public ResponseEntity logoutEverywhere(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader("User-Agent") @UserAgent String userAgent,
             SessionData sessionData
     ) {
         this.tokens.closeAllSessions(sessionData.getUsername());
@@ -80,7 +81,7 @@ public class AuthController {
     @PostMapping("/sessions")
     public ResponseEntity sessions(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader("User-Agent") @UserAgent String userAgent,
             SessionData sessionData
     ) {
         return new ResponseEntity<>(
@@ -94,7 +95,7 @@ public class AuthController {
     @PostMapping("/history")
     public ResponseEntity history(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader("User-Agent") @UserAgent String userAgent,
             SessionData sessionData
     ) {
         return new ResponseEntity<>(

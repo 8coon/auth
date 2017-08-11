@@ -9,7 +9,6 @@ import org.minecraftshire.auth.data.SessionData;
 import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.lang.annotation.Annotation;
@@ -45,20 +44,9 @@ public class AuthAspect {
 
             } else if (userAgent == null && arg instanceof String) {
 
-                RequestHeader header = (RequestHeader) AuthAspect.getArgAnnotated(method, i, RequestHeader.class);
-                String value;
-
-                //try {
-
-                    value = header.name();
-                    Logger.getLogger().info("USER-AGENT ANNOTATION", value);
-
-                    if (value.equalsIgnoreCase("User-Agent")) {
-                        userAgent = (String) arg;
-                    }
-                //} catch (NullPointerException e) {
-                //    value = null;
-                //}
+                if (AuthAspect.getArgAnnotated(method, i, UserAgent.class) != null) {
+                    userAgent = (String) arg;
+                }
 
             } else if (sessionIndex == null && arg instanceof SessionData) {
 

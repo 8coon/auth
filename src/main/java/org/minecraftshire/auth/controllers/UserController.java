@@ -1,6 +1,7 @@
 package org.minecraftshire.auth.controllers;
 
 import org.minecraftshire.auth.aspects.AuthRequired;
+import org.minecraftshire.auth.aspects.UserAgent;
 import org.minecraftshire.auth.data.*;
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
@@ -63,7 +64,7 @@ public class UserController {
     @PostMapping("/change_password")
     public ResponseEntity changePassword(
             @RequestBody ChangePasswordData passwordData,
-            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader("User-Agent") @UserAgent String userAgent,
             SessionData sessionData
     ) {
         try {
