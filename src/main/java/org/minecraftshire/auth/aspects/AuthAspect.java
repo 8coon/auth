@@ -106,11 +106,12 @@ public class AuthAspect {
 
     private static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> annotation) {
         for (Annotation argAnnotation: method.getParameterAnnotations()[idx]) {
-            if (argAnnotation.annotationType().equals(annotation)) {
+            if (argAnnotation.getClass().equals(annotation)) {
                 return argAnnotation;
             }
         }
 
+        Logger.getLogger().info("No annotations found");
         return null;
     }
 
