@@ -48,16 +48,17 @@ public class AuthAspect {
                 RequestHeader header = (RequestHeader) AuthAspect.getArgAnnotated(method, i, RequestHeader.class);
                 String value;
 
-                try {
-                    value = header.value();
+                //try {
+
+                    value = header.name();
                     Logger.getLogger().info("USER-AGENT ANNOTATION", value);
 
                     if (value.equalsIgnoreCase("User-Agent")) {
                         userAgent = (String) arg;
                     }
-                } catch (NullPointerException e) {
-                    value = null;
-                }
+                //} catch (NullPointerException e) {
+                //    value = null;
+                //}
 
             } else if (sessionIndex == null && arg instanceof SessionData) {
 
