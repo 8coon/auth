@@ -9,7 +9,6 @@ import org.minecraftshire.auth.data.SessionData;
 import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -44,7 +43,10 @@ public class AuthAspect {
 
             } else if (userAgent == null && arg instanceof String) {
 
-                if (AuthAspect.getArgAnnotated(method, i, UserAgent.class) != null) {
+                Logger.getLogger().info("PARAMS: ", method.getParameters());
+                Logger.getLogger().info("PARAMS[", i, "]: ", method.getParameters()[i]);
+
+                if (method.getParameters()[i].isAnnotationPresent(UserAgent.class)) {
                     userAgent = (String) arg;
                 }
 
