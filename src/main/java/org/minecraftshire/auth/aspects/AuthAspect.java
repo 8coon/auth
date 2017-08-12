@@ -37,7 +37,7 @@ public class AuthAspect {
         int i = 0;
         for (Object arg: args) {
 
-            Logger.getLogger().info("ANNOTATIONS[", i, "]: ", method.getParameterAnnotations()[i]);
+            Logger.getLogger().info("ANNOTATIONS[", i, "]: ", method.getParameterAnnotations()[i][1]);
 
             if (tokenData == null && arg instanceof AuthTokenData) {
 
@@ -46,7 +46,7 @@ public class AuthAspect {
             } else if (userAgent == null && arg instanceof String) {
 
                 Logger.getLogger().info("PARAMS: ", method.getParameters());
-                Logger.getLogger().info("PARAMS[", i, "]: ", method.getParameters()[i]);
+                Logger.getLogger().info("PARAMS[", i, "]: ", method.getParameters()[i].getAnnotatedType().getAnnotation(UserAgent.class));
 
                 if (method.getParameters()[i].isAnnotationPresent(UserAgent.class)) {
                     userAgent = (String) arg;
