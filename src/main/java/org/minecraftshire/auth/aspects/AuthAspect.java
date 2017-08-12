@@ -83,19 +83,20 @@ public class AuthAspect {
 
     private static Method firstMethod(Object targetThis, String name) {
         for (Method method: targetThis.getClass().getMethods()) {
-            Logger.getLogger().info("Method ", method.getName(), " ? ", name);
-
             if (method.getName().equals(name)) {
                 return method;
             }
         }
 
-        Logger.getLogger().info("No methods found with name ", name);
+        Logger.getLogger().warning("No methods found with name ", name);
         return null;
     }
 
 
     private static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> annotation) {
+        Logger.getLogger().info(idx, " ", method.getParameterAnnotations(), " ",
+                method.getParameterAnnotations()[idx]);
+
         for (Annotation argAnnotation: method.getParameterAnnotations()[idx]) {
             Logger.getLogger().info(argAnnotation.getClass(), " ? ", annotation);
             if (argAnnotation.getClass().equals(annotation)) {
@@ -103,7 +104,7 @@ public class AuthAspect {
             }
         }
 
-        Logger.getLogger().info("No annotations found");
+        Logger.getLogger().warning("No annotations found");
         return null;
     }
 
