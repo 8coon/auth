@@ -37,6 +37,8 @@ public class AuthAspect {
         int i = 0;
         for (Object arg: args) {
 
+            Logger.getLogger().info("ANNOTATIONS[", i, "]: ", method.getParameterAnnotations()[i]);
+
             if (tokenData == null && arg instanceof AuthTokenData) {
 
                 tokenData = (AuthTokenData) arg;
