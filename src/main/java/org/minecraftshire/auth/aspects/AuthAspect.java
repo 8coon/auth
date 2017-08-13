@@ -10,11 +10,6 @@ import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-
-
 @Aspect
 public class AuthAspect {
 
@@ -28,7 +23,6 @@ public class AuthAspect {
 
     @Around("execution(public * *(..)) && @annotation(org.minecraftshire.auth.aspects.AuthRequired)")
     public Object fire(ProceedingJoinPoint pjp) throws Throwable {
-        Method method = AuthAspect.firstMethod(pjp.getThis(), pjp.getSignature().getName());
         Object[] args = pjp.getArgs();
 
         AuthTokenData tokenData = null;
@@ -49,13 +43,11 @@ public class AuthAspect {
             } else if (sessionIndex == null && arg instanceof SessionData) {
 
                 sessionIndex = i;
+
             }
 
             i++;
         }
-
-        Logger.getLogger().info("AUTH TOKEN: ", tokenData.getAuthToken(),
-                ", USER AGENT: ", userAgent, ", SESSION INDEX: ", sessionIndex);
 
         if (tokenData == null) {
             Logger.getLogger().warning(
@@ -79,36 +71,6 @@ public class AuthAspect {
         }
 
         return pjp.proceed(args);
-    }
-
-
-    public static Method firstMethod(Object targetThis, String name) {
-        for (Method method: targetThis.getClass().getMethods()) {
-            if (method.getName().equals(name)) {
-                return method;
-            }
-        }
-
-        return null;
-    }
-
-
-    public static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> clazz) {
-        for (Parameter parameter: method.getParameters()) {
-            Logger.getLogger().info("PARAMETER ", parameter.getName(), ": ",
-                    parameter.getDeclaredAnnotations().length);
-
-            for (Annotation annotation: parameter.getDeclaredAnnotations()) {
-                Logger.getLogger().info("\tANNOTATION ",
-                        annotation.annotationType().isAssignableFrom(clazz));
-
-                if (annotation.annotationType().isAssignableFrom(clazz)) {
-                    return annotation;
-                }
-            }
-        }
-
-        return null;
     }
 
 }

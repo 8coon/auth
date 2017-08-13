@@ -1,14 +1,10 @@
 package org.minecraftshire.auth;
 
 import org.apache.commons.cli.*;
-import org.minecraftshire.auth.aspects.AuthAspect;
-import org.minecraftshire.auth.aspects.UserAgent;
-import org.minecraftshire.auth.controllers.AuthController;
 import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.utils.ProcessRunner;
 import org.minecraftshire.auth.utils.logging.FileLogWriter;
 import org.minecraftshire.auth.utils.logging.Logger;
-import org.minecraftshire.auth.utils.logging.StdOutLogWriter;
 import org.minecraftshire.auth.utils.logging.SystemRedirectStream;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,10 +12,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
 import java.io.*;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.Proxy;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -175,23 +167,6 @@ public class Server {
 
 
 	public static void main(String[] args) {
-		/*Logger.setLogger(new Logger(new StdOutLogWriter()));
-
-		AuthController auth = new AuthController(null, null);
-		Method method = AuthAspect.firstMethod(auth, "history");
-
-		Logger.getLogger().info("LENGTH: ", method.getParameters().length);
-
-		for (Parameter parameter: method.getParameters()) {
-			Logger.getLogger().info("PARAMETER ", parameter.getName(), ": ",
-					parameter.getAnnotations().length);
-
-			for (Annotation annotation: parameter.getAnnotations()) {
-				Logger.getLogger().info("\tANNOTATION ",
-						annotation.annotationType().isAssignableFrom(UserAgent.class));
-			}
-		}*/
-
 		loadArgs(args);
 		initLogger();
 		writePid();
