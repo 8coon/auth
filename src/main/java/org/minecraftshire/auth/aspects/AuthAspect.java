@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 
 @Aspect
@@ -96,10 +97,18 @@ public class AuthAspect {
     }
 
 
-    public static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> annotation) {
-        for (Annotation argAnnotation: method.getParameterAnnotations()[idx]) {
-            if (argAnnotation.annotationType().isAssignableFrom(annotation)) {
-                return argAnnotation;
+    public static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> clazz) {
+        for (Parameter parameter: method.getParameters()) {
+            Logger.getLogger().info("PARAMETER ", parameter.getName(), ": ",
+                    parameter.getAnnotations().length);
+
+            for (Annotation annotation: parameter.getAnnotations()) {
+                Logger.getLogger().info("\tANNOTATION ",
+                        annotation.annotationType().isAssignableFrom(clazz));
+
+                if (annotation.annotationType().isAssignableFrom(clazz)) {
+                    return annotation;
+                }
             }
         }
 
