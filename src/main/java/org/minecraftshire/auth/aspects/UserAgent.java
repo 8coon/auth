@@ -3,7 +3,9 @@ package org.minecraftshire.auth.aspects;
 
 public class UserAgent {
 
-    private String userAgent;
+    private String userAgent = "";
+
+    public UserAgent() {}
 
     public UserAgent(String userAgent) {
         this.userAgent = userAgent;
