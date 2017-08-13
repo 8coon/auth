@@ -5,6 +5,7 @@ import org.minecraftshire.auth.aspects.AuthAspect;
 import org.minecraftshire.auth.aspects.ProfileAspect;
 import org.minecraftshire.auth.aspects.UserAgentResolver;
 import org.minecraftshire.auth.repositories.TokenRepository;
+import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,6 +37,7 @@ public class ServerConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        Logger.getLogger().info("CONFIGURATION");
         argumentResolvers.add(new UserAgentResolver());
     }
 
