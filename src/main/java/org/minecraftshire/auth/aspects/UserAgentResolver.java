@@ -1,5 +1,6 @@
 package org.minecraftshire.auth.aspects;
 
+import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -21,6 +22,7 @@ public class UserAgentResolver implements HandlerMethodArgumentResolver {
             NativeWebRequest webRequest,
             WebDataBinderFactory binderFactory
     ) throws Exception {
+        Logger.getLogger().info("USER AGENT RESOLVED: ", webRequest.getHeader("User-Agent"));
         return new UserAgent(webRequest.getHeader("User-Agent"));
     }
 
