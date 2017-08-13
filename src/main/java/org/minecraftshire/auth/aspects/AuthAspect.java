@@ -100,9 +100,9 @@ public class AuthAspect {
     public static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> clazz) {
         for (Parameter parameter: method.getParameters()) {
             Logger.getLogger().info("PARAMETER ", parameter.getName(), ": ",
-                    parameter.getAnnotations().length);
+                    parameter.getDeclaredAnnotations().length);
 
-            for (Annotation annotation: parameter.getAnnotations()) {
+            for (Annotation annotation: parameter.getDeclaredAnnotations()) {
                 Logger.getLogger().info("\tANNOTATION ",
                         annotation.annotationType().isAssignableFrom(clazz));
 
