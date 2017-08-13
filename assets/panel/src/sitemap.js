@@ -10,4 +10,5 @@ export default {
     restoreAccess: `${appRoot}/restore_access`,
     restoreSuccess: `${appRoot}/restore_success`,
     passwordReset: `${appRoot}/password_reset`,
+    settings: `${appRoot}/settings`,
 };

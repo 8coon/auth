@@ -22,6 +22,7 @@ import PageSignup from './ui-blocks/page-signup/page-signup';
 import PageRestoreAccess from './ui-blocks/page-restore-access/page-restore-access';
 import PageRestoreSuccess from './ui-blocks/page-restore-success/page-restore-success';
 import PagePasswordReset from './ui-blocks/page-password-reset/page-password-reset';
+import PageSettings from './ui-blocks/page-settings/page-settings';
 
 // Service Worker
 import registerServiceWorker from './registerServiceWorker';
@@ -40,6 +41,7 @@ ReactDOM.render(
             <Route exact path={Sitemap.restoreAccess} component={PageRestoreAccess}/>
             <Route exact path={Sitemap.restoreSuccess} component={PageRestoreSuccess}/>
             <Route exact path={Sitemap.passwordReset} component={PagePasswordReset}/>
+            <Route exact path={Sitemap.settings} component={PageSettings}/>
         </Switch>
     </BrowserRouter>,
 

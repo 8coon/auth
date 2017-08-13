@@ -22,7 +22,9 @@ $z-index-notify-box: 10002;
 $font-family-default: "Open Sans", Helvetica, "Segoe UI", sans-serif;
 
 $base-unit: 1px;
-$input-padding: 5px 20px;
+$input-padding-left-right: 20 * $base-unit;
+$input-padding-top-bottom: 5 * $base-unit;
+$input-padding: $input-padding-top-bottom $input-padding-left-right;
 $border-radius: 5 * $base-unit;
 $notify-width: 300 * $base-unit;
 
@@ -45,25 +47,38 @@ $font-color-title: $gray;
 $form-header-height: 50px;
 $form-header-padding: 5px;
 
-$form-width: 550px;
-$form-padding: 10px;
+$form-width: 550 * $base-unit;
+$form-padding: 10 * $base-unit;
 $form-control-width: $form-width - $form-padding * 20;
-$form-block-padding: 30px;
-$form-control-height: 35px;
+$form-block-padding: 30 * $base-unit;
+$form-control-height: 35 * $base-unit;
 $form-control-margin: 2 * $base-unit;
 $form-control-padding: 4 * $base-unit;
 
+$layout-width: 900 * $base-unit;
+$layout-account-width: 300 * $base-unit;
+$layout-logo-width: 200 * $base-unit;
+$layout-header-height: 80 * $base-unit;
+$layout-logo-border: 10 * $base-unit;
+$layout-header-burger-size: 36 * $base-unit;
+
+
 
 $handhelds: handhelds;
+$tablets: tablets;
 $desktop: desktop;
-$threshold: $form-width + 125;
+$max-handhelds: $form-width + 125 * $base-unit;
+$min-desktop: $layout-width + 100 * $base-unit;
 
 @mixin respond-to($media) {
 	@if $media == $handhelds {
-		@media only screen and (max-width: $threshold) { @content; }
+		@media only screen and (max-width: $max-handhelds) { @content; }
+	}
+	@else if $media == $tablets {
+		@media only screen and (min-width: $max-handhelds + 1) and (max-width: $min-desktop) { @content; }
 	}
 	@else if $media == $desktop {
-		@media only screen and (min-width: $threshold + 1) { @content; }
+		@media only screen and (min-width: $min-desktop + 1) { @content; }
 	}
 }
 

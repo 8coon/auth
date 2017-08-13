@@ -1,0 +1,67 @@
+@import "../../globals.scss";
+
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background-color: $gray;
+
+	&__wrapper {
+		width: $layout-width;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+
+		@include respond-to($tablets) {
+			width: 100%;
+		}
+
+		@include respond-to($handhelds) {
+			width: 100%;
+			height: $layout-header-burger-size;
+			overflow: hidden;
+		}
+	}
+
+	&__logo {
+		background: $orange no-repeat center;
+		background-size: contain;
+		height: $layout-header-height;
+		width: $layout-logo-width;
+		border: $layout-logo-border solid $orange;
+		border-top-width: $layout-logo-border + 2 * $base-unit;
+		cursor: pointer;
+	}
+
+	&__search {
+		flex: 1;
+	}
+
+	&__account {
+		width: $layout-account-width;
+		background-color: lighten($gray, 10%);
+	}
+
+	&__account-mobile {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	&__burger {
+		background: $orange no-repeat center;
+		height: $layout-header-burger-size;
+		width: $layout-header-burger-size;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+
+		i {
+			font-size: 150%;
+			color: $white;
+		}
+	}
+}
