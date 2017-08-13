@@ -16,6 +16,7 @@ public class Logger {
     private ILogWriter writer;
     private DateTimeFormatter formatter;
     private Logger parent = null;
+    private String nullValue = "null";
 
     private static boolean loggerChanged = false;
     protected static final String DELIMITER = " ";
@@ -157,10 +158,15 @@ public class Logger {
         StringBuilder sb = new StringBuilder();
 
         for (Object part: msg) {
-            sb.append(part.toString());
+            if (part == null) {
+                sb.append(this.getNullValue());
+            } else {
+                sb.append(part.toString());
+            }
         }
 
-        this.writeln(this.formatDate(), Logger.DELIMITER, this.formatBlock(level), Logger.DELIMITER, sb.toString());
+        this.writeln(this.formatDate(), Logger.DELIMITER, this.formatBlock(level), Logger.DELIMITER,
+                sb.toString());
     }
 
     public void log(String level, Throwable throwable) {
@@ -246,6 +252,14 @@ public class Logger {
         if (this.hasParent()) {
             this.getParent().flush();
         }
+    }
+
+    public String getNullValue() {
+        return nullValue;
+    }
+
+    public void setNullValue(String nullValue) {
+        this.nullValue = nullValue;
     }
 
 }
