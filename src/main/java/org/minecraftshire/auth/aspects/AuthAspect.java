@@ -34,6 +34,8 @@ public class AuthAspect {
         String userAgent = null;
         Integer sessionIndex = null;
 
+
+
         int i = 0;
         for (Object arg: args) {
 
@@ -45,10 +47,9 @@ public class AuthAspect {
 
             } else if (userAgent == null && arg instanceof String) {
 
-                Logger.getLogger().info("PARAMS: ", method.getParameters());
-                Logger.getLogger().info("PARAMS[", i, "]: ", method.getParameters()[i].getAnnotatedType().getAnnotation(UserAgent.class));
+                UserAgent annotation = (UserAgent) AuthAspect.getArgAnnotated(method, i, UserAgent.class);
 
-                if (method.getParameters()[i].isAnnotationPresent(UserAgent.class)) {
+                if (annotation != null) {
                     userAgent = (String) arg;
                 }
 
@@ -85,29 +86,24 @@ public class AuthAspect {
     }
 
 
-    private static Method firstMethod(Object targetThis, String name) {
+    public static Method firstMethod(Object targetThis, String name) {
         for (Method method: targetThis.getClass().getMethods()) {
             if (method.getName().equals(name)) {
                 return method;
             }
         }
 
-        Logger.getLogger().warning("No methods found with name ", name);
         return null;
     }
 
 
-    private static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> annotation) {
-        Logger.getLogger().info(idx, " ", method.getParameterAnnotations()[idx].length);
-
+    public static Annotation getArgAnnotated(Method method, int idx, Class<? extends Annotation> annotation) {
         for (Annotation argAnnotation: method.getParameterAnnotations()[idx]) {
-            Logger.getLogger().info(argAnnotation.getClass(), " ? ", annotation);
-            if (argAnnotation.getClass().equals(annotation)) {
+            if (argAnnotation.annotationType().isAssignableFrom(annotation)) {
                 return argAnnotation;
             }
         }
 
-        Logger.getLogger().warning("No annotations found");
         return null;
     }
 
