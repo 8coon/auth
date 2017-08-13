@@ -10,6 +10,7 @@ import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 @Aspect
 public class AuthAspect {
 
