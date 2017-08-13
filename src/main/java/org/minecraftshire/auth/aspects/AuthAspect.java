@@ -34,12 +34,8 @@ public class AuthAspect {
         String userAgent = null;
         Integer sessionIndex = null;
 
-
-
         int i = 0;
         for (Object arg: args) {
-
-            // Logger.getLogger().info("ANNOTATIONS[", i, "]: ", method.getParameterAnnotations()[i][1]);
 
             if (tokenData == null && arg instanceof AuthTokenData) {
 
@@ -60,6 +56,9 @@ public class AuthAspect {
 
             i++;
         }
+
+        Logger.getLogger().info("AUTH TOKEN: ", tokenData.getAuthToken(),
+                ", USER AGENT: ", userAgent, ", SESSION INDEX: ", sessionIndex);
 
         if (tokenData == null) {
             Logger.getLogger().warning(
