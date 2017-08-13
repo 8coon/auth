@@ -34,11 +34,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity login(
             @RequestBody CredentialsData credentials,
-            @RequestHeader("User-Agent") String userAgent,
+            UserAgent userAgent,
             @RequestHeader("X-Real-IP") String ip
     ) {
         try {
-            credentials.setAppToken(userAgent);
+            credentials.setAppToken(userAgent.toString());
 
             return new ResponseEntity<>(
                     new AuthTokenData(this.users.login(credentials, ip)),
@@ -57,7 +57,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity logout(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") @UserAgent String userAgent,
+            UserAgent userAgent,
             SessionData sessionData
     ) {
         this.tokens.dropToken(authTokenData.getAuthToken());
@@ -69,7 +69,7 @@ public class AuthController {
     @PostMapping("/logout_everywhere")
     public ResponseEntity logoutEverywhere(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") @UserAgent String userAgent,
+            UserAgent userAgent,
             SessionData sessionData
     ) {
         this.tokens.closeAllSessions(sessionData.getUsername());
@@ -81,7 +81,7 @@ public class AuthController {
     @PostMapping("/sessions")
     public ResponseEntity sessions(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") @UserAgent String userAgent,
+            UserAgent userAgent,
             SessionData sessionData
     ) {
         return new ResponseEntity<>(
@@ -95,7 +95,7 @@ public class AuthController {
     @PostMapping("/history")
     public ResponseEntity history(
             @RequestBody AuthTokenData authTokenData,
-            @RequestHeader("User-Agent") @UserAgent String userAgent,
+            UserAgent userAgent,
             SessionData sessionData
     ) {
         return new ResponseEntity<>(

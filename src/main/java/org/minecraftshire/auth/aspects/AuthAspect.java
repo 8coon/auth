@@ -42,13 +42,9 @@ public class AuthAspect {
 
                 tokenData = (AuthTokenData) arg;
 
-            } else if (userAgent == null && arg instanceof String) {
+            } else if (userAgent == null && arg instanceof UserAgent) {
 
-                UserAgent annotation = (UserAgent) AuthAspect.getArgAnnotated(method, i, UserAgent.class);
-
-                if (annotation != null) {
-                    userAgent = (String) arg;
-                }
+                userAgent = arg.toString();
 
             } else if (sessionIndex == null && arg instanceof SessionData) {
 

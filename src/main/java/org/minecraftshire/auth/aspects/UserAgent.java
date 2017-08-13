@@ -1,12 +1,25 @@
 package org.minecraftshire.auth.aspects;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
+public class UserAgent {
 
-@Target(ElementType.PARAMETER)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface UserAgent {
+    private String userAgent;
+
+    public UserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    public String toString() {
+        return this.userAgent;
+    }
+
+    public boolean equals(Object another) {
+        return (another instanceof UserAgent || another instanceof String) &&
+                this.hashCode() == another.hashCode();
+    }
+
+    public int hashCode() {
+        return userAgent.hashCode();
+    }
+
 }

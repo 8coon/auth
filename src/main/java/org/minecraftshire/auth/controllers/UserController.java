@@ -64,7 +64,7 @@ public class UserController {
     @PostMapping("/change_password")
     public ResponseEntity changePassword(
             @RequestBody ChangePasswordData passwordData,
-            @RequestHeader("User-Agent") @UserAgent String userAgent,
+            UserAgent userAgent,
             SessionData sessionData
     ) {
         try {
