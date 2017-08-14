@@ -57,11 +57,11 @@ public abstract class Worker<T> implements Runnable {
             context.getDone().call(this, context.getPayload());
 
             if (queue.size() < Worker.QUEUE_DEBOUNCE_THRESHOLD) {
-                this.wait(Worker.QUEUE_ITEMS_DELAY);
+                Thread.sleep(Worker.QUEUE_ITEMS_DELAY);
             }
         }
 
-        this.wait(delay);
+        Thread.sleep(delay);
     }
 
 
