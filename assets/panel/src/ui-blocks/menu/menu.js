@@ -55,7 +55,7 @@ export default class Menu extends Component {
         }
 
         return (
-            <div className={`scrollable menu__links menu__links_${state} ${absolute ? 'menu__links_absolute' : ''}`}>
+            <div className={`menu__links menu__links_${state} ${absolute ? 'menu__links_absolute' : ''}`}>
                 {this.renderMenuItem('root', 'Профиль', 'fa-user')}
                 {this.renderMenuItem('root', 'Закладки', 'fa-star')}
                 {this.renderMenuItem('root', 'Персонажи', 'fa-users')}
@@ -69,6 +69,16 @@ export default class Menu extends Component {
         )
     }
 
+    renderContent() {
+        const content = [];
+
+        for (let i = 0; i < 100; i++) {
+            content.push(<div key={i}>Content</div>);
+        }
+
+        return content;
+    }
+
     render() {
         return (
             <div className="menu">
@@ -78,7 +88,9 @@ export default class Menu extends Component {
                 {this.props.size === LayoutSize.handheld && this.renderLinks(this.state.expanded)}
 
                 <div className="menu__content">
-                    Content
+                    <div className="menu__content__wrapper">
+                        {this.renderContent()}
+                    </div>
                 </div>
             </div>
         );

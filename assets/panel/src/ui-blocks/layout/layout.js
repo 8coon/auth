@@ -13,10 +13,14 @@ export const LayoutSize = {
 
 export default class Layout extends Component {
 
+    static defaultProps = {
+        onReflow: () => {},
+    };
+
     constructor(props) {
         super(props);
-
         this.state = {size: LayoutSize.desktop};
+
         this.onResize = this.onResize.bind(this);
         this.onDebouncedResize = this.onDebouncedResize.bind(this);
     }
@@ -39,6 +43,7 @@ export default class Layout extends Component {
 
         if (newSize !== this.state.size) {
             this.setState({size: newSize});
+            this.props.onReflow();
         }
     }
 
@@ -56,7 +61,7 @@ export default class Layout extends Component {
             return React.cloneElement(child, {...child.props, size: this.state.size});
         });
 
-        return (<div style={{height: '100%'}}>{children}</div>);
+        return (<div style={{height: /*'100%'*/ null}}>{children}</div>);
     }
 
 }

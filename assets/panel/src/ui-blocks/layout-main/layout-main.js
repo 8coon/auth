@@ -32,7 +32,7 @@ export default class LayoutMain extends Component {
     render() {
         return (
             <div className="layout-main">
-                <Layout>
+                <Layout style={{boxSizing: 'border-box'}}>
                     <Header onBurgerClick={this.onBurgerClick}/>
                     <Menu ref="menu"/>
                 </Layout>

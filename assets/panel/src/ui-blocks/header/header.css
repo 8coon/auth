@@ -6,19 +6,9 @@ body {
   margin: 0;
   background-color: #343F4B;
   color: white;
-  overflow: hidden;
   font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
   font-size: 15px;
   font-weight: 400; }
-  body #root {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: scroll; }
-    body #root > * {
-      position: static; }
 
 .scrollable {
   overflow-y: scroll;
@@ -45,7 +35,7 @@ body {
       .header__wrapper {
         background-color: #5A6978;
         width: 100%;
-        height: 36px;
+        height: 50px;
         overflow: hidden; } }
   .header__logo {
     background: #FF9052 no-repeat center;
@@ -85,12 +75,22 @@ body {
     background-color: #718394;
     transition: opacity 0.3s ease-in-out;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    padding-left: 20px;
-    padding-right: 20px; }
+    cursor: pointer; }
+    .header__account__wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding-left: 20px;
+      padding-right: 20px;
+      flex: 1; }
+      .header__account__wrapper:hover {
+        background-color: lightslategray; }
     .header__account__info {
       display: flex;
       flex-direction: column;
@@ -101,7 +101,8 @@ body {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-weight: 700; }
+        font-weight: 700;
+        padding-right: 10px; }
     .header__account__avatar {
       display: flex;
       align-items: center;
@@ -110,6 +111,20 @@ body {
         height: 60px;
         width: 60px;
         border-radius: 50%; }
+    .header__account__logout {
+      position: absolute;
+      top: 100px;
+      width: 250px;
+      background-color: #8e9caa;
+      opacity: 0.5;
+      text-align: center;
+      padding-top: 2px;
+      padding-bottom: 2px; }
+      .header__account__logout:hover {
+        background-color: #abb6c0; }
+      .header__account__logout a {
+        text-decoration: none;
+        color: white; }
   .header__account-mobile {
     flex: 1;
     display: flex;
@@ -117,8 +132,8 @@ body {
     justify-content: flex-end; }
   .header__burger {
     background: #FF9052 no-repeat center;
-    height: 36px;
-    width: 36px;
+    height: 50px;
+    width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;

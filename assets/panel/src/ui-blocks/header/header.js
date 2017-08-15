@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import './header.css';
 
 // Assets
@@ -35,7 +36,7 @@ export default class Header extends Component {
         this.onSearchKeyPress = this.onSearchKeyPress.bind(this);
         this.onSearchFocus = this.onSearchFocus.bind(this);
         this.onSearchBlur = this.onSearchBlur.bind(this);
-        this.onSearchClick = this.onSearchClick.bind(this);
+        this.onAccountClick = this.onAccountClick.bind(this);
     }
 
     onLogoClick() {
@@ -44,7 +45,7 @@ export default class Header extends Component {
 
     onSearchKeyPress(evt) {
         if (evt.keyCode === 13) {
-            this.onSearchClick();
+
         }
     }
 
@@ -57,8 +58,8 @@ export default class Header extends Component {
         console.log('SEARCH UNFOCUS');
     }
 
-    onSearchClick() {
-        console.log('SEARCH CLICK');
+    onAccountClick() {
+
     }
 
     render() {
@@ -104,17 +105,24 @@ export default class Header extends Component {
 
                         <div className="header__account"
                              style={{opacity: this.state.search ? 0 : 1}}>
-                            <div className="header__account__info">
-                                <div className="header__account__info__username">
-                                    Анатолий Ничведо
+                            <div className="header__account__wrapper">
+                                <div className="header__account__info"
+                                     onClick={this.onAccountClick}>
+                                    <div className="header__account__info__username">
+                                        Анатолий Ничведо
+                                    </div>
+                                    <div className="header__account__info__balance">
+                                        <i className={`fa fa-usd`} aria-hidden="true"/>
+                                        <span>13 500</span>
+                                    </div>
                                 </div>
-                                <div className="header__account__info__balance">
-                                    <i className={`fa fa-usd`} aria-hidden="true"/>
-                                    <span>13 500</span>
+                                <div className="header__account__avatar"
+                                     onClick={this.onAccountClick}>
+                                    <img src={NoAvatar} alt=""/>
                                 </div>
                             </div>
-                            <div className="header__account__avatar">
-                                <img src={NoAvatar} alt=""/>
+                            <div className="header__account__logout">
+                                <Link to={Sitemap.root}>Выход</Link>
                             </div>
                         </div>
                     </div>

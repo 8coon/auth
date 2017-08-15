@@ -64,7 +64,7 @@ $layout-account-width: 250 * $base-unit;
 $layout-logo-width: 200 * $base-unit;
 $layout-header-height: 80 * $base-unit;
 $layout-logo-border: 10 * $base-unit;
-$layout-header-burger-size: 36 * $base-unit;
+$layout-header-burger-size: 50 * $base-unit;
 $layout-header-total-height: $layout-header-height + 2 * $layout-logo-border;
 $layout-account-padding: 20 * $base-unit;
 $layout-avatar-size: $layout-header-total-height - 2 * $layout-account-padding;
@@ -108,24 +108,10 @@ body {
 
 	background-color: $black;
 	color: $font-color-default;
-	overflow: hidden;
 
 	font-family: $font-family-default;
 	font-size: $font-size-default;
 	font-weight: $font-weight-default;
-
-	#root {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		overflow-y: scroll;
-
-		> * {
-			position: static;
-		}
-	}
 }
 
 

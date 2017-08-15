@@ -80,12 +80,26 @@
 		background-color: lighten($gray, 10%);
 		transition: opacity $transition-default;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		box-sizing: border-box;
-		padding-left: $layout-account-padding;
-		padding-right: $layout-account-padding;
+		cursor: pointer;
+
+		&__wrapper {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			padding-left: $layout-account-padding;
+			padding-right: $layout-account-padding;
+			flex: 1;
+
+			&:hover {
+				background-color: lighten($gray, 12%);
+			}
+		}
 
 		&__info {
 			display: flex;
@@ -99,6 +113,7 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				font-weight: $font-weight-username;
+				padding-right: 0.5 * $layout-account-padding;
 			}
 		}
 
@@ -111,6 +126,26 @@
 				height: $layout-avatar-size;
 				width: $layout-avatar-size;
 				border-radius: 50%;
+			}
+		}
+
+		&__logout {
+			position: absolute;
+			top: $layout-header-total-height;
+			width: $layout-account-width;
+			background-color: lighten($gray, 20%);
+			opacity: $opacity-placeholder;
+			text-align: center;
+			padding-top: 2 * $base-unit;
+			padding-bottom: 2 * $base-unit;
+
+			&:hover {
+				background-color: lighten($gray, 30%);
+			}
+
+			a {
+				text-decoration: none;
+				color: $white;
 			}
 		}
 	}
