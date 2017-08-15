@@ -131,6 +131,7 @@
 
 		&__logout {
 			position: absolute;
+			z-index: $z-index-logout;
 			top: $layout-header-total-height;
 			width: $layout-account-width;
 			background-color: lighten($gray, 20%);

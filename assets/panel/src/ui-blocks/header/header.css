@@ -113,6 +113,7 @@ body {
         border-radius: 50%; }
     .header__account__logout {
       position: absolute;
+      z-index: 1001;
       top: 100px;
       width: 250px;
       background-color: #8e9caa;
