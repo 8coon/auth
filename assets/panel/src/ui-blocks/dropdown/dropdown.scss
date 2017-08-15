@@ -55,7 +55,7 @@
 .dropdown__items {
 	position: absolute;
 	background-color: $white;
-	padding: 10 * $base-unit;
+	box-shadow: 0 0 5 * $base-unit lighten($gray, 10%);
 	z-index: 1;
 	transition: margin-top 0.3s, opacity 0.3s;
 }
@@ -63,7 +63,6 @@
 
 .dropdown__item {
 	color: $black;
-	//min-width: 100%;
 	padding: 10 * $base-unit;
 	user-select: none;
 	transition: background-color 0.3s;

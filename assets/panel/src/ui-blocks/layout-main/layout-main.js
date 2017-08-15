@@ -10,6 +10,7 @@ import Sitemap from '../../sitemap';
 import Layout from '../layout/layout';
 import LayerNotify from '../layer-notify/layer-notify';
 import Header from '../header/header';
+import Menu from '../menu/menu';
 
 
 export default class LayoutMain extends Component {
@@ -20,13 +21,20 @@ export default class LayoutMain extends Component {
 
     constructor(props) {
         super(props);
+
+        this.onBurgerClick = this.onBurgerClick.bind(this);
+    }
+
+    onBurgerClick() {
+        this.refs.menu.toggle();
     }
 
     render() {
         return (
             <div className="layout-main">
                 <Layout>
-                    <Header/>
+                    <Header onBurgerClick={this.onBurgerClick}/>
+                    <Menu ref="menu"/>
                 </Layout>
 
             </div>

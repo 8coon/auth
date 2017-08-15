@@ -20,6 +20,11 @@ body {
     body #root > * {
       position: static; }
 
+.scrollable {
+  overflow-y: scroll;
+  touch-action: pan-y;
+  box-sizing: border-box; }
+
 .form__title {
   font-size: 38px;
   font-weight: 400;

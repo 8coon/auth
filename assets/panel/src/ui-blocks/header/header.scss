@@ -5,19 +5,23 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	background-color: $gray;
+	background-color: $black;
 
 	&__wrapper {
 		width: $layout-width;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
+		height: $layout-header-total-height;
+		transition: height $transition-default;
+		background-color: $gray;
 
 		@include respond-to($tablets) {
 			width: 100%;
 		}
 
 		@include respond-to($handhelds) {
+			background-color: $gray;
 			width: 100%;
 			height: $layout-header-burger-size;
 			overflow: hidden;
@@ -29,18 +33,86 @@
 		background-size: contain;
 		height: $layout-header-height;
 		width: $layout-logo-width;
+		min-width: $layout-logo-width;
 		border: $layout-logo-border solid $orange;
 		border-top-width: $layout-logo-border + 2 * $base-unit;
 		cursor: pointer;
 	}
 
 	&__search {
+		background-color: $gray;
 		flex: 1;
+		display: flex;
+		align-items: center;
+		overflow: visible;
+		padding-left: 30 * $base-unit;
+		padding-right: 30 * $base-unit;
+
+		input {
+			opacity: $opacity-search;
+			min-width: 100%;
+			width: 100%;
+			transition: opacity $transition-default, width $transition-default;
+
+			&:focus {
+				min-width: 190 * $base-unit;
+				width: 200%;
+				opacity: 1;
+			}
+		}
+
+		i {
+			transition: opacity $transition-default;
+			margin-left: 10 * $base-unit;
+
+			&:hover {
+				background-color: lighten($gray, 4%);
+			}
+
+			&:active {
+				background-color: darken($gray, 4%);
+			}
+		}
 	}
 
 	&__account {
 		width: $layout-account-width;
 		background-color: lighten($gray, 10%);
+		transition: opacity $transition-default;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		padding-left: $layout-account-padding;
+		padding-right: $layout-account-padding;
+
+		&__info {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+
+			&__username {
+				box-sizing: border-box;
+				max-width: $layout-account-width - 2 * $layout-account-padding - $layout-avatar-size;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-weight: $font-weight-username;
+			}
+		}
+
+		&__avatar {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			img {
+				height: $layout-avatar-size;
+				width: $layout-avatar-size;
+				border-radius: 50%;
+			}
+		}
 	}
 
 	&__account-mobile {

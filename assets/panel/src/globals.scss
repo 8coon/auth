@@ -6,15 +6,18 @@ $orange: #FF9052;
 $red: #DA7666;
 $green: #549F5D;
 $light-gray: #EEEEEE;
+$light: #F0F1F2;
 $white: white;
 
 $opacity-default: 1;
 $opacity-hover: 0.8;
 $opacity-placeholder: 0.5;
 $opacity-notify-box: 0.7;
+$opacity-search: 0.3;
 
-$transition-default: 0.5s ease-in-out;
+$transition-default: 0.3s ease-in-out;
 
+$z-index-menu: 1000;
 $z-index-notify: 10000;
 $z-index-tooltip: 10001;
 $z-index-notify-box: 10002;
@@ -39,6 +42,7 @@ $font-weight-default: 400;
 $font-weight-header: 700;
 $font-weight-title: 400;
 $font-weight-button: 700;
+$font-weight-username: 700;
 
 $font-color-default: $white;
 $font-color-header: $gray;
@@ -56,11 +60,14 @@ $form-control-margin: 2 * $base-unit;
 $form-control-padding: 4 * $base-unit;
 
 $layout-width: 900 * $base-unit;
-$layout-account-width: 300 * $base-unit;
+$layout-account-width: 250 * $base-unit;
 $layout-logo-width: 200 * $base-unit;
 $layout-header-height: 80 * $base-unit;
 $layout-logo-border: 10 * $base-unit;
 $layout-header-burger-size: 36 * $base-unit;
+$layout-header-total-height: $layout-header-height + 2 * $layout-logo-border;
+$layout-account-padding: 20 * $base-unit;
+$layout-avatar-size: $layout-header-total-height - 2 * $layout-account-padding;
 
 
 
@@ -119,4 +126,11 @@ body {
 			position: static;
 		}
 	}
+}
+
+
+.scrollable {
+	overflow-y: scroll;
+	touch-action: pan-y;
+	box-sizing: border-box;
 }

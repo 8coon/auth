@@ -20,21 +20,30 @@ body {
     body #root > * {
       position: static; }
 
+.scrollable {
+  overflow-y: scroll;
+  touch-action: pan-y;
+  box-sizing: border-box; }
+
 .header {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #5A6978; }
+  background-color: #343F4B; }
   .header__wrapper {
     width: 900px;
     display: flex;
     flex-direction: row;
-    justify-content: center; }
+    justify-content: center;
+    height: 100px;
+    transition: height 0.3s ease-in-out;
+    background-color: #5A6978; }
     @media only screen and (min-width: 676px) and (max-width: 1000px) {
       .header__wrapper {
         width: 100%; } }
     @media only screen and (max-width: 675px) {
       .header__wrapper {
+        background-color: #5A6978;
         width: 100%;
         height: 36px;
         overflow: hidden; } }
@@ -43,14 +52,64 @@ body {
     background-size: contain;
     height: 80px;
     width: 200px;
+    min-width: 200px;
     border: 10px solid #FF9052;
     border-top-width: 12px;
     cursor: pointer; }
   .header__search {
-    flex: 1; }
+    background-color: #5A6978;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+    padding-left: 30px;
+    padding-right: 30px; }
+    .header__search input {
+      opacity: 0.3;
+      min-width: 100%;
+      width: 100%;
+      transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out; }
+      .header__search input:focus {
+        min-width: 190px;
+        width: 200%;
+        opacity: 1; }
+    .header__search i {
+      transition: opacity 0.3s ease-in-out;
+      margin-left: 10px; }
+      .header__search i:hover {
+        background-color: #637384; }
+      .header__search i:active {
+        background-color: #515f6c; }
   .header__account {
-    width: 300px;
-    background-color: #718394; }
+    width: 250px;
+    background-color: #718394;
+    transition: opacity 0.3s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px; }
+    .header__account__info {
+      display: flex;
+      flex-direction: column;
+      flex: 1; }
+      .header__account__info__username {
+        box-sizing: border-box;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 700; }
+    .header__account__avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      .header__account__avatar img {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%; }
   .header__account-mobile {
     flex: 1;
     display: flex;

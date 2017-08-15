@@ -20,6 +20,11 @@ body {
     body #root > * {
       position: static; }
 
+.scrollable {
+  overflow-y: scroll;
+  touch-action: pan-y;
+  box-sizing: border-box; }
+
 .layer-notify {
   position: fixed;
   overflow: hidden;

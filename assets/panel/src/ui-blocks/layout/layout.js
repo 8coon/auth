@@ -29,9 +29,9 @@ export default class Layout extends Component {
         const width = window.innerWidth;
         let newSize = this.state.size;
 
-        if (width < 675) {
+        if (width <= 675) {
             newSize = LayoutSize.handheld;
-        } else if (width < 1000) {
+        } else if (width <= 1000) {
             newSize = LayoutSize.tablet;
         } else {
             newSize = LayoutSize.desktop;
@@ -56,7 +56,7 @@ export default class Layout extends Component {
             return React.cloneElement(child, {...child.props, size: this.state.size});
         });
 
-        return (<div>{children}</div>);
+        return (<div style={{height: '100%'}}>{children}</div>);
     }
 
 }

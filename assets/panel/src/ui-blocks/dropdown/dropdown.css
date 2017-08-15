@@ -20,6 +20,11 @@ body {
     body #root > * {
       position: static; }
 
+.scrollable {
+  overflow-y: scroll;
+  touch-action: pan-y;
+  box-sizing: border-box; }
+
 .dropdown-control {
   font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
   font-size: 15px;
@@ -54,7 +59,7 @@ body {
 .dropdown__items {
   position: absolute;
   background-color: white;
-  padding: 10px;
+  box-shadow: 0 0 5px #718394;
   z-index: 1;
   transition: margin-top 0.3s, opacity 0.3s; }
 

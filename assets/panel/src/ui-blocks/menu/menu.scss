@@ -1,0 +1,136 @@
+@import "../../globals.scss";
+
+
+$menu-width: 220 * $base-unit;
+$menu-item-height: 30 * $base-unit;
+$strip-width: 10 * $base-unit;
+
+
+.menu {
+	justify-content: center;
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	box-sizing: border-box;
+
+	&__strip {
+		width: $strip-width;
+		background-color: $black;
+	}
+
+	&__links {
+		width: $menu-width - $strip-width;
+		background-color: $light;
+		box-sizing: border-box;
+		transition: width $transition-default,
+					color $transition-default;
+	}
+
+	&__content {
+		background-color: $white;
+		color: $black;
+		box-sizing: border-box;
+		flex: 1;
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: row;
+		padding: 5 * $base-unit 20 * $base-unit;
+		cursor: pointer;
+		text-decoration: none;
+		color: $gray;
+		height: $menu-item-height;
+		line-height: $menu-item-height;
+
+		&__icon {
+			flex: 1;
+			min-width: 20 * $base-unit;
+			max-width: 20 * $base-unit;
+			text-align: center;
+			padding-right: 15 * $base-unit;
+		}
+
+		&:hover {
+			background-color: lighten($light, 4%);
+		}
+
+		&:active {
+			background-color: $gray;
+			color: $light;
+		}
+
+		&_selected {
+			background-color: $gray;
+			color: $light;
+
+			&:hover {
+				background-color: $gray;
+				color: $light;
+			}
+		}
+	}
+
+	@include respond-to($desktop) {
+		&__strip {
+			display: none;
+		}
+
+		&__links {
+			width: $menu-width;
+		}
+
+		&__content {
+			max-width: $layout-width - $menu-width;
+		}
+	}
+
+	@include respond-to($handhelds) {
+		.menu__strip {
+			display: none;
+		}
+
+		.menu__links_absolute {
+			position: absolute;
+			top: $layout-header-burger-size;
+			z-index: $z-index-menu;
+			height: 100%;
+			overflow-x: hidden;
+			transition: left $transition-default;
+		}
+
+		.menu__links_collapsed {
+			left: -$menu-width;
+		}
+
+		.menu__links_expanded {
+			left: 0;
+		}
+
+		.menu__links_small {
+			width: $layout-header-burger-size;
+			background-color: $black;
+
+			.menu__item {
+				padding: 5 * $base-unit 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: $light;
+				height: $menu-item-height;
+
+				&__text {
+					display: none;
+				}
+
+				&__icon {
+					padding: 0;
+				}
+
+				&:hover {
+					background-color: $gray;
+				}
+			}
+		}
+	}
+}

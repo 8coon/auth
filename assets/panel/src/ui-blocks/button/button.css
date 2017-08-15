@@ -20,6 +20,11 @@ body {
     body #root > * {
       position: static; }
 
+.scrollable {
+  overflow-y: scroll;
+  touch-action: pan-y;
+  box-sizing: border-box; }
+
 .button {
   margin: 2px;
   padding: 4px;

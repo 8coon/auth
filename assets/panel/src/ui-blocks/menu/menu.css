@@ -1,0 +1,109 @@
+body {
+  height: 100%; }
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #343F4B;
+  color: white;
+  overflow: hidden;
+  font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 400; }
+  body #root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll; }
+    body #root > * {
+      position: static; }
+
+.scrollable {
+  overflow-y: scroll;
+  touch-action: pan-y;
+  box-sizing: border-box; }
+
+.menu {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  box-sizing: border-box; }
+  .menu__strip {
+    width: 10px;
+    background-color: #343F4B; }
+  .menu__links {
+    width: 210px;
+    background-color: #F0F1F2;
+    box-sizing: border-box;
+    transition: width 0.3s ease-in-out, color 0.3s ease-in-out; }
+  .menu__content {
+    background-color: white;
+    color: #343F4B;
+    box-sizing: border-box;
+    flex: 1; }
+  .menu__item {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #5A6978;
+    height: 30px;
+    line-height: 30px; }
+    .menu__item__icon {
+      flex: 1;
+      min-width: 20px;
+      max-width: 20px;
+      text-align: center;
+      padding-right: 15px; }
+    .menu__item:hover {
+      background-color: #fbfbfb; }
+    .menu__item:active {
+      background-color: #5A6978;
+      color: #F0F1F2; }
+    .menu__item_selected {
+      background-color: #5A6978;
+      color: #F0F1F2; }
+      .menu__item_selected:hover {
+        background-color: #5A6978;
+        color: #F0F1F2; }
+  @media only screen and (min-width: 1001px) {
+    .menu__strip {
+      display: none; }
+    .menu__links {
+      width: 220px; }
+    .menu__content {
+      max-width: 680px; } }
+  @media only screen and (max-width: 675px) {
+    .menu .menu__strip {
+      display: none; }
+    .menu .menu__links_absolute {
+      position: absolute;
+      top: 36px;
+      z-index: 1000;
+      height: 100%;
+      overflow-x: hidden;
+      transition: left 0.3s ease-in-out; }
+    .menu .menu__links_collapsed {
+      left: -220px; }
+    .menu .menu__links_expanded {
+      left: 0; }
+    .menu .menu__links_small {
+      width: 36px;
+      background-color: #343F4B; }
+      .menu .menu__links_small .menu__item {
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #F0F1F2;
+        height: 30px; }
+        .menu .menu__links_small .menu__item__text {
+          display: none; }
+        .menu .menu__links_small .menu__item__icon {
+          padding: 0; }
+        .menu .menu__links_small .menu__item:hover {
+          background-color: #5A6978; } }
