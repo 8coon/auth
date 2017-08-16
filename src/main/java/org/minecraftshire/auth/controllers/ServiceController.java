@@ -39,6 +39,9 @@ public class ServiceController {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
+        this.jdbc.update("DELETE FROM Tokens");
+        this.jdbc.update("DELETE FROM TokenHistory");
+        this.jdbc.update("DELETE FROM Notifications");
         this.jdbc.update("DELETE FROM Confirmations");
         this.jdbc.update("DELETE FROM Users");
 
@@ -82,7 +85,9 @@ public class ServiceController {
                 new StatsResponse(
                     this.jdbc.queryForObject("SELECT count(*) FROM Users", Integer.class),
                     this.jdbc.queryForObject("SELECT count(*) FROM Confirmations", Integer.class),
-                    this.jdbc.queryForObject("SELECT count(*) FROM Tokens", Integer.class)
+                    this.jdbc.queryForObject("SELECT count(*) FROM Tokens", Integer.class),
+                    this.jdbc.queryForObject("SELECT count(*) FROM TokenHistory", Integer.class),
+                    this.jdbc.queryForObject("SELECT count(*) FROM Notifications", Integer.class)
                 ),
                 HttpStatus.OK
         );

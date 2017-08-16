@@ -48,7 +48,7 @@ public class NotificationRepository extends Repository {
 
     public List<NotificationData> get(String username) {
         return this.jdbc.query(
-                "SELECT * FROM Notifications WHERE username = ? ORDER BY created_at LIMIT 1000",
+                "SELECT * FROM Notifications WHERE username = ? ORDER BY created_at DESC LIMIT 1000",
                 new NotificationData(),
                 username
         );
