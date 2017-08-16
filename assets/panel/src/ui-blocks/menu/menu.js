@@ -16,6 +16,10 @@ export default class Menu extends Component {
         router: PropTypes.object,
     };
 
+    static defaultProps = {
+        title: '',
+    };
+
     constructor(props) {
         super(props);
 
@@ -76,7 +80,7 @@ export default class Menu extends Component {
             <div className={`menu__links menu__links_${state} ${absolute ? 'menu__links_absolute' : ''}`}>
                 {state !== 'normal' && state !== 'small' && this.renderMenuItem(null, 'Скрыть', 'fa-bars')}
                 {this.renderMenuItem('root', 'Профиль', 'fa-user')}
-                {this.renderMenuItem('root', 'Уведомления', 'fa-bell', 73)}
+                {this.renderMenuItem('notifications', 'Уведомления', 'fa-bell', 73)}
                 {this.renderMenuItem('root', 'Персонажи', 'fa-users')}
                 {this.renderMenuItem('root', 'Государства', 'fa-flag')}
                 {this.renderMenuItem('root', 'Финансы', 'fa-usd')}
@@ -88,16 +92,6 @@ export default class Menu extends Component {
         )
     }
 
-    renderContent() {
-        const content = [];
-
-        for (let i = 0; i < 100; i++) {
-            content.push(<div key={i}>Content</div>);
-        }
-
-        return content;
-    }
-
     render() {
         return (
             <div className="menu">
@@ -107,8 +101,13 @@ export default class Menu extends Component {
                 {this.props.size === LayoutSize.handheld && this.renderLinks(this.state.expanded)}
 
                 <div className="menu__content">
-                    <div className="menu__content__wrapper">
-                        {this.renderContent()}
+                    <div className="page menu__content__wrapper">
+                        <div className="page__title">
+                            {this.props.title}
+                        </div>
+                        <div className="page__content">
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
             </div>

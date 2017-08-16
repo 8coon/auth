@@ -40,6 +40,7 @@ $font-size-header: 18px;
 $font-size-title: 38px;
 $font-size-small: 12px;
 $font-size-smallest: 9px;
+$font-size-page-title: 20px;
 
 $font-weight-default: 400;
 $font-weight-header: 700;
@@ -72,6 +73,7 @@ $layout-header-total-height: $layout-header-height + 2 * $layout-logo-border;
 $layout-account-padding: 20 * $base-unit;
 $layout-avatar-size: $layout-header-total-height - 2 * $layout-account-padding;
 
+$page-content-padding: 35 * $base-unit;
 
 
 $handhelds: handhelds;

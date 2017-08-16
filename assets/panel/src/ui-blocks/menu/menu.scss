@@ -30,7 +30,7 @@ $strip-width: 10 * $base-unit;
 		color: $black;
 		box-sizing: border-box;
 		flex: 1;
-		padding: 20 * $base-unit;
+		padding: 0;
 	}
 
 	&__item {
@@ -200,5 +200,30 @@ $strip-width: 10 * $base-unit;
 				}
 			}
 		}
+	}
+}
+
+
+.page {
+	&__title {
+		width: 100%;
+		font-size: $font-size-page-title;
+		font-weight: $font-weight-title;
+		border-bottom: 1 * $base-unit solid darken($light, 5%);
+		color: lighten($gray, 5%);
+		padding: 20 * $base-unit;
+		padding-bottom: 5 * $base-unit;
+		padding-right: $page-content-padding;
+		padding-left: $page-content-padding;
+		margin: 0;
+		background-color: lighten($light, 3%);
+		box-sizing: border-box;
+	}
+
+	&__content {
+		padding-left: $page-content-padding;
+		padding-right: $page-content-padding;
+		padding-bottom: 40 * $base-unit;
+		min-height: 400 * $base-unit;
 	}
 }

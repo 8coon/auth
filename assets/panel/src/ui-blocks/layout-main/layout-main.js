@@ -19,6 +19,10 @@ export default class LayoutMain extends Component {
         router: PropTypes.object,
     };
 
+    static defaultProps = {
+        title: '',
+    };
+
     constructor(props) {
         super(props);
 
@@ -34,7 +38,9 @@ export default class LayoutMain extends Component {
             <div className="layout-main">
                 <Layout style={{boxSizing: 'border-box'}}>
                     <Header onBurgerClick={this.onBurgerClick}/>
-                    <Menu ref="menu"/>
+                    <Menu ref="menu" title={this.props.title}>
+                        {this.props.children}
+                    </Menu>
                 </Layout>
 
             </div>

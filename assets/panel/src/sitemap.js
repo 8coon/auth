@@ -11,4 +11,5 @@ export default {
     restoreSuccess: `${appRoot}/restore_success`,
     passwordReset: `${appRoot}/password_reset`,
     settings: `${appRoot}/settings`,
+    notifications: `${appRoot}/notifications`,
 };
