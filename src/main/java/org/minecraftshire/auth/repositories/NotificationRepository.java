@@ -1,8 +1,11 @@
 package org.minecraftshire.auth.repositories;
 
 
+import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.data.NotificationData;
 import org.minecraftshire.auth.utils.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -12,7 +15,11 @@ import java.util.List;
 @org.springframework.stereotype.Repository
 public class NotificationRepository extends Repository {
 
+    @Autowired
+    public UserRepository users;
 
+
+    @Transactional
     public void add(NotificationData notification) {
         this.jdbc.update(
                 "INSERT INTO Notifications " +
@@ -24,9 +31,11 @@ public class NotificationRepository extends Repository {
                 notification.getPictureUrl(),
                 notification.getDetailsUrl()
         );
+        this.users.update(notification.getUsername());
     }
 
 
+    @Transactional
     public void truncate() {
         this.jdbc.update(
                 "DELETE FROM Notifications WHERE !unread AND now() - created_at > INTERVAL '10 days'"
@@ -34,6 +43,7 @@ public class NotificationRepository extends Repository {
     }
 
 
+    @Transactional
     public void markRead(String username, int[] idx) {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
@@ -58,9 +68,11 @@ public class NotificationRepository extends Repository {
                 username,
                 sb.toString()
         );
+        this.users.update(username);
     }
 
 
+    @Transactional
     public List<NotificationData> get(String username, boolean unread) {
         String unreadCond = "";
 

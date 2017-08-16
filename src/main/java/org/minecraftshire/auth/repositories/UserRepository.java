@@ -73,6 +73,7 @@ public class UserRepository extends Repository {
     }
 
 
+    @Transactional
     public String login(CredentialsData credentials, String ip) throws WrongCredentialsException {
         UserData user;
 
@@ -103,7 +104,7 @@ public class UserRepository extends Repository {
         return tokens.getAuthToken(credentials, user, ip);
     }
 
-
+    @Transactional
     public void changePassword(String username, String oldPassword, String newPassword) throws WrongCredentialsException {
         UserData user;
 
@@ -135,6 +136,7 @@ public class UserRepository extends Repository {
     }
 
 
+    @Transactional
     public void resetPassword(String email) throws WrongCredentialsException {
         String username;
 
@@ -152,6 +154,7 @@ public class UserRepository extends Repository {
     }
 
 
+    @Transactional
     public void setPassword(long code, String password) throws WrongCredentialsException {
         String username = confirmations.getUsername(code);
 
@@ -173,6 +176,7 @@ public class UserRepository extends Repository {
     }
 
 
+    @Transactional
     public UserStatusData getStatus(String username, String lastModified) throws EmptyResultDataAccessException {
         if (lastModified != null) {
             List<UserStatusData> users = jdbc.query(
@@ -199,6 +203,15 @@ public class UserRepository extends Repository {
 
         user.setNotifications(notifications.get(username, true));
         return user;
+    }
+
+
+    /**
+     * Sets lastModified to now()
+     */
+    @Transactional
+    public void update(String username) {
+        jdbc.update("UPDATE Users SET lastModified = now() WHERE username = ?", username);
     }
 
 
