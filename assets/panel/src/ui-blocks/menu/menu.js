@@ -19,24 +19,42 @@ export default class Menu extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {expanded: false}
+        this.state = {expanded: false};
+        this.onBurgerClick = this.onBurgerClick.bind(this);
     }
 
     toggle(expanded) {
         this.setState({expanded: expanded === void 0 ? !this.state.expanded : expanded});
     }
 
-    renderMenuItem(link, text, icon) {
+    onBurgerClick(evt) {
+        evt.preventDefault();
+        this.toggle();
+    }
+
+    renderMenuItem(link, text, icon, counter = 0) {
         const location = this.context.router.route.match.path;
-        const route = Sitemap[link];
+        const route = !link ? Sitemap.root : Sitemap[link];
+        counter = counter === 0 ? null : (counter < 100 ? counter : '99+');
 
         return (
             <Link to={route} title={text}
-                  className={`menu__item ${location === route ? 'menu__item_selected' : ''}`}>
+                  className={`menu__item ${location === route ? 'menu__item_selected' : ''} ${
+                        !link ? 'menu__item_grayed' : ''
+                      }`}
+                  onClick={!link ? this.onBurgerClick : null}>
                 <div className="menu__item__icon">
                     <i className={`fa ${icon}`} aria-hidden="true"/>
+                    {counter !== null && (
+                        <span className="menu__item__icon__counter">{counter}</span>
+                    )}
                 </div>
-                <div className="menu__item__text">{text}</div>
+                <div className="menu__item__text">
+                    {text}
+                    {counter !== null && (
+                        <span className="menu__item__text__counter">{counter}</span>
+                    )}
+                    </div>
             </Link>
         )
     }
@@ -56,8 +74,9 @@ export default class Menu extends Component {
 
         return (
             <div className={`menu__links menu__links_${state} ${absolute ? 'menu__links_absolute' : ''}`}>
+                {state !== 'normal' && state !== 'small' && this.renderMenuItem(null, 'Скрыть', 'fa-bars')}
                 {this.renderMenuItem('root', 'Профиль', 'fa-user')}
-                {this.renderMenuItem('root', 'Закладки', 'fa-star')}
+                {this.renderMenuItem('root', 'Уведомления', 'fa-bell', 73)}
                 {this.renderMenuItem('root', 'Персонажи', 'fa-users')}
                 {this.renderMenuItem('root', 'Государства', 'fa-flag')}
                 {this.renderMenuItem('root', 'Финансы', 'fa-usd')}

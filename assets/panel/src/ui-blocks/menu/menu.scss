@@ -44,11 +44,45 @@ $strip-width: 10 * $base-unit;
 		line-height: $menu-item-height;
 
 		&__icon {
+			position: relative;
 			flex: 1;
 			min-width: 20 * $base-unit;
 			max-width: 20 * $base-unit;
 			text-align: center;
 			padding-right: 15 * $base-unit;
+
+			&__counter {
+				display: none;
+			}
+		}
+
+		&__text {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+
+			&__counter {
+				font-size: $font-size-small;
+				height: 24 * $base-unit;
+				width: 28 * $base-unit;
+				text-align: center;
+				line-height: 24 * $base-unit;
+				border-radius: $border-radius;
+				margin-right: -14 * $base-unit;
+
+				background-color: $red;
+				color: $white;
+			}
+		}
+
+		&_grayed {
+			opacity: $opacity-placeholder;
+
+			&:hover {
+				background-color: $light !important;
+			}
 		}
 
 		&:hover {
@@ -139,10 +173,30 @@ $strip-width: 10 * $base-unit;
 
 				&__icon {
 					padding: 0;
+
+					&__counter {
+						display: inline-block;
+						position: absolute;
+						top: -3 * $base-unit;
+						right: -13 * $base-unit;
+						font-size: $font-size-smallest;
+						color: $white;
+						background-color: $red;
+						width: 18 * $base-unit;
+						height: 18 * $base-unit;
+						line-height: 18 * $base-unit;
+						border-radius: 50%;
+					}
 				}
 
 				&:hover {
 					background-color: $gray;
+				}
+
+				&_grayed {
+					&:hover {
+						background-color: $black !important;
+					}
 				}
 			}
 		}
