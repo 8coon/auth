@@ -10,6 +10,7 @@ import org.minecraftshire.auth.repositories.UserRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
 import org.minecraftshire.auth.utils.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +82,29 @@ public class UserController {
                     HttpStatus.BAD_REQUEST
             );
         }
+    }
+
+
+    @AuthRequired
+    @PostMapping("/status")
+    public ResponseEntity status(
+            @RequestBody AuthTokenWithLastModifiedData data,
+            UserAgent userAgent,
+            SessionData sessionData
+    ) {
+        UserStatusData status;
+
+        try {
+            status = users.getStatus(sessionData.getUsername(), data.getLastModified());
+        } catch (EmptyResultDataAccessException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        if (status == null) {
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+        }
+
+        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
 

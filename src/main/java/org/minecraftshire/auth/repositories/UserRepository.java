@@ -3,15 +3,16 @@ package org.minecraftshire.auth.repositories;
 
 import org.minecraftshire.auth.data.CredentialsData;
 import org.minecraftshire.auth.data.UserData;
+import org.minecraftshire.auth.data.UserStatusData;
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.ExistsExceptionCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
-import org.minecraftshire.auth.services.EmailSender;
 import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
@@ -19,6 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
 import java.util.Random;
 
 
@@ -28,12 +30,14 @@ public class UserRepository extends Repository {
     private SecureRandom random = new SecureRandom();
     private ConfirmationRepository confirmations;
     private TokenRepository tokens;
+    private NotificationRepository notifications;
 
 
     @Autowired
-    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens) {
+    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens, NotificationRepository notifications) {
         this.confirmations = confirmations;
         this.tokens = tokens;
+        this.notifications = notifications;
     }
 
 
@@ -166,6 +170,35 @@ public class UserRepository extends Repository {
                 "UPDATE Users SET password = ? WHERE username = ?",
                 newPassword, username
         );
+    }
+
+
+    public UserStatusData getStatus(String username, String lastModified) throws EmptyResultDataAccessException {
+        if (lastModified != null) {
+            List<UserStatusData> users = jdbc.query(
+                    "SELECT username, last_modified, free_balance, total_balance FROM Users WHERE " +
+                            "username = ? AND last_modified > ? LIMIT 1",
+                    new UserStatusData(),
+                    username, lastModified
+            );
+
+            if (users.size() == 0) {
+                return null;
+            }
+
+            UserStatusData user = users.get(0);
+            user.setNotifications(notifications.get(username, true));
+        }
+
+        UserStatusData user = jdbc.queryForObject(
+                "SELECT username, last_modified, free_balance, total_balance FROM Users WHERE " +
+                        "username = ? LIMIT 1",
+                new UserStatusData(),
+                username
+        );
+
+        user.setNotifications(notifications.get(username, true));
+        return user;
     }
 
 
