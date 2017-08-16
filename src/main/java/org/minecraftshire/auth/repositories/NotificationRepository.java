@@ -15,10 +15,9 @@ public class NotificationRepository extends Repository {
     public void add(NotificationData notification) {
         this.jdbc.update(
                 "INSERT INTO Notifications " +
-                        "(username, created_at, title, \"text\", picture_url, details_url) " +
-                        "VALUES (?, ?, ?, ?, ?, ?)",
+                        "(username, title, \"text\", picture_url, details_url) " +
+                        "VALUES (?, ?, ?, ?, ?)",
                 notification.getUsername(),
-                notification.getCreatedAt(),
                 notification.getTitle(),
                 notification.getText(),
                 notification.getPictureUrl(),
