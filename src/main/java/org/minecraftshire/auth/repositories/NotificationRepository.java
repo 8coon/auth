@@ -46,7 +46,7 @@ public class NotificationRepository extends Repository {
     @Transactional
     public void markRead(String username, Integer[] idx) {
         StringBuilder sb = new StringBuilder();
-        sb.append('{');
+        sb.append('(');
 
         int i = 0;
         for (int value: idx) {
@@ -59,7 +59,7 @@ public class NotificationRepository extends Repository {
             i++;
         }
 
-        sb.append('}');
+        sb.append(')');
 
         this.jdbc.update(
                 "UPDATE Notifications SET unread = FALSE WHERE username = ? AND id IN " + sb.toString(),
