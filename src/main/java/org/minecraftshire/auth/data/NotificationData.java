@@ -35,6 +35,7 @@ public class NotificationData extends AuthTokenData implements RowMapper<Notific
     ) {
         super(authToken);
 
+        this.id = id;
         this.username = username;
         this.createdAt = createdAt;
         this.title = title;
