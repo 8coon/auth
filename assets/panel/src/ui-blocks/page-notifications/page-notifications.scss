@@ -1,2 +1,58 @@
 @import "../../globals.scss";
 
+
+.notification {
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
+	padding: 10 * $base-unit;
+
+	&:hover {
+		background-color: lighten($gray, 57%)
+	}
+
+	&_unread {
+		background-color: lighten($gray, 54%);
+
+		&:hover {
+			background-color: lighten($gray, 55%)
+		}
+	}
+
+	&__text {
+		flex: 1;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		&__title {
+			font-weight: $font-weight-button;
+		}
+	}
+
+	&__picture {
+		&__img {
+			height: 60 * $base-unit;
+			width: 60 * $base-unit;
+			background-size: cover;
+			border-radius: 50%;
+		}
+	}
+}
+
+
+.notification-delim {
+	margin-top: 20 * $base-unit;
+	margin-bottom: 20 * $base-unit;
+	overflow: visible;
+	height: 4 * $base-unit;
+	text-align: center;
+	background-color: lighten($gray, 55%);
+	color: lighten($gray, 20%);
+
+	&__text {
+		position: relative;
+		top: -9 * $base-unit;
+	}
+}
