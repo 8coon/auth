@@ -16,14 +16,9 @@ import java.security.SecureRandom;
 @Repository
 public class ConfirmationRepository extends org.minecraftshire.auth.repositories.Repository {
 
+    @Autowired
     private EmailSender mail;
     private SecureRandom random = new SecureRandom();
-
-
-    @Autowired
-    public ConfirmationRepository(EmailSender mail) {
-        this.mail = mail;
-    }
 
 
     public void requestSignUpConfirmation(String username, String email) {

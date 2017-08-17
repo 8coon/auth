@@ -30,11 +30,11 @@ public class UserRepository extends Repository {
     private SecureRandom random = new SecureRandom();
 
     @Autowired
-    private ConfirmationRepository confirmations;
+    public ConfirmationRepository confirmations;
     @Autowired
-    private TokenRepository tokens;
+    public TokenRepository tokens;
     @Autowired
-    private NotificationRepository notifications;
+    public NotificationRepository notifications;
 
 
 
