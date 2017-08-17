@@ -13,6 +13,9 @@ import LayoutMain from '../layout-main/layout-main';
 import listNotifications from 'minecraftshire-jsapi/src/method/notification/list';
 import markReadNotifications from 'minecraftshire-jsapi/src/method/notification/markRead';
 
+// Services
+import Status from '../../services/status';
+
 
 export default class PageNotifications extends Component {
 
@@ -20,6 +23,8 @@ export default class PageNotifications extends Component {
         router: PropTypes.object,
         model: PropTypes.object,
     };
+
+    static instances = [];
 
     static prepare() {
         return new Promise(resolve => {
@@ -31,7 +36,12 @@ export default class PageNotifications extends Component {
                         .filter(notification => notification.is('unread'))
                         .pluck('id');
 
-                    //markReadNotifications(notifications.filter())
+                    if (ids.length > 0) {
+                        markReadNotifications(ids)
+                            .then(() => PageNotifications.prepare())
+                            .then(model => PageNotifications.refreshInstances(model))
+                            .then(() => Status.reloadModel());
+                    }
                 })
                 .catch(() => {
                     resolve({error: 'Не удалось загрузить данные.'});
@@ -39,11 +49,32 @@ export default class PageNotifications extends Component {
         });
     }
 
+    static refreshInstances(model) {
+        PageNotifications.instances.forEach(instance => Object.assign(instance.context.model, model));
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {allRead: false};
+    }
+
+    componentDidMount() {
+        PageNotifications.instances.push(this);
+    }
+
+    componentWillUnmount() {
+        PageNotifications.instances.splice(PageNotifications.instances.indexOf(this), 1);
+    }
+
     renderNotifications(blocks) {
         const result = [];
         const now = new Date(Date.now());
 
         blocks.forEach(block => {
+            if (block.length === 0) {
+                return;
+            }
+
             const days = dateDiffInDays(block[0].getCreatedAt(), now);
 
             if (days > 0) {

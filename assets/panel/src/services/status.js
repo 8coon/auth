@@ -1,4 +1,7 @@
 
+// Emitter
+import Emitter from 'minecraftshire-jsapi/src/emitter/Emitter';
+
 // Models
 import User from 'minecraftshire-jsapi/src/models/User/User';
 
@@ -9,58 +12,70 @@ import statusUser from 'minecraftshire-jsapi/src/method/user/status';
 const STATUS_MIN_INTERVAL = 1000;
 
 
-export default class Status {
+function Status() {
+    Emitter.apply(this);
 
-    static user = null;
-    static lastFetched = 0;
+    this.user = null;
+    this.lastFetched = 0;
+
+    this.reloadModel = this.reloadModel.bind(this);
+}
+
+Status.prototype = Object.create(Emitter.prototype);
+
+Object.assign(Status.prototype, {
+
+    EVT_STATUS_CHANGE: 'status',
 
     /**
      * Force fetch status
      * @param {Date} lastModified
      * @return {Promise}
      */
-    static fetch(lastModified = null) {
+    fetch(lastModified = null) {
         return new Promise((resolve, reject) => {
             statusUser(lastModified)
                 .then(user => {
-                    Status.lastFetched = Date.now();
-                    Status.user = user;
+                    this.lastFetched = Date.now();
+                    this.user = user;
+
+                    this.$emit(this.EVT_STATUS_CHANGE, user);
                     resolve(user);
                 })
                 .catch(xhr => {
                     // Content not modified
                     if (xhr.status === 304) {
-                        Status.lastFetched = Date.now();
-                        resolve(Status.user);
+                        this.lastFetched = Date.now();
+                        resolve(this.user);
                         return;
                     }
 
                     reject(xhr);
                 })
         });
-    }
+    },
 
     /**
      * Reload status
      * @param {boolean} forced
      * @return {Promise}
      */
-    static reload(forced = false) {
-        if (forced || !Status.user || Date.now() - Status.lastFetched > STATUS_MIN_INTERVAL) {
-            const lastModified = Status.user && Status.user.get('lastModified');
-            return Status.fetch(lastModified);
+    reload(forced = false) {
+        if (forced || !this.user || Date.now() - this.lastFetched > STATUS_MIN_INTERVAL) {
+            const lastModified = this.user && this.user.get('lastModified');
+            return this.fetch(lastModified);
         }
 
-        return Promise.resolve(Status.user);
-    }
+        return Promise.resolve(this.user);
+    },
 
     /**
      * Reload status and never reject, resolve with {model: User}
      * @param {boolean} forced
      */
-    static reloadModel(forced = false) {
+    reloadModel(forced = false) {
         return new Promise(resolve => {
-            Status.reload(forced)
+            this.reload(forced)
                 .then(user => {
                     resolve({user});
                 })
@@ -68,6 +83,9 @@ export default class Status {
                     resolve({});
                 });
         });
-    }
+    },
 
-}
+});
+
+export default new Status();
+

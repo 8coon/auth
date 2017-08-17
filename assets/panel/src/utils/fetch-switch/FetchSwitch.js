@@ -27,8 +27,6 @@ export default class FetchSwitch extends Component {
         this.state = {currentComponent: null, model: {}};
         this.futureComponent = {props: {path: 1}};
         this.navigating = false;
-
-        this.navigate = this.navigate.bind(this);
     }
 
     getChildContext() {

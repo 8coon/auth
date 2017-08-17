@@ -7,7 +7,10 @@ import './menu.css';
 import Sitemap from '../../sitemap';
 
 // UI-Blocks
-import Layout, {LayoutSize} from '../layout/layout';
+import {LayoutSize} from '../layout/layout';
+
+// Services
+import Status from '../../services/status';
 
 
 export default class Menu extends Component {
@@ -21,11 +24,28 @@ export default class Menu extends Component {
         title: '',
     };
 
+    static countUnread(model) {
+        return model && model.notifications && model.notifications.filter(n => n.is('unread')).length;
+    }
+
     constructor(props) {
         super(props);
+        this.state = {expanded: false, unreadCount: Menu.countUnread(Status.user)};
 
-        this.state = {expanded: false, unreadCount: 0};
         this.onBurgerClick = this.onBurgerClick.bind(this);
+        this.onStatusFetch = this.onStatusFetch.bind(this);
+    }
+
+    componentDidMount() {
+        Status.$on(Status.EVT_STATUS_CHANGE, this.onStatusFetch);
+    }
+
+    componentWillUnmount() {
+        Status.$off(Status.EVT_STATUS_CHANGE, this.onStatusFetch);
+    }
+
+    onStatusFetch(evt) {
+        this.setState({unreadCount: Menu.countUnread(evt.details.user)})
     }
 
     toggle(expanded) {
