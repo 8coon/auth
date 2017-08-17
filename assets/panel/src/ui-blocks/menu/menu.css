@@ -74,9 +74,6 @@ body {
         background-color: #F0F1F2 !important; }
     .menu__item:hover {
       background-color: #fbfbfb; }
-    .menu__item:active {
-      background-color: #5A6978;
-      color: #F0F1F2; }
     .menu__item_selected {
       background-color: #5A6978;
       color: #F0F1F2; }

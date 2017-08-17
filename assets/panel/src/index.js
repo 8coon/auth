@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 //Router
 import {BrowserRouter, Route} from 'react-router-dom';
-import Switch from './utils/switch/Switch';
+import FetchSwitch from './utils/fetch-switch/FetchSwitch';
 
 // Font-Awesome
 import 'font-awesome/css/font-awesome.min.css';
@@ -36,7 +36,7 @@ import Sitemap from './sitemap';
 ReactDOM.render(
 
     <BrowserRouter>
-        <Switch>
+        <FetchSwitch>
             <Route exact path={Sitemap.root} component={Application}/>
             <Route exact path={Sitemap.login} component={PageLogin}/>
             <Route exact path={Sitemap.signup} component={PageSignup}/>
@@ -45,7 +45,7 @@ ReactDOM.render(
             <Route exact path={Sitemap.passwordReset} component={PagePasswordReset}/>
             <Route exact path={Sitemap.settings} component={PageSettings}/>
             <Route exact path={Sitemap.notifications} component={PageNotifications}/>
-        </Switch>
+        </FetchSwitch>
     </BrowserRouter>,
 
     document.getElementById('root')

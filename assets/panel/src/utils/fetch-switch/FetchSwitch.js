@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {matchPath} from 'react-router-dom';
 
 
-export default class Switch extends Component {
+export default class FetchSwitch extends Component {
 
     static contextTypes = {
         router: PropTypes.object,
@@ -17,7 +17,7 @@ export default class Switch extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {currentComponent: null, model: null};
+        this.state = {currentComponent: null, model: {}};
         this.futureComponent = {props: {path: 1}};
         this.navigating = false;
 
@@ -30,7 +30,11 @@ export default class Switch extends Component {
 
     navigate(model, props) {
         this.navigating = false;
-        this.setState({currentComponent: React.cloneElement(this.futureComponent, props), model});
+
+        this.setState({
+            currentComponent: React.cloneElement(this.futureComponent, props),
+            model: Object.assign(this.state.model, model),
+        });
     }
 
     render() {

@@ -89,11 +89,6 @@ $strip-width: 10 * $base-unit;
 			background-color: lighten($light, 4%);
 		}
 
-		&:active {
-			background-color: $gray;
-			color: $light;
-		}
-
 		&_selected {
 			background-color: $gray;
 			color: $light;
