@@ -50,9 +50,7 @@ public class NotificationRepository extends Repository {
 
         int i = 0;
         for (int value: idx) {
-            sb.append('\"');
             sb.append(String.valueOf(value));
-            sb.append('\"');
 
             if (i < idx.length - 1) {
                 sb.append(',');
