@@ -5,7 +5,7 @@
   "homepage": "https://minecraftshire.ru/app",
   "dependencies": {
     "font-awesome": "^4.7.0",
-    "minecraftshire-jsapi": "2.0.17",
+    "minecraftshire-jsapi": "2.0.18",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.0.2",
     "open-sans-all": "^0.1.2",
@@ -13,7 +13,8 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "4.1.2",
-    "react-scripts": "1.0.10"
+    "react-scripts": "1.0.10",
+    "react-router-v4-transition": "0.1.8"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

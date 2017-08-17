@@ -37,7 +37,7 @@ export default class Menu extends Component {
     }
 
     renderMenuItem(link, text, icon, counter = 0) {
-        const location = this.context.router.route.match.path;
+        const location = this.context.router.route.location.pathname;
         const route = !link ? Sitemap.root : Sitemap[link];
         counter = counter === 0 ? null : (counter < 100 ? counter : '99+');
 
@@ -78,7 +78,7 @@ export default class Menu extends Component {
 
         return (
             <div className={`menu__links menu__links_${state} ${absolute ? 'menu__links_absolute' : ''}`}>
-                {state !== 'normal' && state !== 'small' && this.renderMenuItem(null, 'Скрыть', 'fa-bars')}
+                {/*state !== 'normal' && state !== 'small' && this.renderMenuItem(null, 'Скрыть', 'fa-bars')*/}
                 {this.renderMenuItem('root', 'Профиль', 'fa-user')}
                 {this.renderMenuItem('notifications', 'Уведомления', 'fa-bell', 73)}
                 {this.renderMenuItem('root', 'Персонажи', 'fa-users')}

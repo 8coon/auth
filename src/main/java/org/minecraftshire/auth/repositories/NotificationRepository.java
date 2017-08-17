@@ -11,8 +11,12 @@ import java.util.List;
 @org.springframework.stereotype.Repository
 public class NotificationRepository extends Repository {
 
+    public final ModificationRepository modifications;
+
     @Autowired
-    public UserRepository users;
+    public NotificationRepository(ModificationRepository modifications) {
+        this.modifications = modifications;
+    }
 
 
     @Transactional
@@ -27,7 +31,7 @@ public class NotificationRepository extends Repository {
                 notification.getPictureUrl(),
                 notification.getDetailsUrl()
         );
-        this.users.update(notification.getUsername());
+        this.modifications.updateUser(notification.getUsername());
     }
 
 
@@ -64,7 +68,7 @@ public class NotificationRepository extends Repository {
                 username,
                 sb.toString()
         );
-        this.users.update(username);
+        this.modifications.updateUser(username);
     }
 
 

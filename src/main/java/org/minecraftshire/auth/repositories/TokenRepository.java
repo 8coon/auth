@@ -25,8 +25,13 @@ import java.util.List;
 @org.springframework.stereotype.Repository
 public class TokenRepository extends Repository {
 
+    private final GeoLocator geoLocator;
+
+
     @Autowired
-    private GeoLocator geoLocator;
+    public TokenRepository(GeoLocator geoLocator) {
+        this.geoLocator = geoLocator;
+    }
 
 
     public static String getSignature(String appToken) {

@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 //Router
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
+import Switch from './utils/switch/Switch';
 
 // Font-Awesome
 import 'font-awesome/css/font-awesome.min.css';

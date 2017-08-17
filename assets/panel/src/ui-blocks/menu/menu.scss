@@ -221,9 +221,7 @@ $strip-width: 10 * $base-unit;
 	}
 
 	&__content {
-		padding-left: $page-content-padding;
-		padding-right: $page-content-padding;
-		padding-bottom: 40 * $base-unit;
+		padding: 15 * $base-unit $page-content-padding 40 * $base-unit;
 		min-height: 400 * $base-unit;
 	}
 }

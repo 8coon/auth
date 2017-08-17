@@ -29,13 +29,16 @@ public class UserRepository extends Repository {
 
     private SecureRandom random = new SecureRandom();
 
-    @Autowired
-    public ConfirmationRepository confirmations;
-    @Autowired
-    public TokenRepository tokens;
-    @Autowired
-    public NotificationRepository notifications;
+    public final ConfirmationRepository confirmations;
+    public final TokenRepository tokens;
+    public final NotificationRepository notifications;
 
+    @Autowired
+    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens, NotificationRepository notifications) {
+        this.confirmations = confirmations;
+        this.tokens = tokens;
+        this.notifications = notifications;
+    }
 
 
     public boolean hasUsername(String username) {
@@ -200,15 +203,6 @@ public class UserRepository extends Repository {
 
         user.setNotifications(notifications.get(username, true));
         return user;
-    }
-
-
-    /**
-     * Sets lastModified to now()
-     */
-    @Transactional
-    public void update(String username) {
-        jdbc.update("UPDATE Users SET lastModified = now() WHERE username = ?", username);
     }
 
 
