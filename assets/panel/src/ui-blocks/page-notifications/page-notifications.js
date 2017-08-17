@@ -5,6 +5,9 @@ import './page-notifications.css';
 // UI-Blocks
 import LayoutMain from '../layout-main/layout-main';
 
+// Requests
+import listNotifications from 'minecraftshire-jsapi/src/method/notification/list';
+
 
 export default class PageNotifications extends Component {
 
@@ -14,15 +17,16 @@ export default class PageNotifications extends Component {
     };
 
     static prepare() {
-        return new Promise(resolve => {
-            window.setTimeout(() => resolve({text: 'Mae Borowski'}), 1000);
+        return listNotifications().then((notifications) => {
+            return {allNotifications: notifications};
         });
     }
 
     render() {
+        console.log(this.context.model.allNotifications);
+
         return (
             <LayoutMain title="Уведомления">
-                {this.context.model.text}
             </LayoutMain>
         )
     }
