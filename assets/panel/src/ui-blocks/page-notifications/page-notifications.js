@@ -17,9 +17,10 @@ export default class PageNotifications extends Component {
     };
 
     static prepare() {
-        return listNotifications().then((notifications) => {
-            return {allNotifications: notifications};
-        });
+        return listNotifications()
+            .then((notifications) => {
+                return {allNotifications: notifications};
+            });
     }
 
     render() {
