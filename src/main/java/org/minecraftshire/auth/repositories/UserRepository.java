@@ -30,14 +30,15 @@ public class UserRepository extends Repository {
     private SecureRandom random = new SecureRandom();
     private ConfirmationRepository confirmations;
     private TokenRepository tokens;
+
+    @Autowired
     private NotificationRepository notifications;
 
 
     @Autowired
-    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens, NotificationRepository notifications) {
+    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens) {
         this.confirmations = confirmations;
         this.tokens = tokens;
-        this.notifications = notifications;
     }
 
 
