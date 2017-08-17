@@ -64,9 +64,8 @@ public class NotificationRepository extends Repository {
         sb.append('}');
 
         this.jdbc.update(
-                "UPDATE Notifications SET unread = FALSE WHERE username = ? AND id IN ?",
-                username,
-                sb.toString()
+                "UPDATE Notifications SET unread = FALSE WHERE username = ? AND id IN " + sb.toString(),
+                username
         );
         this.modifications.updateUser(username);
     }
