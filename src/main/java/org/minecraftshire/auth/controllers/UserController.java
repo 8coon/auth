@@ -21,15 +21,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserRepository users;
-    private ConfirmationRepository confirmations;
-
-
     @Autowired
-    public UserController(UserRepository users, ConfirmationRepository confirmations) {
-        this.users = users;
-        this.confirmations = confirmations;
-    }
+    private UserRepository users;
+    @Autowired
+    private ConfirmationRepository confirmations;
 
 
     @PostMapping("/create")

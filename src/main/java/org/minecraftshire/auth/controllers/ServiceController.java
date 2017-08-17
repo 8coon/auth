@@ -19,15 +19,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/service")
 public class ServiceController {
 
-    private JdbcTemplate jdbc;
-    private Environment env;
-
-
     @Autowired
-    public ServiceController(JdbcTemplate jdbc, Environment env) {
-        this.jdbc = jdbc;
-        this.env = env;
-    }
+    private JdbcTemplate jdbc;
+    @Autowired
+    private Environment env;
 
 
     @PostMapping("/drop")

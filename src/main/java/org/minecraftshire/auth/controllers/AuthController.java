@@ -20,15 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private UserRepository users;
-    private TokenRepository tokens;
-
-
     @Autowired
-    public AuthController(UserRepository users, TokenRepository tokens) {
-        this.users = users;
-        this.tokens = tokens;
-    }
+    private UserRepository users;
+    @Autowired
+    private TokenRepository tokens;
 
 
     @PostMapping("/login")

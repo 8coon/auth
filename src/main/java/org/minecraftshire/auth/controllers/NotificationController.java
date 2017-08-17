@@ -21,12 +21,8 @@ import java.util.List;
 @RequestMapping("/notification")
 public class NotificationController {
 
-    private NotificationRepository notifications;
-
     @Autowired
-    public NotificationController(NotificationRepository notifications) {
-        this.notifications = notifications;
-    }
+    private NotificationRepository notifications;
 
 
     @AuthRequired
