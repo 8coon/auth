@@ -14,6 +14,10 @@ export default class FetchSwitch extends Component {
         model: PropTypes.object,
     };
 
+    static defaultProps = {
+        onNavigate: () => Promise.resolve(),
+    };
+
     constructor(props) {
         super(props);
 
@@ -29,11 +33,13 @@ export default class FetchSwitch extends Component {
     }
 
     navigate(model, props) {
-        this.navigating = false;
+        this.props.onNavigate.then(() => {
+            this.navigating = false;
 
-        this.setState({
-            currentComponent: React.cloneElement(this.futureComponent, props),
-            model: Object.assign(this.state.model, model),
+            this.setState({
+                currentComponent: React.cloneElement(this.futureComponent, props),
+                model: Object.assign(this.state.model, model),
+            });
         });
     }
 

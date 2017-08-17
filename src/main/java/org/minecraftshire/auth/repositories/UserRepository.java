@@ -181,7 +181,7 @@ public class UserRepository extends Repository {
         if (lastModified != null) {
             List<UserStatusData> users = jdbc.query(
                     "SELECT username, last_modified, free_balance, total_balance FROM Users WHERE " +
-                            "username = ? AND last_modified > ? LIMIT 1",
+                            "username = ? AND last_modified > ?::TIMESTAMPTZ LIMIT 1",
                     new UserStatusData(),
                     username, lastModified
             );

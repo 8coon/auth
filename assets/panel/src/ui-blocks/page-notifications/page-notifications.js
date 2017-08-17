@@ -11,6 +11,7 @@ import LayoutMain from '../layout-main/layout-main';
 
 // Requests
 import listNotifications from 'minecraftshire-jsapi/src/method/notification/list';
+import markReadNotification from 'minecraftshire-jsapi/src/method/notification/markRead';
 
 
 export default class PageNotifications extends Component {
@@ -25,6 +26,8 @@ export default class PageNotifications extends Component {
             listNotifications()
                 .then((notifications) => {
                     resolve({error: null, allNotifications: notifications});
+
+
                 })
                 .catch(() => {
                     resolve({error: 'Не удалось загрузить данные.'});
@@ -38,7 +41,6 @@ export default class PageNotifications extends Component {
 
         blocks.forEach(block => {
             const days = dateDiffInDays(block[0].getCreatedAt(), now);
-            console.log(days);
 
             if (days > 0) {
                 result.push(this.renderDate(block[0].getCreatedAt(), days, result.length));
