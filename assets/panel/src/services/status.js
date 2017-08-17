@@ -47,10 +47,27 @@ export default class Status {
      */
     static reload(forced = false) {
         if (forced || !Status.user || Date.now() - Status.lastFetched > STATUS_MIN_INTERVAL) {
-            return Status.fetch();
+            const lastModified = Status.user && Status.user.get('lastModified');
+            return Status.fetch(lastModified);
         }
 
         return Promise.resolve(Status.user);
+    }
+
+    /**
+     * Reload status and never reject, resolve with {model: User}
+     * @param {boolean} forced
+     */
+    static reloadModel(forced = false) {
+        return new Promise(resolve => {
+            Status.reload(forced)
+                .then(user => {
+                    resolve({user});
+                })
+                .catch(() => {
+                    resolve({});
+                });
+        });
     }
 
 }

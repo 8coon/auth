@@ -11,7 +11,7 @@ import LayoutMain from '../layout-main/layout-main';
 
 // Requests
 import listNotifications from 'minecraftshire-jsapi/src/method/notification/list';
-import markReadNotification from 'minecraftshire-jsapi/src/method/notification/markRead';
+import markReadNotifications from 'minecraftshire-jsapi/src/method/notification/markRead';
 
 
 export default class PageNotifications extends Component {
@@ -27,7 +27,11 @@ export default class PageNotifications extends Component {
                 .then((notifications) => {
                     resolve({error: null, allNotifications: notifications});
 
+                    const ids = notifications
+                        .filter(notification => notification.is('unread'))
+                        .pluck('id');
 
+                    //markReadNotifications(notifications.filter())
                 })
                 .catch(() => {
                     resolve({error: 'Не удалось загрузить данные.'});

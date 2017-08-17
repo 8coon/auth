@@ -14,6 +14,7 @@ export default class Menu extends Component {
 
     static contextTypes = {
         router: PropTypes.object,
+        model: PropTypes.object,
     };
 
     static defaultProps = {
@@ -23,7 +24,7 @@ export default class Menu extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {expanded: false};
+        this.state = {expanded: false, unreadCount: 0};
         this.onBurgerClick = this.onBurgerClick.bind(this);
     }
 
@@ -80,7 +81,7 @@ export default class Menu extends Component {
             <div className={`menu__links menu__links_${state} ${absolute ? 'menu__links_absolute' : ''}`}>
                 {/*state !== 'normal' && state !== 'small' && this.renderMenuItem(null, 'Скрыть', 'fa-bars')*/}
                 {this.renderMenuItem('root', 'Профиль', 'fa-user')}
-                {this.renderMenuItem('notifications', 'Уведомления', 'fa-bell', 73)}
+                {this.renderMenuItem('notifications', 'Уведомления', 'fa-bell', this.state.unreadCount)}
                 {this.renderMenuItem('root', 'Персонажи', 'fa-users')}
                 {this.renderMenuItem('root', 'Государства', 'fa-flag')}
                 {this.renderMenuItem('root', 'Финансы', 'fa-usd')}

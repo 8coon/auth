@@ -32,11 +32,14 @@ import registerServiceWorker from './registerServiceWorker';
 // Sitemap
 import Sitemap from './sitemap';
 
+// Services
+import Status from './services/status';
+
 
 ReactDOM.render(
 
     <BrowserRouter>
-        <FetchSwitch>
+        <FetchSwitch onNavigate={Status.reloadModel}>
             <Route exact path={Sitemap.root} component={Application}/>
             <Route exact path={Sitemap.login} component={PageLogin}/>
             <Route exact path={Sitemap.signup} component={PageSignup}/>

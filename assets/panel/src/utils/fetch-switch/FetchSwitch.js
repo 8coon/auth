@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {matchPath} from 'react-router-dom';
 
+// Utils
+import TimeoutPromise from '../TimeoutPromise';
+
 
 export default class FetchSwitch extends Component {
 
@@ -32,14 +35,12 @@ export default class FetchSwitch extends Component {
         return {model: this.state.model};
     }
 
-    navigate(model, props) {
-        this.props.onNavigate.then(() => {
-            this.navigating = false;
+    navigate(models, props) {
+        this.navigating = false;
 
-            this.setState({
-                currentComponent: React.cloneElement(this.futureComponent, props),
-                model: Object.assign(this.state.model, model),
-            });
+        this.setState({
+            currentComponent: React.cloneElement(this.futureComponent, props),
+            model: Object.assign(this.state.model, ...models),
         });
     }
 
@@ -78,9 +79,11 @@ export default class FetchSwitch extends Component {
             const promise = component && component.prepare && component.prepare();
 
             if (promise && promise.then) {
-                promise.then(model => this.navigate(model, {location: location, computedMatch: match}));
+                Promise.all([promise, this.props.onNavigate()])
+                    .then(models => this.navigate(models, {location: location, computedMatch: match}));
             } else {
-                window.setTimeout(() => this.navigate(null, {location: location, computedMatch: match}), 0);
+                Promise.all([this.props.onNavigate(), new TimeoutPromise(0)])
+                    .then(models => this.navigate(models, {location: location, computedMatch: match}));
             }
         }
 
