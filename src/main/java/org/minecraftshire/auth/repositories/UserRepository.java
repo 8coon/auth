@@ -28,18 +28,14 @@ import java.util.Random;
 public class UserRepository extends Repository {
 
     private SecureRandom random = new SecureRandom();
-    private ConfirmationRepository confirmations;
-    private TokenRepository tokens;
 
+    @Autowired
+    private ConfirmationRepository confirmations;
+    @Autowired
+    private TokenRepository tokens;
     @Autowired
     private NotificationRepository notifications;
 
-
-    @Autowired
-    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens) {
-        this.confirmations = confirmations;
-        this.tokens = tokens;
-    }
 
 
     public boolean hasUsername(String username) {
