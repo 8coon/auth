@@ -1,14 +1,10 @@
 package org.minecraftshire.auth.repositories;
 
 
-import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.data.NotificationData;
-import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -44,7 +40,7 @@ public class NotificationRepository extends Repository {
 
 
     @Transactional
-    public void markRead(String username, int[] idx) {
+    public void markRead(String username, Integer[] idx) {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
 
