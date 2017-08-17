@@ -12,7 +12,7 @@ public class ModificationRepository extends org.minecraftshire.auth.repositories
 
     @Transactional
     public void update(String modelName, String keyName, Object id) {
-        jdbc.update("UPDATE " + modelName + " SET lastModified = now() WHERE " + keyName + " = ?", id);
+        jdbc.update("UPDATE " + modelName + " SET last_modified = now() WHERE " + keyName + " = ?", id);
     }
 
 
