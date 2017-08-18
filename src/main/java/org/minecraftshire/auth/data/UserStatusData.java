@@ -12,6 +12,7 @@ public class UserStatusData implements RowMapper<UserStatusData> {
 
     private String username;
     private String lastModified;
+    private String avatarUrl;
     private int totalBalance;
     private int freeBalance;
     private List<NotificationData> notifications;
@@ -22,16 +23,30 @@ public class UserStatusData implements RowMapper<UserStatusData> {
             String lastModified,
             int totalBalance,
             int freeBalance,
-            List<NotificationData> notifications
+            List<NotificationData> notifications,
+            String avatarHash,
+            String avatarContentType
     ) {
         this.username = username;
         this.lastModified = lastModified;
         this.totalBalance = totalBalance;
         this.freeBalance = freeBalance;
         this.notifications = notifications;
+        this.avatarUrl = "user/" + username + "/" + avatarHash;
+
+        // Определяем расширение "файла" по его contentType.
+        if ("image/jpeg".equalsIgnoreCase(avatarContentType)) {
+            this.avatarUrl += ".jpg";
+        } else if ("image/png".equalsIgnoreCase(avatarContentType)) {
+            this.avatarUrl += ".png";
+        } else {
+            // У аватарки выставлен некорректный contentType -- не дадим пользователю её скачать!
+            this.avatarUrl = null;
+        }
     }
 
     public UserStatusData() {}
+
 
 
     @Override
@@ -41,7 +56,9 @@ public class UserStatusData implements RowMapper<UserStatusData> {
                 resultSet.getString("last_modified"),
                 resultSet.getInt("total_balance"),
                 resultSet.getInt("free_balance"),
-                null
+                null,
+                resultSet.getString("avatar_hash"),
+                resultSet.getString("avatar_content_type")
         );
     }
 
@@ -86,4 +103,7 @@ public class UserStatusData implements RowMapper<UserStatusData> {
         this.notifications = notifications;
     }
 
+    public String getAvatarUrl() {
+        return this.avatarUrl;
+    }
 }
