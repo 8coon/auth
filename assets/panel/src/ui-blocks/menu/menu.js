@@ -48,7 +48,7 @@ export default class Menu extends Component {
     }
 
     onStatusFetch(evt) {
-        this.setState({unreadCount: Menu.countUnread(evt.details)})
+        this.setState({unreadCount: Menu.countUnread(evt.details)});
     }
 
     toggle(expanded) {

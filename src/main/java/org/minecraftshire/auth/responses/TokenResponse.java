@@ -1,7 +1,20 @@
 package org.minecraftshire.auth.responses;
 
-/**
- * Created by coon on 19.08.17.
- */
+
 public class TokenResponse {
+
+    private String token;
+
+
+    public TokenResponse(
+            String token
+    ) {
+        this.token = token;
+    }
+
+
+    public String getToken() {
+        return token;
+    }
+
 }

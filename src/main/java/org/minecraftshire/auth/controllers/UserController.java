@@ -1,5 +1,6 @@
 package org.minecraftshire.auth.controllers;
 
+import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.aspects.UserAgent;
 import org.minecraftshire.auth.data.*;
@@ -8,12 +9,19 @@ import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
 import org.minecraftshire.auth.repositories.UserRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
+import org.minecraftshire.auth.responses.TokenResponse;
+import org.minecraftshire.auth.storages.UploadStorage;
 import org.minecraftshire.auth.utils.Errors;
+import org.minecraftshire.auth.utils.logging.Logger;
+import org.minecraftshire.auth.workers.WorkerDoneCallback;
+import org.minecraftshire.auth.workers.uploadProcessor.UploadProcessorWorkerPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 
 @RestController
@@ -21,10 +29,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
     private UserRepository users;
-    @Autowired
     private ConfirmationRepository confirmations;
+    private UploadStorage uploadStorage;
+
+
+    @Autowired
+    public UserController(
+            UserRepository users,
+            ConfirmationRepository confirmations,
+            UploadStorage uploadStorage
+    ) {
+        this.users = users;
+        this.confirmations = confirmations;
+        this.uploadStorage = uploadStorage;
+    }
 
 
     @PostMapping("/create")
@@ -101,6 +120,35 @@ public class UserController {
 
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
+
+
+    @AuthRequired
+    @PostMapping("/upload_avatar")
+    public ResponseEntity uploadAvatar(
+            @RequestBody AuthTokenData data,
+            UserAgent userAgent,
+            SessionData sessionData
+    ) {
+        String token = String.valueOf(uploadStorage.requestToken(UserController.onAvatarUpload, sessionData));
+
+        return new ResponseEntity<>(
+                new TokenResponse(token),
+                HttpStatus.OK
+        );
+    }
+
+
+    private static WorkerDoneCallback<UploadProcessorWorkerPayload> onAvatarUpload = (worker, payload) -> {
+        try {
+            Server.getContext().getBean(UserRepository.class).setAvatar(
+                    payload.getInfo().getSessionData().getUsername(),
+                    payload.getFileInfo().getFile().getBytes(),
+                    payload.getFileInfo().getFile().getContentType()
+            );
+        } catch (IOException e) {
+            Logger.getLogger().severe(e);
+        }
+    };
 
 
 }

@@ -1,7 +1,14 @@
-package org.minecraftshire.auth.workers.upload;
+package org.minecraftshire.auth.workers.uploadProcessor;
 
-/**
- * Created by coon on 19.08.17.
- */
-public class UploadProcesserWorker {
+
+import org.minecraftshire.auth.workers.Worker;
+
+
+public class UploadProcessorWorker extends Worker<UploadProcessorWorkerPayload> {
+
+    @Override
+    protected void process(UploadProcessorWorkerPayload payload) throws Throwable {
+        payload.getInfo().invokeCallback(this, payload);
+    }
+
 }

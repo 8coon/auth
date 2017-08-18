@@ -1,7 +1,23 @@
 package org.minecraftshire.auth.storages.upload;
 
-/**
- * Created by coon on 19.08.17.
- */
+
+import org.springframework.web.multipart.MultipartFile;
+
+
 public class UploadFileInfo {
+
+    private MultipartFile file;
+
+
+    public UploadFileInfo(
+            MultipartFile file
+    ) {
+        this.file = file;
+    }
+
+
+    public MultipartFile getFile() {
+        return this.file;
+    }
+
 }

@@ -29,15 +29,23 @@ public class UserRepository extends Repository {
 
     private SecureRandom random = new SecureRandom();
 
-    public final ConfirmationRepository confirmations;
-    public final TokenRepository tokens;
-    public final NotificationRepository notifications;
+    private ConfirmationRepository confirmations;
+    private TokenRepository tokens;
+    private NotificationRepository notifications;
+    private ModificationRepository modifications;
+
 
     @Autowired
-    public UserRepository(ConfirmationRepository confirmations, TokenRepository tokens, NotificationRepository notifications) {
+    public UserRepository(
+            ConfirmationRepository confirmations,
+            TokenRepository tokens,
+            NotificationRepository notifications,
+            ModificationRepository modifications
+    ) {
         this.confirmations = confirmations;
         this.tokens = tokens;
         this.notifications = notifications;
+        this.modifications = modifications;
     }
 
 
@@ -203,6 +211,18 @@ public class UserRepository extends Repository {
 
         user.setNotifications(notifications.get(username, true));
         return user;
+    }
+
+
+    @Transactional
+    public void setAvatar(String username, byte[] avatar, String contentType) {
+        jdbc.update(
+                "UPDATE Users SET avatar = ?, avatar_content_type = ? WHERE username = ?",
+                avatar,
+                contentType,
+                username
+        );
+        modifications.updateUser(username);
     }
 
 

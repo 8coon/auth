@@ -28,6 +28,7 @@ public class Server {
 	private static String buildDate;
 	private static String path;
 	private static String logPath;
+	private static String uploadsPath;
 	private static String geoDbVersion;
 	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
@@ -70,6 +71,10 @@ public class Server {
 		return context;
 	}
 
+	public static String getUploadsPath() {
+		return uploadsPath;
+	}
+
 
 	public static void stop() {
 		log.info("Stopping via System.exit(0)...");
@@ -106,6 +111,8 @@ public class Server {
 
 		Server.secretToken = cmd.getOptionValue("secret");
 		Server.path = cmd.getOptionValue("path");
+		Server.uploadsPath = Server.path + "/assets/uploads";
+
 		Server.buildNumber = ProcessRunner.exec(
 				"cd " + Server.path + "/ && git rev-list HEAD --count"
 		);
