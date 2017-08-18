@@ -50,6 +50,7 @@ public class ServerConfig extends WebMvcConfigurerAdapter {
         uploadProcessorWorker = new UploadProcessorWorker();
         uploadProcessorWorkerThread = new Thread(uploadProcessorWorker);
         uploadProcessorWorkerThread.start();
+        Logger.getLogger().info("uploadProcessorWorkerThread start.");
 
         return uploadProcessorWorker;
     }

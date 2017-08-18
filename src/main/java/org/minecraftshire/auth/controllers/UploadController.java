@@ -56,9 +56,11 @@ public class UploadController {
 
     @PostMapping("/upload/{token}")
     public ResponseEntity upload(
-            @PathVariable long token,
+            @PathVariable("token") String strToken,
             @RequestParam("file") MultipartFile file
     ) {
+        long token = Long.valueOf(strToken);
+
         if (uploadStorage.getUploadStatus(token) != UploadInfo.STATUS_AWAITING_CLIENT) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }

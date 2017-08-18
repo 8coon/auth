@@ -17,7 +17,9 @@ import org.minecraftshire.auth.workers.WorkerDoneCallback;
 import org.minecraftshire.auth.workers.uploadProcessor.UploadProcessorWorkerPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -119,6 +121,27 @@ public class UserController {
         }
 
         return new ResponseEntity<>(status, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{username}/{filename}")
+    public ResponseEntity getAvatar(
+            @PathVariable("username") String username
+    ) {
+        AvatarData avatar = users.getAvatar(username);
+
+        if (avatar == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(avatar.getContentType()));
+
+        return new ResponseEntity<>(
+                avatar.getData(),
+                headers,
+                HttpStatus.OK
+        );
     }
 
 

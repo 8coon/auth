@@ -1,6 +1,7 @@
 package org.minecraftshire.auth.repositories;
 
 
+import org.minecraftshire.auth.data.AvatarData;
 import org.minecraftshire.auth.data.CredentialsData;
 import org.minecraftshire.auth.data.UserData;
 import org.minecraftshire.auth.data.UserStatusData;
@@ -223,6 +224,20 @@ public class UserRepository extends Repository {
                 username
         );
         modifications.updateUser(username);
+    }
+
+
+    @Transactional
+    public AvatarData getAvatar(String username) {
+        try {
+            return jdbc.queryForObject(
+                    "SELECT avatar, avatar_content_type FROM Users WHERE username = ? LIMIT 1",
+                    new AvatarData(),
+                    username
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
 
