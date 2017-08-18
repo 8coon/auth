@@ -38,8 +38,7 @@ export default class PageNotifications extends Component {
 
                     if (ids.length > 0) {
                         markReadNotifications(ids)
-                            .then(() => PageNotifications.prepare())
-                            .then(model => PageNotifications.refreshInstances(model))
+                            .then(() => PageNotifications.refresh())
                             .then(() => Status.reloadModel());
                     }
                 })
@@ -49,21 +48,37 @@ export default class PageNotifications extends Component {
         });
     }
 
+    static refresh() {
+        return PageNotifications.prepare()
+            .then(model => PageNotifications.refreshInstances(model));
+    }
+
     static refreshInstances(model) {
-        PageNotifications.instances.forEach(instance => Object.assign(instance.context.model, model));
+        PageNotifications.instances.forEach(instance => {
+            Object.assign(instance.context.model, model);
+            instance.setState({});
+        });
     }
 
     constructor(props) {
         super(props);
         this.state = {allRead: false};
+
+        this.onStatusChange = this.onStatusChange.bind(this);
     }
 
     componentDidMount() {
         PageNotifications.instances.push(this);
+        Status.$on(Status.EVT_STATUS_CHANGE, this.onStatusChange);
     }
 
     componentWillUnmount() {
         PageNotifications.instances.splice(PageNotifications.instances.indexOf(this), 1);
+        Status.$off(Status.EVT_STATUS_CHANGE, this.onStatusChange);
+    }
+
+    onStatusChange(evt) {
+        PageNotifications.refresh();
     }
 
     renderNotifications(blocks) {

@@ -39,6 +39,7 @@ Object.assign(Status.prototype, {
                     this.lastFetched = Date.now();
                     this.user = user;
 
+                    console.log('EMITTING', user);
                     this.$emit(this.EVT_STATUS_CHANGE, user);
                     resolve(user);
                 })
@@ -87,5 +88,19 @@ Object.assign(Status.prototype, {
 
 });
 
-export default new Status();
+const status = new Status();
+export default status;
 
+// todo: Service worker
+let timer;
+
+const schedule = () => {
+    timer = window.setTimeout(reload, 5000);
+};
+
+const reload = () => {
+    window.clearTimeout(timer);
+    status.reloadModel().then(schedule);
+};
+
+schedule();

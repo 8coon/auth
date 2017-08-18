@@ -95,6 +95,7 @@
 			padding-left: $layout-account-padding;
 			padding-right: $layout-account-padding;
 			flex: 1;
+			width: 100%;
 
 			&:hover {
 				background-color: lighten($gray, 12%);

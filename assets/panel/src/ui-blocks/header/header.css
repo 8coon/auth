@@ -88,7 +88,8 @@ body {
       box-sizing: border-box;
       padding-left: 20px;
       padding-right: 20px;
-      flex: 1; }
+      flex: 1;
+      width: 100%; }
       .header__account__wrapper:hover {
         background-color: lightslategray; }
     .header__account__info {

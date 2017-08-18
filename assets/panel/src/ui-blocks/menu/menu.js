@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import './menu.css';
 
+// Utils
+import {trimLocation} from '../../utils/polyfills';
+
 // Sitemap
 import Sitemap from '../../sitemap';
 
@@ -45,7 +48,7 @@ export default class Menu extends Component {
     }
 
     onStatusFetch(evt) {
-        this.setState({unreadCount: Menu.countUnread(evt.details.user)})
+        this.setState({unreadCount: Menu.countUnread(evt.details)})
     }
 
     toggle(expanded) {
@@ -58,7 +61,7 @@ export default class Menu extends Component {
     }
 
     renderMenuItem(link, text, icon, counter = 0) {
-        const location = this.context.router.route.location.pathname;
+        const location = trimLocation(this.context.router.route.location.pathname);
         const route = !link ? Sitemap.root : Sitemap[link];
         counter = counter === 0 ? null : (counter < 100 ? counter : '99+');
 

@@ -17,11 +17,18 @@ import {LayoutSize} from '../layout/layout';
 import Dropdown from '../dropdown/dropdown';
 import Input from '../input/input';
 
+// Services
+import Status from '../../services/status';
+
+// Models
+import User from 'minecraftshire-jsapi/src/models/User/User';
+
 
 export default class Header extends Component {
 
     static contextTypes = {
         router: PropTypes.object,
+        model: PropTypes.object,
     };
 
     static defaultProps = {
@@ -30,13 +37,26 @@ export default class Header extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {search: false};
+        this.state = {search: false, user: new User()};
 
         this.onLogoClick = this.onLogoClick.bind(this);
         this.onSearchKeyPress = this.onSearchKeyPress.bind(this);
         this.onSearchFocus = this.onSearchFocus.bind(this);
         this.onSearchBlur = this.onSearchBlur.bind(this);
         this.onAccountClick = this.onAccountClick.bind(this);
+        this.onStatusChange = this.onStatusChange.bind(this);
+    }
+
+    componentDidMount() {
+        Status.$on(Status.EVT_STATUS_CHANGE, this.onStatusChange);
+    }
+
+    componentWillUnmount() {
+        Status.$off(Status.EVT_STATUS_CHANGE, this.onStatusChange);
+    }
+
+    onStatusChange(evt) {
+        this.setState({user: evt.details});
     }
 
     onLogoClick() {
@@ -63,6 +83,8 @@ export default class Header extends Component {
     }
 
     render() {
+        const user = this.context.model.user;
+
         return (
             <div className={`header header_size_${this.props.size}`}>
                 {
@@ -74,7 +96,7 @@ export default class Header extends Component {
                             </div>
 
                             <div className="header__account-mobile">
-                                <Dropdown controlText="Анатолий Ничведо"
+                                <Dropdown controlText={user.get('username')}
                                           transparent>
                                     <div className="dropdown__item">
                                         Item 1
@@ -109,16 +131,16 @@ export default class Header extends Component {
                                 <div className="header__account__info"
                                      onClick={this.onAccountClick}>
                                     <div className="header__account__info__username">
-                                        Анатолий Ничведо
+                                        {user.get('username')}
                                     </div>
                                     <div className="header__account__info__balance">
                                         <i className={`fa fa-usd`} aria-hidden="true"/>
-                                        <span>13 500</span>
+                                        <span>{user.get('freeBalance')}</span>
                                     </div>
                                 </div>
                                 <div className="header__account__avatar"
                                      onClick={this.onAccountClick}>
-                                    <img src={NoAvatar} alt=""/>
+                                    <img src={user.get('avatarUrl') || NoAvatar} alt=""/>
                                 </div>
                             </div>
                             <div className="header__account__logout">

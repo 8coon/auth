@@ -73,3 +73,14 @@ export const formatDate = (date) => {
 
     return `${day} ${month} ${year}`;
 };
+
+/**
+ * Remove location trailing slash
+ * @param {string} location
+ * @return {string}
+ */
+export const trimLocation = (location) => {
+    if (location.startsWith('/')) location = location.substring(1);
+    if (location.endsWith('/')) location = location.substring(0, location.length - 1);
+    return `/${location}`;
+};
