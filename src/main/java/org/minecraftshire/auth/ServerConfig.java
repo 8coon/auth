@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -23,7 +22,7 @@ import java.util.List;
 @Configuration
 @EnableAspectJAutoProxy
 @EnableWebMvc
-@ComponentScan(basePackages = {"org.minecraftshire.auth"})
+//@ComponentScan(basePackages = {"org.minecraftshire.auth"})
 public class ServerConfig extends WebMvcConfigurerAdapter {
 
     private UploadProcessorWorker uploadProcessorWorker = new UploadProcessorWorker();
@@ -43,6 +42,8 @@ public class ServerConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public UploadProcessorWorker getUploadProcessorWorker() {
+        Logger.getLogger().info("getUploadProcessorWorker invoked.");
+
         if (uploadProcessorWorker != null) {
             return uploadProcessorWorker;
         }
