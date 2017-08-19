@@ -39,7 +39,7 @@ export default class PageNotifications extends Component {
                     if (ids.length > 0) {
                         markReadNotifications(ids)
                             .then(() => PageNotifications.refresh())
-                            .then(() => Status.reloadModel());
+                            .then(() => Status.reloadModel(true));
                     }
                 })
                 .catch(() => {

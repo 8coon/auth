@@ -140,7 +140,8 @@ export default class Header extends Component {
                                 </div>
                                 <div className="header__account__avatar"
                                      onClick={this.onAccountClick}>
-                                    <img src={user.get('avatarUrl') || NoAvatar} alt=""/>
+                                    <span className="header__account__avatar__img"
+                                          style={{backgroundImage: `url(${user.getAvatarFullUrl() || NoAvatar})`}}/>
                                 </div>
                             </div>
                             <div className="header__account__logout">

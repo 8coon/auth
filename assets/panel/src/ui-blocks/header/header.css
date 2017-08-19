@@ -108,9 +108,11 @@ body {
       display: flex;
       align-items: center;
       justify-content: center; }
-      .header__account__avatar img {
+      .header__account__avatar__img {
         height: 60px;
         width: 60px;
+        background-size: cover;
+        background-position: center;
         border-radius: 50%; }
     .header__account__logout {
       position: absolute;

@@ -65,7 +65,9 @@ export const formatMonth = (month) => {
  */
 export const formatDate = (date) => {
     let result = date.toISOString();
-    result = result.substring(0, result.indexOf('T')).split('-');
+
+    result = result.replace(' ', 'T').replace('.', '-').replace('/', '-')
+        .substring(0, result.indexOf('T')).split('-');
 
     const year = result[0];
     const month = formatMonth(result[1]);
