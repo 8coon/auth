@@ -48,9 +48,9 @@ public class UploadStorage {
     public int getUploadStatus(long token) {
         UploadInfo info = uploads.get(token);
 
-        // Если токен не найден, то полагаем, что связанный с ним файл уже был загружен и токен удалили.
+        // Если токен не найден.
         if (info == null) {
-            return UploadInfo.STATUS_FINISHED;
+            return UploadInfo.STATUS_NOT_FOUND;
         }
 
         int status = info.getStatus();

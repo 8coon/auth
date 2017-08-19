@@ -25,7 +25,7 @@ import java.util.List;
 //@ComponentScan(basePackages = {"org.minecraftshire.auth"})
 public class ServerConfig extends WebMvcConfigurerAdapter {
 
-    private UploadProcessorWorker uploadProcessorWorker = new UploadProcessorWorker();
+    private UploadProcessorWorker uploadProcessorWorker = null;
     private Thread uploadProcessorWorkerThread = null;
 
 
@@ -42,8 +42,6 @@ public class ServerConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public UploadProcessorWorker getUploadProcessorWorker() {
-        Logger.getLogger().info("getUploadProcessorWorker invoked.");
-
         if (uploadProcessorWorker != null) {
             return uploadProcessorWorker;
         }
@@ -51,7 +49,6 @@ public class ServerConfig extends WebMvcConfigurerAdapter {
         uploadProcessorWorker = new UploadProcessorWorker();
         uploadProcessorWorkerThread = new Thread(uploadProcessorWorker);
         uploadProcessorWorkerThread.start();
-        Logger.getLogger().info("uploadProcessorWorkerThread start.");
 
         return uploadProcessorWorker;
     }

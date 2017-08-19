@@ -11,6 +11,7 @@ import org.minecraftshire.auth.workers.uploadProcessor.UploadProcessorWorkerPayl
 public class UploadInfo {
 
     public static final int STATUS_AWAITING_CLIENT = 0;
+    public static final int STATUS_NOT_FOUND = 1;
     public static final int STATUS_PROCESSING = 2;
     public static final int STATUS_FINISHED = 3;
 

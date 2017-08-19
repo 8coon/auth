@@ -45,6 +45,7 @@ public class UploadController {
             case UploadInfo.STATUS_AWAITING_CLIENT: text = "awaiting_client"; break;
             case UploadInfo.STATUS_PROCESSING: text = "processing"; break;
             case UploadInfo.STATUS_FINISHED: text = "finished"; break;
+            case UploadInfo.STATUS_NOT_FOUND: return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(

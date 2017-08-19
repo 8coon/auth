@@ -38,7 +38,6 @@ public abstract class Worker<T> implements Runnable {
 
         while (this.isRunning()) {
             try {
-                Logger.getLogger().info("logger running...");
                 this.runDelayed(delay);
             } catch (InterruptedException e) {
                 Logger.getLogger().warning(e);
