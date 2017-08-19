@@ -189,7 +189,9 @@ public class UserRepository extends Repository {
     public UserStatusData getStatus(String username, String lastModified) throws EmptyResultDataAccessException {
         if (lastModified != null) {
             List<UserStatusData> users = jdbc.query(
-                    "SELECT username, last_modified, free_balance, total_balance FROM Users WHERE " +
+                    "SELECT " +
+                            "username, last_modified, free_balance, total_balance, avatar_hash, avatar_content_type " +
+                            "FROM Users WHERE " +
                             "username = ? AND last_modified > ?::TIMESTAMPTZ LIMIT 1",
                     new UserStatusData(),
                     username, lastModified
@@ -204,7 +206,9 @@ public class UserRepository extends Repository {
         }
 
         UserStatusData user = jdbc.queryForObject(
-                "SELECT username, last_modified, free_balance, total_balance FROM Users WHERE " +
+                "SELECT " +
+                        "username, last_modified, free_balance, total_balance, avatar_hash, avatar_content_type " +
+                        "FROM Users WHERE " +
                         "username = ? LIMIT 1",
                 new UserStatusData(),
                 username
