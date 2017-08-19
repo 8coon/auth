@@ -28,6 +28,7 @@ import java.util.Random;
 @org.springframework.stereotype.Repository
 public class UserRepository extends Repository {
 
+    private MessageDigest md;
     private SecureRandom random = new SecureRandom();
 
     private ConfirmationRepository confirmations;
@@ -47,6 +48,12 @@ public class UserRepository extends Repository {
         this.tokens = tokens;
         this.notifications = notifications;
         this.modifications = modifications;
+
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            Logger.getLogger().severe(e);
+        }
     }
 
 
@@ -221,10 +228,15 @@ public class UserRepository extends Repository {
 
     @Transactional
     public void setAvatar(String username, byte[] avatar, String contentType) {
+        // Считаем хэш аватара, преобразовываем в base64, убираем лишние символы, чтобы в урле было покрасивее.
+        String hash = Base64.getEncoder().encodeToString(md.digest(avatar))
+                .replace("+", "").replace("/", "").replace("=", "").replace("%", "");
+
         jdbc.update(
-                "UPDATE Users SET avatar = ?, avatar_content_type = ? WHERE username = ?",
+                "UPDATE Users SET avatar = ?, avatar_content_type = ?, avatar_hash = ? WHERE username = ?",
                 avatar,
                 contentType,
+                hash,
                 username
         );
         modifications.updateUser(username);
