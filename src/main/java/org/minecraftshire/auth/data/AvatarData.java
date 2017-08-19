@@ -2,6 +2,7 @@ package org.minecraftshire.auth.data;
 
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
 
 import java.sql.Blob;
 import java.sql.ResultSet;
@@ -27,11 +28,12 @@ public class AvatarData implements RowMapper<AvatarData> {
 
     @Override
     public AvatarData mapRow(ResultSet resultSet, int i) throws SQLException {
-        Blob avatar = resultSet.getBlob("avatar");
+        DefaultLobHandler lob = new DefaultLobHandler();
+        lob.getBlobAsBytes(resultSet, "avatar");
 
         return new AvatarData(
                 resultSet.getString("avatar_content_type"),
-                avatar.getBytes(1, (int) avatar.length())
+                lob.getBlobAsBytes(resultSet, "avatar")
         );
     }
 
