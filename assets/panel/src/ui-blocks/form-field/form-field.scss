@@ -8,3 +8,24 @@
 	75%  { margin-left: -2.5%;  }
 	100% { margin-left:  0   ;  }
 }
+
+
+.form-field {
+	&_flexible {
+		input {
+			min-width: 0 !important;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		.button {
+			text-align: right;
+		}
+
+		button {
+			min-width: 0 !important;
+			width: 150 * $base-unit;
+			box-sizing: border-box;
+		}
+	}
+}

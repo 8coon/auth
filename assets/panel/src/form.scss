@@ -47,3 +47,28 @@
 		}
 	}
 }
+
+
+.big-form {
+	padding-top: 30 * $base-unit;
+	padding-bottom: 30 * $base-unit;
+
+	&__field {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		&__title {
+			width: 120px;
+			padding-right: 20 * $base-unit;
+			line-height: $form-control-height + 2 * $input-padding-top-bottom;
+			text-align: right;
+		}
+
+		.form-field_flexible {
+			flex: 1;
+			justify-content: flex-end;
+		}
+	}
+
+}

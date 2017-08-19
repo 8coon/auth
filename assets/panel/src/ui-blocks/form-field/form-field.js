@@ -12,6 +12,11 @@ export const FormFieldTypes = {
     BUTTON: 'button',
 };
 
+export const FormFieldModes = {
+    NORMAL: 'normal',
+    FLEXIBLE: 'flexible',
+};
+
 
 class FormField extends Component {
 
@@ -20,6 +25,7 @@ class FormField extends Component {
         placeholder: '',
         text: '',
         password: false,
+        mode: FormFieldModes.NORMAL,
         validator: () => true,
 
         onAction: () => {},
@@ -77,7 +83,7 @@ class FormField extends Component {
 
             case FormFieldTypes.INPUT:
                 return (
-                    <span>
+                    <span className={`form-field_${this.props.mode}`}>
                         <Input
                             ref="text"
                             placeholder={this.props.placeholder}
@@ -92,7 +98,7 @@ class FormField extends Component {
 
             case FormFieldTypes.BUTTON:
                 return (
-                    <span>
+                    <span className={`form-field_${this.props.mode}`}>
                         <Button
                             text={this.props.text}
                             onClick={this.props.onAction}/>
