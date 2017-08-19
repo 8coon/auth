@@ -9,7 +9,8 @@ export default class PageSettings extends Component {
 
     render() {
         return (
-            <LayoutMain/>
+            <LayoutMain title="Настройки">
+            </LayoutMain>
         )
     }
 

@@ -1,0 +1,18 @@
+@import "../../globals.scss";
+
+
+.delimiter {
+	margin-top: 20 * $base-unit;
+	margin-bottom: 20 * $base-unit;
+	overflow: visible;
+	height: 3 * $base-unit;
+	text-align: center;
+	background-color: lighten($gray, 55%);
+	color: lighten($gray, 20%);
+	opacity: 0.8;
+
+	&__text {
+		position: relative;
+		top: -10 * $base-unit;
+	}
+}

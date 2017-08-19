@@ -1,0 +1,27 @@
+body {
+  height: 100%; }
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #343F4B;
+  color: white;
+  font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 400; }
+
+.scrollable {
+  overflow-y: scroll;
+  touch-action: pan-y;
+  box-sizing: border-box; }
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .avatar__img {
+    height: 60px;
+    width: 60px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%; }

@@ -8,6 +8,8 @@ import {dateDiffInDays, formatDate} from '../../utils/polyfills';
 
 // UI-Blocks
 import LayoutMain from '../layout-main/layout-main';
+import Delimiter from '../delimiter/delimiter';
+import Avatar from '../avatar/avatar';
 
 // Requests
 import listNotifications from 'minecraftshire-jsapi/src/method/notification/list';
@@ -114,12 +116,8 @@ export default class PageNotifications extends Component {
         }
 
         return (
-            <div className="notification-delim" key={key}>
-                <span className="notification-delim__text">
-                    {diffText}
-                </span>
-            </div>
-        )
+            <Delimiter key={key} text={diffText}/>
+        );
     }
 
     renderNotification(notification, key) {
@@ -134,10 +132,7 @@ export default class PageNotifications extends Component {
                         {notification.get('text')}
                     </div>
                 </div>
-                <div className="notification__picture">
-                    <div className="notification__picture__img"
-                         style={{backgroundImage: `url(${notification.get('pictureUrl') || NoAvatar})`}}/>
-                </div>
+                <Avatar url={notification.get('pictureUrl')}/>
             </div>
         );
     }

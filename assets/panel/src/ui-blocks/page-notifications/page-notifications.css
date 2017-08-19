@@ -39,16 +39,3 @@ body {
     width: 60px;
     background-size: cover;
     border-radius: 50%; }
-
-.notification-delim {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  overflow: visible;
-  height: 3px;
-  text-align: center;
-  background-color: #f4f5f7;
-  color: #8e9caa;
-  opacity: 0.8; }
-  .notification-delim__text {
-    position: relative;
-    top: -10px; }

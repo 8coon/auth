@@ -1,0 +1,16 @@
+@import "../../globals.scss";
+
+
+.avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&__img {
+		height: $layout-avatar-size;
+		width: $layout-avatar-size;
+		background-size: cover;
+		background-position: center;
+		border-radius: 50%;
+	}
+}

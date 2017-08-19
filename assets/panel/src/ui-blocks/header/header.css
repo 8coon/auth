@@ -104,16 +104,6 @@ body {
         text-overflow: ellipsis;
         font-weight: 700;
         padding-right: 10px; }
-    .header__account__avatar {
-      display: flex;
-      align-items: center;
-      justify-content: center; }
-      .header__account__avatar__img {
-        height: 60px;
-        width: 60px;
-        background-size: cover;
-        background-position: center;
-        border-radius: 50%; }
     .header__account__logout {
       position: absolute;
       z-index: 1001;

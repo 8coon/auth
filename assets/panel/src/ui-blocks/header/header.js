@@ -5,7 +5,6 @@ import './header.css';
 
 // Assets
 import Logo from '../../assets/logo.png';
-import NoAvatar from '../../assets/no-avatar.jpg';
 
 // Sitemap
 import Sitemap from '../../sitemap';
@@ -16,6 +15,7 @@ import {LayoutSize} from '../layout/layout';
 // UI-Blocks
 import Dropdown from '../dropdown/dropdown';
 import Input from '../input/input';
+import Avatar from '../avatar/avatar';
 
 // Services
 import Status from '../../services/status';
@@ -138,11 +138,8 @@ export default class Header extends Component {
                                         <span>{user.get('freeBalance')}</span>
                                     </div>
                                 </div>
-                                <div className="header__account__avatar"
-                                     onClick={this.onAccountClick}>
-                                    <span className="header__account__avatar__img"
-                                          style={{backgroundImage: `url(${user.getAvatarFullUrl() || NoAvatar})`}}/>
-                                </div>
+                                <Avatar url={user.getAvatarFullUrl()}
+                                        onClick={this.onAccountClick}/>
                             </div>
                             <div className="header__account__logout">
                                 <Link to={Sitemap.root}>Выход</Link>
