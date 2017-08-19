@@ -1,6 +1,6 @@
 
 // Emitter
-import Emitter from 'minecraftshire-jsapi/src/emitter/Emitter';
+import Emitter from 'minecraftshire-utils/src/emitter/Emitter';
 
 // Models
 import User from 'minecraftshire-jsapi/src/models/User/User';
