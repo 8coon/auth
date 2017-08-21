@@ -266,14 +266,16 @@ public class UserRepository extends Repository {
             if (ownProfile) {
                 return jdbc.queryForObject(
                         "SELECT username, email, password_length, avatar_hash, avatar_content_type, " +
-                                "total_balance, free_balance FROM Users WHERE username = ? LIMIT 1",
+                                "total_balance, free_balance, \"group\" " +
+                                "FROM Users WHERE username = ? LIMIT 1",
                         new ProfileData(),
                         username
                 );
             } else {
                 return jdbc.queryForObject(
                         "SELECT username, NULL AS email, 0 AS password_length, avatar_hash, avatar_content_type, " +
-                                "total_balance, free_balance FROM Users WHERE username = ? LIMIT 1",
+                                "total_balance, free_balance, \"group\" " +
+                                "FROM Users WHERE username = ? LIMIT 1",
                         new ProfileData(),
                         username
                 );
