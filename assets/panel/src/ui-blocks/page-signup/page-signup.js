@@ -16,6 +16,9 @@ import createUser from 'minecraftshire-jsapi/src/method/user/create';
 // Sitemap
 import Sitemap from '../../sitemap';
 
+// Utils
+import Validators from '../../utils/validators/validators';
+
 
 export default class PageSignup extends Component {
 
@@ -25,48 +28,9 @@ export default class PageSignup extends Component {
         super(props);
         this.state = {validated: false};
 
-        PageSignup.validateUsername = PageSignup.validateUsername.bind(this);
-        PageSignup.validateEmail = PageSignup.validateEmail.bind(this);
-        PageSignup.validatePassword = PageSignup.validatePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
-    }
-
-    static validateUsername(value) {
-        if (value.length < 4) {
-            return `Минимальная длина — 4 символа!`;
-        }
-
-        if (value.length > 30) {
-            return `Максимальная длина — 30 символов!`
-        }
-
-        if (!/[a-zA-Z0-9._=[\]]+/.test(value)) {
-            return 'Разрешены только символы: a-z A-Z 0-9 ._=[]';
-        }
-
-        return true;
-    }
-
-    static validatePassword(value) {
-        if (value.length < 4) {
-            return `Минимальная длина — 4 символа!`;
-        }
-
-        if (value.length > 30) {
-            return `Максимальная длина — 30 символов!`
-        }
-
-        return true;
-    }
-
-    static validateEmail(value) {
-        if (!/.*@.*/.test(value)) {
-            return 'Неверный формат Email-адреса!';
-        }
-
-        return true;
     }
 
     onFocus() {
@@ -127,7 +91,7 @@ export default class PageSignup extends Component {
                             ref={this.form.add('username')}
                             type={FormFieldTypes.INPUT}
                             placeholder="Имя пользователя"
-                            validator={PageSignup.validateUsername}
+                            validator={Validators.username}
                             onFocus={this.onFocus}
                             onBlur={this.onBlur}/>
 
@@ -135,7 +99,7 @@ export default class PageSignup extends Component {
                             ref={this.form.add('email')}
                             type={FormFieldTypes.INPUT}
                             placeholder="Email"
-                            validator={PageSignup.validateEmail}
+                            validator={Validators.email}
                             onFocus={this.onFocus}
                             onBlur={this.onBlur}/>
 
@@ -144,7 +108,7 @@ export default class PageSignup extends Component {
                             type={FormFieldTypes.INPUT}
                             placeholder="Пароль"
                             password
-                            validator={PageSignup.validatePassword}
+                            validator={Validators.password}
                             onFocus={this.onFocus}
                             onBlur={this.onBlur}/>
 

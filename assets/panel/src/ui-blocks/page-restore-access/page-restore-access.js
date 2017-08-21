@@ -16,6 +16,9 @@ import restoreAccess from 'minecraftshire-jsapi/src/method/auth/restoreAccess';
 // Sitemap
 import Sitemap from '../../sitemap';
 
+// Utils
+import Validators from '../../utils/validators/validators';
+
 
 export default class PageRestoreAccess extends Component {
 
@@ -29,18 +32,9 @@ export default class PageRestoreAccess extends Component {
         super(props);
         this.state = {validated: false};
 
-        PageRestoreAccess.validateEmail = PageRestoreAccess.validateEmail.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
-    }
-
-    static validateEmail(value) {
-        if (!/.*@.*/.test(value)) {
-            return 'Неверный формат Email-адреса!';
-        }
-
-        return true;
     }
 
     onFocus() {
@@ -97,7 +91,7 @@ export default class PageRestoreAccess extends Component {
                             ref={this.form.add('email')}
                             type={FormFieldTypes.INPUT}
                             placeholder="Email"
-                            validator={PageRestoreAccess.validateEmail}
+                            validator={Validators.email}
                             onFocus={this.onFocus}
                             onBlur={this.onBlur}/>
 

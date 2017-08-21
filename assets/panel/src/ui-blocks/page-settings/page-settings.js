@@ -9,55 +9,77 @@ import Delimiter from '../delimiter/delimiter';
 // Form
 import Form from '../../form/form';
 
+// Utils
+import Validators from '../../utils/validators/validators';
+
 
 export default class PageSettings extends Component {
 
-    form = new Form();
+    emailForm = new Form();
+    passwordForm = new Form();
+    avatarForm = new Form();
 
     constructor(props) {
         super(props);
-        this.state = {validated: false};
+        this.state = {emailValidated: false};
 
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onFocus = this.onFocus.bind(this);
-        this.onBlur = this.onBlur.bind(this);
+        this.onEmailSubmit = this.onEmailSubmit.bind(this);
+        this.onEmailFocus = this.onEmailFocus.bind(this);
+        this.onEmailBlur = this.onEmailBlur.bind(this);
     }
 
-    onFocus() {
-        this.form.toggleTooltip(false);
+    onEmailSubmit() {
+        this.setState({emailValidated: true});
+        if (!this.emailForm.validate()) return;
+
+        alert('ok!');
     }
 
-    onBlur() {
-        if (this.state.validated) {
-            this.form.validate();
+    onEmailFocus() {
+        this.emailForm.toggleTooltip(false);
+    }
+
+    onEmailBlur() {
+        if (this.state.emailValidated) {
+            this.emailForm.validate();
         }
-    }
-
-    onSubmit() {
-
     }
 
     render() {
         return (
             <LayoutMain title="Настройки">
-                <Delimiter text="Аккаунт"/>
+                <Delimiter text="Смена адреса электронной почты"/>
 
                 <div className="big-form">
                     <div className="big-form__field">
                         <span className="big-form__field__title">Email:</span>
                         <FormField
-                            ref={this.form.add('email')}
+                            ref={this.emailForm.add('email')}
                             type={FormFieldTypes.INPUT}
                             placeholder="Email"
                             mode={FormFieldModes.FLEXIBLE}
-                            onFocus={this.onFocus}
-                            onBlur={this.onBlur}/>
+                            validator={Validators.email}
+                            onFocus={this.onEmailFocus}
+                            onBlur={this.onEmailBlur}/>
                     </div>
 
                     <div className="big-form__field">
+                        <span className="big-form__field__title"/>
+                        <FormField
+                            type={FormFieldTypes.BUTTON}
+                            mode={FormFieldModes.FLEXIBLE}
+                            onAction={this.onEmailSubmit}
+                            text="Поменять"/>
+                    </div>
+                </div>
+
+                <Delimiter text="Смена пароля"/>
+
+                <div className="big-form">
+                    <div className="big-form__field">
                         <span className="big-form__field__title">Старый пароль:</span>
                         <FormField
-                            ref={this.form.add('old_password')}
+                            ref={this.passwordForm.add('old_password')}
                             type={FormFieldTypes.INPUT}
                             placeholder="Старый пароль"
                             password
@@ -69,7 +91,7 @@ export default class PageSettings extends Component {
                     <div className="big-form__field">
                         <span className="big-form__field__title">Новый пароль:</span>
                         <FormField
-                            ref={this.form.add('new_password')}
+                            ref={this.passwordForm.add('new_password')}
                             type={FormFieldTypes.INPUT}
                             placeholder="Новый пароль"
                             password
@@ -85,10 +107,18 @@ export default class PageSettings extends Component {
                             mode={FormFieldModes.FLEXIBLE}
                             text="Поменять"/>
                     </div>
-
                 </div>
 
-                <Delimiter text="Профиль"/>
+                <Delimiter text="Смена аватара"/>
+                <div className="big-form">
+                    <div className="big-form__field">
+                        <span className="big-form__field__title"/>
+                        <FormField
+                            type={FormFieldTypes.BUTTON}
+                            mode={FormFieldModes.FLEXIBLE}
+                            text="Поменять"/>
+                    </div>
+                </div>
 
                 <Delimiter text="Активные сессии"/>
 

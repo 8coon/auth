@@ -16,6 +16,9 @@ import restorePassword from 'minecraftshire-jsapi/src/method/auth/restorePasswor
 // Sitemap
 import Sitemap from '../../sitemap';
 
+// Utils
+import Validators from '../../utils/validators/validators';
+
 
 export default class PagePasswordReset extends Component {
 
@@ -29,7 +32,6 @@ export default class PagePasswordReset extends Component {
         super(props);
         this.state = {validated: false};
 
-        PagePasswordReset.validatePassword = PagePasswordReset.validatePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
@@ -94,7 +96,7 @@ export default class PagePasswordReset extends Component {
                             type={FormFieldTypes.INPUT}
                             password
                             placeholder="Пароль"
-                            validator={PagePasswordReset.validatePassword}
+                            validator={Validators.password}
                             onFocus={this.onFocus}
                             onBlur={this.onBlur}/>
 
