@@ -1,14 +1,12 @@
 package org.minecraftshire.auth.repositories;
 
 
-import org.minecraftshire.auth.data.AvatarData;
-import org.minecraftshire.auth.data.CredentialsData;
-import org.minecraftshire.auth.data.UserData;
-import org.minecraftshire.auth.data.UserStatusData;
+import org.minecraftshire.auth.data.*;
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.ExistsExceptionCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
+import org.minecraftshire.auth.services.PasswordEncoder;
 import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +14,22 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
-import java.util.Random;
 
 
 @org.springframework.stereotype.Repository
 public class UserRepository extends Repository {
 
     private MessageDigest md;
-    private SecureRandom random = new SecureRandom();
-
     private ConfirmationRepository confirmations;
     private TokenRepository tokens;
     private NotificationRepository notifications;
     private ModificationRepository modifications;
+    private PasswordEncoder passwordEncoder;
 
 
     @Autowired
@@ -42,12 +37,14 @@ public class UserRepository extends Repository {
             ConfirmationRepository confirmations,
             TokenRepository tokens,
             NotificationRepository notifications,
-            ModificationRepository modifications
+            ModificationRepository modifications,
+            PasswordEncoder passwordEncoder
     ) {
         this.confirmations = confirmations;
         this.tokens = tokens;
         this.notifications = notifications;
         this.modifications = modifications;
+        this.passwordEncoder = passwordEncoder;
 
         try {
             md = MessageDigest.getInstance("SHA-1");
@@ -76,13 +73,15 @@ public class UserRepository extends Repository {
             throw new ExistsException(ExistsExceptionCause.EMAIL);
         }
 
-        int salt = this.generateSalt();
-        String salty = UserRepository.makeSalty(password, salt);
+        int salt = passwordEncoder.generateSalt();
+        String salty = passwordEncoder.makeSalty(password, salt);
 
         this.jdbc.update(
-                "INSERT INTO Users (username, password, email, salt, \"group\", is_confirmed, is_banned) VALUES" +
-                        "(?, ?, ?, ?, ?, ?, ?)",
-                username, salty, email, salt, UserGroups.STANDARD, false, false
+                "INSERT INTO Users " +
+                        "(username, password, email, salt, \"group\", is_confirmed, is_banned, password_length) " +
+                        "VALUES" +
+                        "(?, ?, ?, ?, ?, ?, ?, ?)",
+                username, salty, email, salt, UserGroups.STANDARD, false, false, password.length()
         );
 
         this.confirmations.requestSignUpConfirmation(username, email);
@@ -111,7 +110,7 @@ public class UserRepository extends Repository {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.BANNED);
         }
 
-        String hash = UserRepository.makeSalty(credentials.getPassword(), user.getSalt());
+        String hash = passwordEncoder.makeSalty(credentials.getPassword(), user.getSalt());
 
         if (!user.getPassword().equals(hash)) {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.USERNAME_OR_PASSWORD);
@@ -138,8 +137,8 @@ public class UserRepository extends Repository {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.SAME_PASSWORD);
         }
 
-        oldPassword = UserRepository.makeSalty(oldPassword, user.getSalt());
-        newPassword = UserRepository.makeSalty(newPassword, user.getSalt());
+        oldPassword = passwordEncoder.makeSalty(oldPassword, user.getSalt());
+        newPassword = passwordEncoder.makeSalty(newPassword, user.getSalt());
 
         if (!oldPassword.equals(user.getPassword())) {
             throw new WrongCredentialsException(WrongCredentialsExceptionCause.PASSWORD);
@@ -184,10 +183,10 @@ public class UserRepository extends Repository {
                 username
         );
 
-        String newPassword = UserRepository.makeSalty(password, user.getSalt());
+        String newPassword = passwordEncoder.makeSalty(password, user.getSalt());
         this.jdbc.update(
-                "UPDATE Users SET password = ? WHERE username = ?",
-                newPassword, username
+                "UPDATE Users SET password = ?, password_length = ? WHERE username = ?",
+                newPassword, newPassword.length(), username
         );
     }
 
@@ -257,40 +256,31 @@ public class UserRepository extends Repository {
     }
 
 
-    public int generateSalt() {
-        return this.random.nextInt();
-    }
-
-
-
-
-    public static String makeSalty(String password, int salt) {
-        Random random = new Random(salt);
-        MessageDigest md = null;
-
+    /**
+     * @param username имя пользователя
+     * @param ownProfile является ли данный пользователь владельцем этого профиля
+     */
+    @Transactional
+    public ProfileData getFullProfile(String username, boolean ownProfile) {
         try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            Logger.getLogger().error(e);
-            System.exit(-1);
+            if (ownProfile) {
+                return jdbc.queryForObject(
+                        "SELECT username, email, password_length, avatar_hash, avatar_content_type, " +
+                                "total_balance, free_balance FROM Users WHERE username = ? LIMIT 1",
+                        new ProfileData(),
+                        username
+                );
+            } else {
+                return jdbc.queryForObject(
+                        "SELECT username, NULL AS email, 0 AS password_length, avatar_hash, avatar_content_type, " +
+                                "total_balance, free_balance FROM Users WHERE username = ? LIMIT 1",
+                        new ProfileData(),
+                        username
+                );
+            }
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
-
-        byte[] intermediate = null;
-
-        try {
-            intermediate = password.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            Logger.getLogger().error( e);
-            System.exit(-1);
-        }
-
-        int upper = 100 + random.nextInt(500);
-
-        for (int i = 0; i < upper; i++) {
-            intermediate = md.digest(intermediate);
-        }
-
-        return Base64.getEncoder().encodeToString(intermediate);
     }
 
 }

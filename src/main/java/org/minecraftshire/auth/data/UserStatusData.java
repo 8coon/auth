@@ -32,21 +32,27 @@ public class UserStatusData implements RowMapper<UserStatusData> {
         this.totalBalance = totalBalance;
         this.freeBalance = freeBalance;
         this.notifications = notifications;
-        this.avatarUrl = "user/" + username + "/" + avatarHash;
-
-        // Определяем расширение "файла" по его contentType.
-        if ("image/jpeg".equalsIgnoreCase(avatarContentType)) {
-            this.avatarUrl += ".jpg";
-        } else if ("image/png".equalsIgnoreCase(avatarContentType)) {
-            this.avatarUrl += ".png";
-        } else {
-            // У аватарки выставлен некорректный contentType -- не дадим пользователю её скачать!
-            this.avatarUrl = null;
-        }
+        this.avatarUrl = UserStatusData.getAvatarUrl(username, avatarHash, avatarContentType);
     }
 
     public UserStatusData() {}
 
+
+    public static String getAvatarUrl(String username, String hash, String contentType) {
+        String url = "user/" + username + "/" + hash;
+
+        // Определяем расширение "файла" по его contentType.
+        if ("image/jpeg".equalsIgnoreCase(contentType)) {
+            url += ".jpg";
+        } else if ("image/png".equalsIgnoreCase(contentType)) {
+            url += ".png";
+        } else {
+            // У аватарки выставлен некорректный contentType -- не дадим пользователю её скачать!
+            url = null;
+        }
+
+        return url;
+    }
 
 
     @Override

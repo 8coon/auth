@@ -161,6 +161,24 @@ public class UserController {
     }
 
 
+    @AuthRequired
+    @PostMapping("/profile/{username}")
+    public ResponseEntity profile(
+            @RequestBody AuthTokenData data,
+            UserAgent userAgent,
+            SessionData sessionData,
+            @PathVariable("username") String username
+    ) {
+        ProfileData profileData = users.getFullProfile(username, sessionData.getUsername().equals(username));
+
+        if (profileData == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(profileData, HttpStatus.OK);
+    }
+
+
     private static WorkerDoneCallback<UploadProcessorWorkerPayload> onAvatarUpload = (worker, payload) -> {
         try {
             Server.getContext().getBean(UserRepository.class).setAvatar(
