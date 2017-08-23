@@ -141,7 +141,7 @@ export default class Header extends Component {
                                 <Avatar url={user.getAvatarFullUrl()}
                                         onClick={this.onAccountClick}/>
                             </div>
-                            <div className="header__account__logout">
+                            <div className="header__account__logout" style={{display: 'none'}}>
                                 <Link to={Sitemap.root}>Выход</Link>
                             </div>
                         </div>

@@ -24,10 +24,10 @@ body {
   .layout-login__outer {
     z-index: 1;
     background-color: #5A6978;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 9px;
+    padding-right: 9px;
     padding-bottom: 60px;
-    width: 550px; }
+    width: 495px; }
   .layout-login__inner {
     background-color: white;
     color: #343F4B; }

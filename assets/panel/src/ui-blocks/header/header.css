@@ -24,26 +24,26 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 100px;
+    height: 90px;
     transition: height 0.3s ease-in-out;
     background-color: #5A6978; }
-    @media only screen and (min-width: 676px) and (max-width: 1000px) {
+    @media only screen and (min-width: 726px) and (max-width: 1025px) {
       .header__wrapper {
         width: 100%; } }
-    @media only screen and (max-width: 675px) {
+    @media only screen and (max-width: 725px) {
       .header__wrapper {
         background-color: #5A6978;
         width: 100%;
-        height: 50px;
+        height: 45px;
         overflow: hidden; } }
   .header__logo {
     background: #FF9052 no-repeat center;
     background-size: contain;
-    height: 80px;
-    width: 200px;
-    min-width: 200px;
-    border: 10px solid #FF9052;
-    border-top-width: 12px;
+    height: 72px;
+    width: 180px;
+    min-width: 180px;
+    border: 9px solid #FF9052;
+    border-top-width: 10.8px;
     cursor: pointer; }
   .header__search {
     background-color: #5A6978;
@@ -51,26 +51,26 @@ body {
     display: flex;
     align-items: center;
     overflow: visible;
-    padding-left: 30px;
-    padding-right: 30px; }
+    padding-left: 27px;
+    padding-right: 27px; }
     .header__search input {
       opacity: 0.3;
       min-width: 100%;
       width: 100%;
       transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out; }
       .header__search input:focus {
-        min-width: 190px;
+        min-width: 171px;
         width: 200%;
         opacity: 1; }
     .header__search i {
       transition: opacity 0.3s ease-in-out;
-      margin-left: 10px; }
+      margin-left: 9px; }
       .header__search i:hover {
         background-color: #637384; }
       .header__search i:active {
         background-color: #515f6c; }
   .header__account {
-    width: 250px;
+    width: 225px;
     background-color: #718394;
     transition: opacity 0.3s ease-in-out;
     display: flex;
@@ -86,8 +86,8 @@ body {
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: 18px;
+      padding-right: 18px;
       flex: 1;
       width: 100%; }
       .header__account__wrapper:hover {
@@ -98,22 +98,22 @@ body {
       flex: 1; }
       .header__account__info__username {
         box-sizing: border-box;
-        max-width: 150px;
+        max-width: 135px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         font-weight: 700;
-        padding-right: 10px; }
+        padding-right: 9px; }
     .header__account__logout {
       position: absolute;
       z-index: 1001;
-      top: 100px;
-      width: 250px;
+      top: 90px;
+      width: 225px;
       background-color: #8e9caa;
       opacity: 0.5;
       text-align: center;
-      padding-top: 2px;
-      padding-bottom: 2px; }
+      padding-top: 1.8px;
+      padding-bottom: 1.8px; }
       .header__account__logout:hover {
         background-color: #abb6c0; }
       .header__account__logout a {
@@ -126,8 +126,8 @@ body {
     justify-content: flex-end; }
   .header__burger {
     background: #FF9052 no-repeat center;
-    height: 50px;
-    width: 50px;
+    height: 45px;
+    width: 45px;
     display: flex;
     justify-content: center;
     align-items: center;

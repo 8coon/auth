@@ -19,7 +19,7 @@ body {
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  padding: 10px; }
+  padding: 9px; }
   .notification:hover {
     background-color: #fafafb; }
   .notification_unread {
@@ -35,7 +35,7 @@ body {
     .notification__text__title {
       font-weight: 700; }
   .notification__picture__img {
-    height: 60px;
-    width: 60px;
+    height: 54px;
+    width: 54px;
     background-size: cover;
     border-radius: 50%; }

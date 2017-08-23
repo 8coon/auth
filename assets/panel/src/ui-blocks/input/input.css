@@ -16,9 +16,9 @@ body {
   box-sizing: border-box; }
 
 .input {
-  margin: 2px;
-  padding: 4px;
-  height: 35px; }
+  margin: 1.8px;
+  padding: 3.6px;
+  height: 31.5px; }
   .input input {
     font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
     font-size: 15px;
@@ -26,13 +26,9 @@ body {
     height: 100%;
     text-overflow: ellipsis;
     box-sizing: border-box;
-    border: 1px solid;
-    border-color: #5A6978;
-    border-bottom-width: 2px;
-    border-bottom-color: #343F4B;
-    border-radius: 5px;
-    padding: 5px 20px;
-    min-width: 350px; }
+    border: 0.9px solid #8e9caa;
+    padding: 4.5px 18px;
+    min-width: 315px; }
     .input input::-moz-placeholder {
       color: #5A6978;
       opacity: 0.5; }
@@ -48,7 +44,7 @@ body {
     .input input:focus {
       opacity: 1;
       outline: none;
-      box-shadow: 0 0 0 1px #343F4B;
+      border: 0.9px solid #abb6c0;
       text-overflow: clip; }
       .input input:focus::-moz-placeholder {
         color: transparent; }
@@ -58,14 +54,14 @@ body {
         color: transparent; }
       .input input:focus:-moz-placeholder {
         color: transparent; }
-    @media only screen and (max-width: 675px) {
+    @media only screen and (max-width: 725px) {
       .input input {
         width: 100% !important; } }
   .input_invalid input {
     border-color: #DA7666; }
     .input_invalid input:focus {
-      box-shadow: 0 0 0 1px #DA7666; }
+      box-shadow: 0 0 0 0.9px #DA7666; }
   .input_valid input {
     border-color: #549F5D; }
     .input_valid input:focus {
-      box-shadow: 0 0 0 1px #549F5D; }
+      box-shadow: 0 0 0 0.9px #549F5D; }

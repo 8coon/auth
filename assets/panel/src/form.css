@@ -22,12 +22,12 @@ body {
   text-align: center; }
 
 .form__desc {
-  padding-bottom: 15px !important; }
+  padding-bottom: 13.5px !important; }
 
 .form__links {
   color: #8e9caa; }
   .form__links > div {
-    padding: 5px; }
+    padding: 4.5px; }
   .form__links a {
     color: #5A6978;
     text-decoration: underline; }
@@ -38,24 +38,24 @@ body {
 .form .form-block {
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
-  padding-bottom: 30px; }
+  padding-top: 27px;
+  padding-bottom: 27px; }
   .form .form-block:first-child {
     padding-bottom: 0; }
   .form .form-block:last-child {
     padding-top: 0; }
 
 .big-form {
-  padding-top: 30px;
-  padding-bottom: 30px; }
+  padding-top: 27px;
+  padding-bottom: 27px; }
   .big-form__field {
     display: flex;
     flex-direction: row;
     justify-content: space-between; }
     .big-form__field__title {
       width: 120px;
-      padding-right: 20px;
-      line-height: 45px;
+      padding-right: 18px;
+      line-height: 40.5px;
       text-align: right; }
     .big-form__field .form-field_flexible {
       flex: 1;

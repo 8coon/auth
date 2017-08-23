@@ -33,9 +33,9 @@ export default class Layout extends Component {
         const width = window.innerWidth;
         let newSize = this.state.size;
 
-        if (width <= 675) {
+        if (width <= 725) {
             newSize = LayoutSize.handheld;
-        } else if (width <= 1000) {
+        } else if (width <= 1025) {
             newSize = LayoutSize.tablet;
         } else {
             newSize = LayoutSize.desktop;

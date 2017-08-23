@@ -13,11 +13,7 @@
 		text-overflow: ellipsis;
 		box-sizing: border-box;
 
-		border: $base-unit solid;
-		border-color: $gray;
-		border-bottom-width: 2 * $base-unit;
-		border-bottom-color: $black;
-		border-radius: $border-radius;
+		border: $base-unit solid lighten($gray, 20%);
 
 		padding: $input-padding;
 		min-width: $form-control-width;
@@ -30,7 +26,7 @@
 		&:focus {
 			opacity: $opacity-default;
 			outline: none;
-			box-shadow: 0 0 0 1 * $base-unit $black;
+			border: $base-unit solid lighten($gray, 30%);
 			text-overflow: clip;
 
 			@include placeholder() {

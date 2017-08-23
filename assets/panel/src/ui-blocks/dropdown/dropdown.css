@@ -21,12 +21,12 @@ body {
   font-weight: 400;
   background-color: #343F4B;
   color: white;
-  height: 40px;
+  height: 36px;
   text-overflow: ellipsis;
   box-sizing: border-box;
   z-index: 100;
   position: relative;
-  padding: 5px 20px;
+  padding: 4.5px 18px;
   display: flex;
   justify-content: center;
   align-items: center; }
@@ -40,22 +40,22 @@ body {
   .dropdown-control_toggled {
     background-color: #455363 !important; }
   .dropdown-control__text_right-arrow {
-    padding-right: 14px; }
+    padding-right: 12.6px; }
   .dropdown-control__text_left-arrow {
-    padding-left: 14px; }
+    padding-left: 12.6px; }
   .dropdown-control_transparent {
     background-color: transparent; }
 
 .dropdown__items {
   position: absolute;
   background-color: white;
-  box-shadow: 0 0 5px #718394;
+  box-shadow: 0 0 4.5px #718394;
   z-index: 1;
   transition: margin-top 0.3s, opacity 0.3s; }
 
 .dropdown__item {
   color: #343F4B;
-  padding: 10px;
+  padding: 9px;
   user-select: none;
   transition: background-color 0.3s;
   box-sizing: border-box;

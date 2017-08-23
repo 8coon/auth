@@ -19,28 +19,28 @@ body {
   position: absolute;
   box-sizing: border-box;
   left: 30%;
-  margin-top: 4px;
+  margin-top: 3.6px;
   z-index: 10001;
-  padding: 5px 40px;
-  width: 400px;
-  border: 2px solid #DA7666;
-  border-radius: 5px;
+  padding: 4.5px 36px;
+  width: 360px;
+  border: 1.8px solid #DA7666;
+  border-radius: 4.5px;
   background-color: #f8e4e1; }
   .tooltip__arrow {
     position: absolute;
-    left: 189.5px;
-    top: -10.5px;
+    left: 170.55px;
+    top: -9.45px;
     z-index: 10002;
-    height: 15px;
-    width: 15px;
+    height: 13.5px;
+    width: 13.5px;
     background-color: #f8e4e1;
-    border-right: 2px solid #DA7666;
-    border-top: 2px solid #DA7666;
+    border-right: 1.8px solid #DA7666;
+    border-top: 1.8px solid #DA7666;
     transform: rotate(-45deg); }
   .tooltip__text {
     color: #DA7666;
     font-weight: 700; }
-  @media only screen and (max-width: 675px) {
+  @media only screen and (max-width: 725px) {
     .tooltip {
       width: 100%;
       left: 0; }

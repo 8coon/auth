@@ -20,8 +20,8 @@ body {
   align-items: center;
   justify-content: center; }
   .avatar__img {
-    height: 60px;
-    width: 60px;
+    height: 54px;
+    width: 54px;
     background-size: cover;
     background-position: center;
     border-radius: 50%; }
