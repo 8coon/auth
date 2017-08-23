@@ -23,11 +23,13 @@ $strip-width: 10 * $base-unit;
 		box-sizing: border-box;
 		transition: width $transition-default,
 					color $transition-default;
+		border-top: $border-default;
 	}
 
 	&__content {
+		border-top: $border-default;
 		background-color: $white;
-		color: $black;
+		color: $gray;
 		box-sizing: border-box;
 		flex: 1;
 		padding: 0;
@@ -113,10 +115,13 @@ $strip-width: 10 * $base-unit;
 
 		&__links {
 			width: $menu-width;
+			border-left: $border-default;
+			border-right: $border-default;
 		}
 
 		&__content {
 			max-width: $layout-width - $menu-width;
+			border-right: $border-default;
 		}
 	}
 
@@ -153,6 +158,7 @@ $strip-width: 10 * $base-unit;
 		.menu__links_small {
 			width: $layout-header-burger-size;
 			background-color: $black;
+			border-top: none;
 
 			.menu__item {
 				padding: 5 * $base-unit 0;

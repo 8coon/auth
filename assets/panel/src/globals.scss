@@ -7,6 +7,7 @@ $red: #DA7666;
 $green: #549F5D;
 $light-gray: #EEEEEE;
 $light: #F0F1F2;
+$very-light-gray: lighten($gray, 50%);
 $white: white;
 
 $opacity-default: 1;
@@ -14,11 +15,14 @@ $opacity-hover: 0.8;
 $opacity-placeholder: 0.5;
 $opacity-notify-box: 0.7;
 $opacity-search: 0.3;
+$opacity-popup-background: 0.5;
 
 $transition-default: 0.3s ease-in-out;
 
 $z-index-menu: 1000;
 $z-index-logout: 1001;
+$z-index-popup: 5000;
+$z-index-popup-background: 5000;
 $z-index-notify: 10000;
 $z-index-tooltip: 10001;
 $z-index-notify-box: 10002;
@@ -51,6 +55,7 @@ $font-weight-username: 700;
 $font-color-default: $white;
 $font-color-header: $gray;
 $font-color-title: $gray;
+$font-color-main: $gray;
 
 $form-header-height: 50px;
 $form-header-padding: 5px;
@@ -74,6 +79,8 @@ $layout-account-padding: 20 * $base-unit;
 $layout-avatar-size: $layout-header-total-height - 2 * $layout-account-padding;
 
 $page-content-padding: 35 * $base-unit;
+
+$border-default: solid $very-light-gray 1 * $base-unit;
 
 
 $handhelds: handhelds;
@@ -111,7 +118,7 @@ body {
 	padding: 0;
 	margin: 0;
 
-	background-color: $black;
+	background-color: lighten($light, 2.5%);
 	color: $font-color-default;
 
 	font-family: $font-family-default;

@@ -9,6 +9,7 @@ import Sitemap from '../../sitemap';
 // UI-Blocks
 import Layout from '../layout/layout';
 import LayerNotify from '../layer-notify/layer-notify';
+import LayerPopup from '../layer-popup/layer-popup';
 import Header from '../header/header';
 import Menu from '../menu/menu';
 
@@ -43,6 +44,8 @@ export default class LayoutMain extends Component {
                     </Menu>
                 </Layout>
 
+                <LayerNotify/>
+                <LayerPopup/>
             </div>
         )
     }

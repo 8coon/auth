@@ -8,6 +8,7 @@ import Sitemap from '../../sitemap';
 
 // UI-Blocks
 import LayerNotify from '../layer-notify/layer-notify';
+import LayerPopup from '../layer-popup/layer-popup';
 
 
 export default class LayoutLogin extends Component {
@@ -43,6 +44,7 @@ export default class LayoutLogin extends Component {
                 </div>
 
                 <LayerNotify/>
+                <LayerPopup/>
             </div>
         )
     }

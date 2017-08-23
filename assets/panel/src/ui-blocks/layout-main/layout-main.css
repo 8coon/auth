@@ -4,7 +4,7 @@ body {
 body {
   padding: 0;
   margin: 0;
-  background-color: #343F4B;
+  background-color: #f7f7f8;
   color: white;
   font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
   font-size: 15px;
@@ -17,4 +17,5 @@ body {
 
 .layout-main {
   height: 100%;
-  overflow-y: hidden; }
+  overflow-y: hidden;
+  color: #5A6978; }

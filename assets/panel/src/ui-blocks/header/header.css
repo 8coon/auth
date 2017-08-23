@@ -4,7 +4,7 @@ body {
 body {
   padding: 0;
   margin: 0;
-  background-color: #343F4B;
+  background-color: #f7f7f8;
   color: white;
   font-family: "Open Sans", Helvetica, "Segoe UI", sans-serif;
   font-size: 15px;
@@ -18,8 +18,7 @@ body {
 .header {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  background-color: #343F4B; }
+  justify-content: center; }
   .header__wrapper {
     width: 900px;
     display: flex;
@@ -79,7 +78,8 @@ body {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    cursor: pointer; }
+    cursor: pointer;
+    color: white; }
     .header__account__wrapper {
       display: flex;
       flex-direction: row;
