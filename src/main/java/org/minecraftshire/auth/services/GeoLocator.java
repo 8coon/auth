@@ -26,7 +26,7 @@ public class GeoLocator {
             try {
                 reader = new DatabaseReader
                         .Builder(
-                            new File(Server.getPath() + "/assets/geo-db/CurrentVersion/GeoLite2-City.mmdb")
+                            new File(Server.getGeoDBPath() + "/CurrentVersion/GeoLite2-City.mmdb")
                         ).build();
             } catch (IOException e) {
                 Logger.getLogger().severe(e);

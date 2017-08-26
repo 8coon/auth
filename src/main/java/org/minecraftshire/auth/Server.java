@@ -29,6 +29,7 @@ public class Server {
 	private static String path;
 	private static String logPath;
 	private static String uploadsPath;
+	private static String geoDBPath;
 	private static String geoDbVersion;
 	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
@@ -63,6 +64,10 @@ public class Server {
 				env.getProperty("minecraftshire.version");
 	}
 
+	public static String getGeoDBPath() {
+		return geoDBPath;
+	}
+
 	public static String getGeoDbVersion() {
 		return geoDbVersion;
 	}
@@ -91,11 +96,13 @@ public class Server {
 		path.setRequired(true);
 
 		Option logPath = new Option("l", "log", true, "Log file path");
+		Option geoDBPath = new Option("g", "geo", true, "GeoDB path");
 
 		Options options = new Options();
 		options.addOption(secret);
 		options.addOption(path);
 		options.addOption(logPath);
+		options.addOption(geoDBPath);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd;
@@ -121,10 +128,11 @@ public class Server {
 		);
 
 		Server.logPath = cmd.getOptionValue("log", null);
+		Server.geoDBPath = cmd.getOptionValue("geo", Server.getPath() + "assets/geo-db");
 
 		try {
 			Server.geoDbVersion = new String(Files.readAllBytes(Paths.get(
-                    Server.getPath(), "assets", "geo-db", "version.info"
+                    Server.getGeoDBPath(), "version.info"
             )), Charset.defaultCharset()).replace("./", "").replace("\n", "");
 		} catch (IOException e) {
 			log.severe(e);

@@ -128,6 +128,7 @@ export default class Header extends Component {
                         <div className="header__account"
                              style={{opacity: this.state.search ? 0 : 1}}>
                             <div className="header__account__wrapper">
+                       top
                                 <div className="header__account__info"
                                      onClick={this.onAccountClick}>
                                     <div className="header__account__info__username">
