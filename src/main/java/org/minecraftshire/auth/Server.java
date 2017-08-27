@@ -32,6 +32,7 @@ public class Server {
 	private static String geoDBPath;
 	private static String geoDbVersion;
 	private static String pidPath;
+	private static boolean verbose;
 	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
 	private static Environment env;
@@ -85,6 +86,10 @@ public class Server {
 		return pidPath;
 	}
 
+	public static boolean isVerbose() {
+		return verbose;
+	}
+
 
 	public static void stop() {
 		log.info("Stopping via System.exit(0)...");
@@ -103,6 +108,7 @@ public class Server {
 		Option logPath = new Option("l", "log", true, "Log file path");
 		Option geoDBPath = new Option("g", "geo", true, "GeoDB path");
 		Option pidPath = new Option("i", "pid", true, "Output Pid path");
+		Option isVerbose = new Option("v", "verbose", false, "Verbose");
 
 		Options options = new Options();
 		options.addOption(secret);
@@ -110,6 +116,7 @@ public class Server {
 		options.addOption(logPath);
 		options.addOption(geoDBPath);
 		options.addOption(pidPath);
+		options.addOption(isVerbose);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd;
@@ -138,6 +145,8 @@ public class Server {
 		Server.logPath = cmd.getOptionValue("log", null);
 		Server.geoDBPath = cmd.getOptionValue("geo", Server.getPath() + "assets/geo-db");
 		Server.pidPath = cmd.getOptionValue("pid");
+
+		Server.verbose = cmd.hasOption("verbose");
 
 		try {
 			Server.geoDbVersion = new String(Files.readAllBytes(Paths.get(
@@ -173,7 +182,7 @@ public class Server {
 		}
 
 		redirectStream = new SystemRedirectStream(Logger.getLogger(), System.out, System.err);
-		redirectStream.setVerbose(false);
+		redirectStream.setVerbose(Server.isVerbose());
 		log = Logger.getLogger();
 
 		log.info("Successfully switched to file \"", fileName ,"\"");
