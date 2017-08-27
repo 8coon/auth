@@ -153,6 +153,7 @@ public class Server {
                     Server.getGeoDBPath(), "version.info"
             )), Charset.defaultCharset()).replace("./", "").replace("\n", "");
 		} catch (IOException e) {
+			e.printStackTrace();
 			log.severe(e);
 
 			System.exit(-1);
