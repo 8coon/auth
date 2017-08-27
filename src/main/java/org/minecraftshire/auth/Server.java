@@ -117,6 +117,7 @@ public class Server {
 		try {
 			cmd = parser.parse(options, args);
 		} catch (ParseException e) {
+			e.printStackTrace();
 			log.severe(e);
 
 			System.exit(-1);
@@ -159,6 +160,7 @@ public class Server {
 			return;
 		}
 
+		System.out.println("Switching to logging into file \"" + fileName + "\"...");
 		log.info("Switching to logging into file \"" + fileName + "\"...");
 
 		try {
@@ -182,7 +184,7 @@ public class Server {
 		PrintWriter out;
 
 		try {
-			out = new PrintWriter(path + "/server.pid");
+			out = new PrintWriter(pidPath);
 		} catch (FileNotFoundException e) {
 			log.severe(e);
 			return;
@@ -200,14 +202,6 @@ public class Server {
 
 		context = SpringApplication.run(Server.class, args);
 		env = context.getEnvironment();
-
-		dropboxWorker = new DropboxWorker();
-
-		for (int i = 0; i < 1000; i++) {
-			dropboxWorker.schedule(new DropboxWorkerPayload(
-					(JdbcTemplate) context.getBean(JdbcTemplate.class), 0, ""
-			));
-		}
 
 		// Truncate login history older than 1 year
 		context.getBean(TokenRepository.class).truncateHistory();
