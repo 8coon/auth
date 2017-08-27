@@ -31,6 +31,7 @@ public class Server {
 	private static String uploadsPath;
 	private static String geoDBPath;
 	private static String geoDbVersion;
+	private static String pidPath;
 	private static Logger log = Logger.getLogger();
 	private static SystemRedirectStream redirectStream;
 	private static Environment env;
@@ -80,6 +81,10 @@ public class Server {
 		return uploadsPath;
 	}
 
+	public static String getPidPath() {
+		return pidPath;
+	}
+
 
 	public static void stop() {
 		log.info("Stopping via System.exit(0)...");
@@ -97,12 +102,14 @@ public class Server {
 
 		Option logPath = new Option("l", "log", true, "Log file path");
 		Option geoDBPath = new Option("g", "geo", true, "GeoDB path");
+		Option pidPath = new Option("i", "pid", true, "Output Pid path");
 
 		Options options = new Options();
 		options.addOption(secret);
 		options.addOption(path);
 		options.addOption(logPath);
 		options.addOption(geoDBPath);
+		options.addOption(pidPath);
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd;
@@ -129,6 +136,7 @@ public class Server {
 
 		Server.logPath = cmd.getOptionValue("log", null);
 		Server.geoDBPath = cmd.getOptionValue("geo", Server.getPath() + "assets/geo-db");
+		Server.pidPath = cmd.getOptionValue("pid");
 
 		try {
 			Server.geoDbVersion = new String(Files.readAllBytes(Paths.get(
