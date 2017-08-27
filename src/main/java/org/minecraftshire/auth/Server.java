@@ -175,6 +175,7 @@ public class Server {
 		try {
 			Logger.setLogger(new Logger(new FileLogWriter(fileName)));
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			log.severe(e);
 
 			System.exit(-1);
