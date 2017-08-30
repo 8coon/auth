@@ -136,10 +136,10 @@ public class Server {
 		Server.uploadsPath = Server.path + "/assets/uploads";
 
 		Server.buildNumber = ProcessRunner.exec(
-				"cd " + Server.path + "/ && git rev-list HEAD --count"
+				"cd \"" + Server.path + "/\" && git rev-list HEAD --count"
 		);
 		Server.buildDate = ProcessRunner.exec(
-				"cd " + Server.path + "/ && git log -1 --format=%cd "
+				"cd \"" + Server.path + "/\" && git log -1 --format=%cd "
 		);
 
 		Server.logPath = cmd.getOptionValue("log", null);
