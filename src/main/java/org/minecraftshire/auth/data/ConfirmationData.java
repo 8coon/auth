@@ -3,7 +3,7 @@ package org.minecraftshire.auth.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.flywaydb.core.internal.util.jdbc.RowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +41,7 @@ public class ConfirmationData implements RowMapper<ConfirmationData> {
 
 
     @Override
-    public ConfirmationData mapRow(ResultSet resultSet) throws SQLException {
+    public ConfirmationData mapRow(ResultSet resultSet, int i) throws SQLException {
         return new ConfirmationData(
                 resultSet.getString("username"),
                 resultSet.getInt("operation"),
