@@ -100,7 +100,7 @@ public class TokenRepository extends Repository {
     public List<SessionGeoData> listAllSessions(String username) {
         return jdbc.query(
                 "SELECT ip, issued_at, \"location\" FROM Tokens WHERE username = ? " +
-                        "ORDER BY issued_at ASC LIMIT 1000",
+                        "ORDER BY issued_at DESC LIMIT 1000",
                 new SessionGeoData(),
                 username
         );
