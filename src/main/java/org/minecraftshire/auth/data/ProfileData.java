@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class ProfileData implements RowMapper<ProfileData> {
@@ -17,6 +18,8 @@ public class ProfileData implements RowMapper<ProfileData> {
     private int totalBalance;
     private int freeBalance;
     private int group;
+    private List<SessionGeoData> sessions;
+    private List<TokenHistoryData> tokens;
 
 
     public ProfileData(
@@ -123,4 +126,19 @@ public class ProfileData implements RowMapper<ProfileData> {
         this.group = group;
     }
 
+    public List<SessionGeoData> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<SessionGeoData> sessions) {
+        this.sessions = sessions;
+    }
+
+    public List<TokenHistoryData> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<TokenHistoryData> tokens) {
+        this.tokens = tokens;
+    }
 }

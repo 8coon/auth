@@ -6,8 +6,8 @@ mvnw.cmd
 *.pid
 java.log
 assets/geo-db
-assets/minecraftshire-jsapi
-assets/minecraftshire-utils
+assets/minecraftshire-jsapi/
+assets/minecraftshire-utils/
 assets/uploads
 
 ### STS ###
@@ -28,6 +28,6 @@ assets/uploads
 nbproject/private/
 build/
 nbbuild/
-dist/
 nbdist/
 .nb-gradle/
+.DS_Store

@@ -290,13 +290,18 @@ public class UserRepository extends Repository {
     public ProfileData getFullProfile(String username, boolean ownProfile) {
         try {
             if (ownProfile) {
-                return jdbc.queryForObject(
+                ProfileData profile = jdbc.queryForObject(
                         "SELECT username, email, password_length, avatar_hash, avatar_content_type, " +
                                 "total_balance, free_balance, \"group\" " +
                                 "FROM Users WHERE username = ? LIMIT 1",
                         new ProfileData(),
                         username
                 );
+
+                profile.setSessions(tokens.listAllSessions(username));
+                profile.setTokens(tokens.getHistory(username));
+
+                return profile;
             } else {
                 return jdbc.queryForObject(
                         "SELECT username, NULL AS email, 0 AS password_length, avatar_hash, avatar_content_type, " +
