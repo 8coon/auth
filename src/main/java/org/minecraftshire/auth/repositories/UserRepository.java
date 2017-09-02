@@ -171,8 +171,8 @@ public class UserRepository extends Repository {
         }
 
         this.jdbc.update(
-                "UPDATE Users SET password = ? WHERE username = ?",
-                newPassword, username
+                "UPDATE Users SET password = ?, password_length = ? WHERE username = ?",
+                newPassword, newPassword.length(), username
         );
     }
 
