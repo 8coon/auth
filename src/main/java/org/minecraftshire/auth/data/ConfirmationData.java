@@ -37,6 +37,8 @@ public class ConfirmationData implements RowMapper<ConfirmationData> {
         this.code = code;
     }
 
+    public ConfirmationData() {}
+
 
     @Override
     public ConfirmationData mapRow(ResultSet resultSet) throws SQLException {

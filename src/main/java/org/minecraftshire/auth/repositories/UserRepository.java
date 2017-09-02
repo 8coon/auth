@@ -2,10 +2,7 @@ package org.minecraftshire.auth.repositories;
 
 
 import org.minecraftshire.auth.data.*;
-import org.minecraftshire.auth.exceptions.ExistsException;
-import org.minecraftshire.auth.exceptions.ExistsExceptionCause;
-import org.minecraftshire.auth.exceptions.WrongCredentialsException;
-import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
+import org.minecraftshire.auth.exceptions.*;
 import org.minecraftshire.auth.services.PasswordEncoder;
 import org.minecraftshire.auth.utils.UserGroups;
 import org.minecraftshire.auth.utils.logging.Logger;
@@ -117,6 +114,27 @@ public class UserRepository extends Repository {
         }
 
         return tokens.getAuthToken(credentials, user, ip);
+    }
+
+    @Transactional
+    public void changeEmail(String username, String newEmail) throws ExceptionWithCause {
+        String oldEmail;
+
+        try {
+            oldEmail = jdbc.queryForObject(
+                    "SELECT email FROM Users WHERE username = ? LIMIT 1",
+                    String.class,
+                    username
+            );
+        } catch (DataAccessException e) {
+            throw new ExceptionWithCause(GenericCause.USER_NOT_FOUND);
+        }
+
+        if (oldEmail.equalsIgnoreCase(newEmail)) {
+            throw new ExceptionWithCause(GenericCause.SAME_EMAIL);
+        }
+
+        confirmations.requestChangeEmailConfirmation(username, newEmail);
     }
 
     @Transactional

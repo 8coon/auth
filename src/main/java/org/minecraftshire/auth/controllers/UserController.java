@@ -4,6 +4,7 @@ import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.aspects.UserAgent;
 import org.minecraftshire.auth.data.*;
+import org.minecraftshire.auth.exceptions.ExceptionWithCause;
 import org.minecraftshire.auth.exceptions.ExistsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.ConfirmationRepository;
@@ -74,6 +75,26 @@ public class UserController {
         }
 
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+
+    @AuthRequired
+    @PostMapping("/change_email")
+    public ResponseEntity changeEmail(
+        @RequestBody ChangeEmailData emailData,
+        UserAgent userAgent,
+        SessionData sessionData
+    ) {
+        try {
+            users.changeEmail(sessionData.getUsername(), emailData.getNewEmail());
+
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (ExceptionWithCause e) {
+            return new ResponseEntity<>(
+                    new ErrorWithCauseResponse("error", e.getCausedBy()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
 
