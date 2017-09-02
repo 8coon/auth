@@ -134,6 +134,14 @@ public class UserRepository extends Repository {
             throw new ExceptionWithCause(GenericCause.SAME_EMAIL);
         }
 
+        // Если такой Email уже существует
+        if (jdbc.queryForObject(
+                "SELECT count(*) FROM Users WHERE lower(email) = ?",
+                Integer.class,
+                newEmail) > 0) {
+            throw new ExceptionWithCause(GenericCause.SAME_EMAIL);
+        }
+
         confirmations.requestChangeEmailConfirmation(username, newEmail);
     }
 
