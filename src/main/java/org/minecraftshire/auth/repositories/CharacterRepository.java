@@ -46,7 +46,7 @@ public class CharacterRepository extends Repository {
         return jdbc.query(
                 "SELECT " +
                      "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                     " is_favourite FROM Characters WHERE owner = ? AND deleted = FALSE LIMIT 1000",
+                     " is_favorite FROM Characters WHERE owner = ? AND deleted = FALSE LIMIT 1000",
                 new CharacterData(),
                 username
         );
@@ -58,7 +58,7 @@ public class CharacterRepository extends Repository {
             return jdbc.queryForObject(
                     "SELECT " +
                          "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                         " is_favourite FROM Characters WHERE id = ? AND deleted = FALSE LIMIT 1",
+                         " is_favorite FROM Characters WHERE id = ? AND deleted = FALSE LIMIT 1",
                     new CharacterData(),
                     id
             );
