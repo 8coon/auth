@@ -66,7 +66,7 @@ public class CharacterRepository extends Repository {
                 "SELECT " +
                      "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
                      " is_favorite FROM Characters WHERE owner = ? AND " +
-                        "((owner = ? && deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1000",
+                        "((owner = ? AND deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1000",
                 new CharacterData(),
                 username, requestAuthor
         );
@@ -80,7 +80,7 @@ public class CharacterRepository extends Repository {
                     "SELECT " +
                          "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
                          " is_favorite FROM Characters WHERE id = ? AND " +
-                            "((owner = ? && deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
+                            "((owner = ? AND deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
                     new CharacterData(),
                     id, requestAuthor
             );
@@ -97,7 +97,7 @@ public class CharacterRepository extends Repository {
                     "SELECT " +
                             "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
                             " is_favorite FROM Characters WHERE lower(first_name) = ? AND lower(last_name) = ? AND " +
-                            "((owner = ? && deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
+                            "((owner = ? AND deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
                     new CharacterData(),
                     firstName.toLowerCase(), lastName.toLowerCase(), requestAuthor
             );
