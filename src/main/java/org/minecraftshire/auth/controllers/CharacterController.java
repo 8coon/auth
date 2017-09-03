@@ -124,6 +124,27 @@ public class CharacterController {
     }
 
 
+    @AuthRequired
+    @PostMapping("/get")
+    public ResponseEntity get(
+            @RequestBody CharacterCreationData data,
+            UserAgent userAgent,
+            SessionData sessionData
+    ) {
+        try {
+            return new ResponseEntity<>(
+                    characters.get(data.getFirstName(), data.getLastName()),
+                    HttpStatus.OK
+            );
+        } catch (ExceptionWithCause e) {
+            return new ResponseEntity<>(
+                    new ErrorWithCauseResponse("fail", e.getCausedBy()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+
     @GetMapping("/{id}/{filename}")
     public ResponseEntity getSkin(
             @PathVariable("id") int id

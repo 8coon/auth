@@ -33,6 +33,7 @@ public class CharacterRepository extends Repository {
     }
 
 
+    @Transactional
     public void create(CharacterCreationData data) throws ExceptionWithCause {
         boolean exists = true;
 
@@ -59,6 +60,7 @@ public class CharacterRepository extends Repository {
     }
 
 
+    @Transactional
     public List<CharacterData> list(String username) {
         return jdbc.query(
                 "SELECT " +
@@ -70,6 +72,7 @@ public class CharacterRepository extends Repository {
     }
 
 
+    @Transactional
     public CharacterData get(int id) throws ExceptionWithCause {
         try {
             return jdbc.queryForObject(
@@ -85,6 +88,23 @@ public class CharacterRepository extends Repository {
     }
 
 
+    @Transactional
+    public CharacterData get(String firstName, String lastName) throws ExceptionWithCause {
+        try {
+            return jdbc.queryForObject(
+                    "SELECT " +
+                            "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
+                            " is_favorite FROM Characters WHERE first_name = ? AND last_name = ? AND deleted = FALSE LIMIT 1",
+                    new CharacterData(),
+                    firstName, lastName
+            );
+        } catch (EmptyResultDataAccessException e) {
+            throw new ExceptionWithCause(GenericCause.CHARACTER_NOT_FOUND);
+        }
+    }
+
+
+    @Transactional
     public void setFavorite(String username, int id, boolean isFavorite) throws WrongCredentialsException {
         String owner = jdbc.queryForObject(
                 "SELECT owner FROM Characters WHERE id = ? LIMIT 1",
@@ -104,6 +124,7 @@ public class CharacterRepository extends Repository {
     }
 
 
+    @Transactional
     public void setOnline(String username, int id, boolean isOnline) throws WrongCredentialsException {
         String owner = jdbc.queryForObject(
                 "SELECT owner FROM Characters WHERE id = ? LIMIT 1",
