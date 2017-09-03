@@ -172,7 +172,7 @@ public class CharacterRepository extends Repository {
 
 
     @Transactional
-    public void delete(int charId, String username) throws WrongCredentialsException {
+    public void setDeleted(int charId, String username, boolean deleted) throws WrongCredentialsException {
         String owner;
 
         try {
@@ -189,7 +189,7 @@ public class CharacterRepository extends Repository {
             throw new WrongCredentialsException(GenericCause.PERMISSION_DENIED);
         }
 
-        jdbc.update("UPDATE Characters SET deleted = true WHERE id = ?", charId);
+        jdbc.update("UPDATE Characters SET deleted = ? WHERE id = ?", deleted, charId);
     }
 
 }

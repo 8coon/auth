@@ -153,7 +153,27 @@ public class CharacterController {
             SessionData sessionData
     ) {
         try {
-            characters.delete(data.getId(), sessionData.getUsername());
+            characters.setDeleted(data.getId(), sessionData.getUsername(), true);
+
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (WrongCredentialsException e) {
+            return new ResponseEntity<>(
+                    new ErrorWithCauseResponse("fail", e.getCausedBy()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+
+    @AuthRequired
+    @PostMapping("/restore")
+    public ResponseEntity restore(
+            @RequestBody UploadSkinData data,
+            UserAgent userAgent,
+            SessionData sessionData
+    ) {
+        try {
+            characters.setDeleted(data.getId(), sessionData.getUsername(), false);
 
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (WrongCredentialsException e) {
