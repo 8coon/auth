@@ -1,8 +1,9 @@
-package org.minecraftshire.auth.data;
+package org.minecraftshire.auth.data.change;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.minecraftshire.auth.data.auth.AuthTokenData;
 
 
 public class ChangePasswordData extends AuthTokenData {

@@ -1,6 +1,9 @@
-package org.minecraftshire.auth.data;
+package org.minecraftshire.auth.data.user;
 
 
+import org.minecraftshire.auth.data.character.CharacterData;
+import org.minecraftshire.auth.data.session.SessionGeoData;
+import org.minecraftshire.auth.data.session.TokenHistoryData;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -20,6 +23,7 @@ public class ProfileData implements RowMapper<ProfileData> {
     private int group;
     private List<SessionGeoData> sessions;
     private List<TokenHistoryData> tokens;
+    private List<CharacterData> characters;
 
 
     public ProfileData(
@@ -140,5 +144,13 @@ public class ProfileData implements RowMapper<ProfileData> {
 
     public void setTokens(List<TokenHistoryData> tokens) {
         this.tokens = tokens;
+    }
+
+    public List<CharacterData> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<CharacterData> characters) {
+        this.characters = characters;
     }
 }

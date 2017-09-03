@@ -1,6 +1,8 @@
-package org.minecraftshire.auth.data;
+package org.minecraftshire.auth.data.user;
 
 
+import org.minecraftshire.auth.data.notification.NotificationData;
+import org.minecraftshire.auth.storages.UploadStorage;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -39,19 +41,7 @@ public class UserStatusData implements RowMapper<UserStatusData> {
 
 
     public static String getAvatarUrl(String username, String hash, String contentType) {
-        String url = "user/" + username + "/" + hash;
-
-        // Определяем расширение "файла" по его contentType.
-        if ("image/jpeg".equalsIgnoreCase(contentType)) {
-            url += ".jpg";
-        } else if ("image/png".equalsIgnoreCase(contentType)) {
-            url += ".png";
-        } else {
-            // У аватарки выставлен некорректный contentType -- не дадим пользователю её скачать!
-            url = null;
-        }
-
-        return url;
+        return "user/" + username + "/" + UploadStorage.getUrl(hash, contentType);
     }
 
 

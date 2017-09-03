@@ -3,8 +3,8 @@ package org.minecraftshire.auth.controllers;
 
 import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.aspects.UserAgent;
-import org.minecraftshire.auth.data.SessionData;
-import org.minecraftshire.auth.data.UploadTokenData;
+import org.minecraftshire.auth.data.session.SessionData;
+import org.minecraftshire.auth.data.upload.UploadTokenData;
 import org.minecraftshire.auth.responses.StatusResponse;
 import org.minecraftshire.auth.storages.UploadStorage;
 import org.minecraftshire.auth.storages.upload.UploadInfo;

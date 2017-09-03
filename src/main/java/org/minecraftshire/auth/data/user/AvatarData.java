@@ -1,10 +1,9 @@
-package org.minecraftshire.auth.data;
+package org.minecraftshire.auth.data.user;
 
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

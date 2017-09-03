@@ -2,7 +2,7 @@ package org.minecraftshire.auth.controllers;
 
 
 import org.minecraftshire.auth.Server;
-import org.minecraftshire.auth.data.SecretTokenData;
+import org.minecraftshire.auth.data.auth.SecretTokenData;
 import org.minecraftshire.auth.responses.StatsResponse;
 import org.minecraftshire.auth.responses.VersionResponse;
 import org.minecraftshire.auth.utils.logging.Logger;

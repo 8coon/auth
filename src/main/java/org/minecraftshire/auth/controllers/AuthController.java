@@ -3,7 +3,11 @@ package org.minecraftshire.auth.controllers;
 
 import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.aspects.UserAgent;
-import org.minecraftshire.auth.data.*;
+import org.minecraftshire.auth.data.auth.AuthTokenData;
+import org.minecraftshire.auth.data.auth.CredentialsData;
+import org.minecraftshire.auth.data.change.RestorePasswordData;
+import org.minecraftshire.auth.data.session.SessionData;
+import org.minecraftshire.auth.data.user.EmailData;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.TokenRepository;
 import org.minecraftshire.auth.repositories.UserRepository;

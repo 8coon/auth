@@ -3,10 +3,10 @@ package org.minecraftshire.auth.controllers;
 
 import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.aspects.UserAgent;
-import org.minecraftshire.auth.data.AuthTokenData;
-import org.minecraftshire.auth.data.IntArrayAuth;
-import org.minecraftshire.auth.data.NotificationData;
-import org.minecraftshire.auth.data.SessionData;
+import org.minecraftshire.auth.data.auth.AuthTokenData;
+import org.minecraftshire.auth.data.auth.IntArrayAuth;
+import org.minecraftshire.auth.data.notification.NotificationData;
+import org.minecraftshire.auth.data.session.SessionData;
 import org.minecraftshire.auth.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

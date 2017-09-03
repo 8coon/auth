@@ -1,4 +1,4 @@
-package org.minecraftshire.auth.data;
+package org.minecraftshire.auth.data.auth;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;

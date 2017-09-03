@@ -1,9 +1,8 @@
 package org.minecraftshire.auth.storages.upload;
 
 
-import org.minecraftshire.auth.data.SessionData;
+import org.minecraftshire.auth.data.session.SessionData;
 import org.minecraftshire.auth.workers.Worker;
-import org.minecraftshire.auth.workers.WorkerContext;
 import org.minecraftshire.auth.workers.WorkerDoneCallback;
 import org.minecraftshire.auth.workers.uploadProcessor.UploadProcessorWorkerPayload;
 

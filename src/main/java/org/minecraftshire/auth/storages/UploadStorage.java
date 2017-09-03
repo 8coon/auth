@@ -1,7 +1,7 @@
 package org.minecraftshire.auth.storages;
 
 
-import org.minecraftshire.auth.data.SessionData;
+import org.minecraftshire.auth.data.session.SessionData;
 import org.minecraftshire.auth.storages.upload.UploadFileInfo;
 import org.minecraftshire.auth.storages.upload.UploadInfo;
 import org.minecraftshire.auth.workers.WorkerDoneCallback;
@@ -74,6 +74,23 @@ public class UploadStorage {
         uploadProcessor.schedule(payload, (WorkerDoneCallback<UploadProcessorWorkerPayload>) (worker, payload1) -> {
             info.setStatus(UploadInfo.STATUS_FINISHED);
         });
+    }
+
+
+    public static String getUrl(String hash, String contentType) {
+        String url = hash;
+
+        // Определяем расширение "файла" по его contentType.
+        if ("image/jpeg".equalsIgnoreCase(contentType)) {
+            url += ".jpg";
+        } else if ("image/png".equalsIgnoreCase(contentType)) {
+            url += ".png";
+        } else {
+            // У файла выставлен некорректный contentType -- не дадим пользователю его скачать!
+            url = null;
+        }
+
+        return url;
     }
 
 }

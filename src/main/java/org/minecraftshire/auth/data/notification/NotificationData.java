@@ -1,8 +1,9 @@
-package org.minecraftshire.auth.data;
+package org.minecraftshire.auth.data.notification;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.minecraftshire.auth.data.auth.AuthTokenData;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

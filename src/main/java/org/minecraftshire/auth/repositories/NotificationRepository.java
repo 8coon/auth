@@ -1,7 +1,7 @@
 package org.minecraftshire.auth.repositories;
 
 
-import org.minecraftshire.auth.data.NotificationData;
+import org.minecraftshire.auth.data.notification.NotificationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

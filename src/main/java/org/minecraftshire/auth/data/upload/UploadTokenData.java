@@ -1,8 +1,9 @@
-package org.minecraftshire.auth.data;
+package org.minecraftshire.auth.data.upload;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.minecraftshire.auth.data.auth.AuthTokenData;
 
 
 public class UploadTokenData extends AuthTokenData {

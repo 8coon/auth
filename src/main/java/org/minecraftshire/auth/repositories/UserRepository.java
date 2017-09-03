@@ -1,7 +1,11 @@
 package org.minecraftshire.auth.repositories;
 
 
-import org.minecraftshire.auth.data.*;
+import org.minecraftshire.auth.data.auth.CredentialsData;
+import org.minecraftshire.auth.data.user.AvatarData;
+import org.minecraftshire.auth.data.user.ProfileData;
+import org.minecraftshire.auth.data.user.UserData;
+import org.minecraftshire.auth.data.user.UserStatusData;
 import org.minecraftshire.auth.exceptions.*;
 import org.minecraftshire.auth.services.PasswordEncoder;
 import org.minecraftshire.auth.utils.UserGroups;
@@ -13,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class UserRepository extends Repository {
     private NotificationRepository notifications;
     private ModificationRepository modifications;
     private PasswordEncoder passwordEncoder;
+    private CharacterRepository characters;
 
 
     @Autowired
@@ -35,13 +39,15 @@ public class UserRepository extends Repository {
             TokenRepository tokens,
             NotificationRepository notifications,
             ModificationRepository modifications,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            CharacterRepository characters
     ) {
         this.confirmations = confirmations;
         this.tokens = tokens;
         this.notifications = notifications;
         this.modifications = modifications;
         this.passwordEncoder = passwordEncoder;
+        this.characters = characters;
 
         try {
             md = MessageDigest.getInstance("SHA-1");
@@ -300,16 +306,21 @@ public class UserRepository extends Repository {
 
                 profile.setSessions(tokens.listAllSessions(username));
                 profile.setTokens(tokens.getHistory(username));
+                profile.setCharacters(characters.list(username));
 
                 return profile;
             } else {
-                return jdbc.queryForObject(
+                ProfileData profile = jdbc.queryForObject(
                         "SELECT username, NULL AS email, 0 AS password_length, avatar_hash, avatar_content_type, " +
                                 "total_balance, free_balance, \"group\" " +
                                 "FROM Users WHERE username = ? LIMIT 1",
                         new ProfileData(),
                         username
                 );
+
+                profile.setCharacters(characters.list(username));
+
+                return profile;
             }
         } catch (EmptyResultDataAccessException e) {
             return null;

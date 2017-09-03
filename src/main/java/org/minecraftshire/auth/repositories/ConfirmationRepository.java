@@ -1,7 +1,7 @@
 package org.minecraftshire.auth.repositories;
 
 
-import org.minecraftshire.auth.data.ConfirmationData;
+import org.minecraftshire.auth.data.change.ConfirmationData;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
 import org.minecraftshire.auth.services.EmailSender;
