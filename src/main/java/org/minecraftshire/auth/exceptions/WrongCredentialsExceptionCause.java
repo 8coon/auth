@@ -8,4 +8,5 @@ public class WrongCredentialsExceptionCause {
     public static final String NOT_CONFIRMED = "not confirmed";
     public static final String BANNED = "banned";
     public static final String NOT_FOUND = "not found";
+    public static final String PERMISSION_DENIED = "permission_denied";
 }

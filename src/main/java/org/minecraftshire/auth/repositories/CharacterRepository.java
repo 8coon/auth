@@ -5,6 +5,8 @@ import org.minecraftshire.auth.data.character.CharacterCreationData;
 import org.minecraftshire.auth.data.character.CharacterData;
 import org.minecraftshire.auth.exceptions.ExceptionWithCause;
 import org.minecraftshire.auth.exceptions.GenericCause;
+import org.minecraftshire.auth.exceptions.WrongCredentialsException;
+import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
@@ -43,8 +45,8 @@ public class CharacterRepository extends Repository {
     public List<CharacterData> list(String username) {
         return jdbc.query(
                 "SELECT " +
-                     "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type " +
-                     "FROM Characters WHERE owner = ? AND deleted = FALSE LIMIT 1000",
+                     "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
+                     " is_favourite FROM Characters WHERE owner = ? AND deleted = FALSE LIMIT 1000",
                 new CharacterData(),
                 username
         );
@@ -55,14 +57,52 @@ public class CharacterRepository extends Repository {
         try {
             return jdbc.queryForObject(
                     "SELECT " +
-                         "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type " +
-                         "FROM Characters WHERE id = ? AND deleted = FALSE LIMIT 1",
+                         "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
+                         " is_favourite FROM Characters WHERE id = ? AND deleted = FALSE LIMIT 1",
                     new CharacterData(),
                     id
             );
         } catch (EmptyResultDataAccessException e) {
             throw new ExceptionWithCause(GenericCause.CHARACTER_NOT_FOUND);
         }
+    }
+
+
+    public void setFavorite(String username, int id, boolean isFavorite) throws WrongCredentialsException {
+        String owner = jdbc.queryForObject(
+                "SELECT owner FROM Characters WHERE id = ? LIMIT 1",
+                String.class,
+                id
+        );
+
+        // Если владелец персонажа не совпадает с отправителем запроса
+        if (!owner.equals(username)) {
+            throw new WrongCredentialsException(WrongCredentialsExceptionCause.PERMISSION_DENIED);
+        }
+
+        jdbc.update(
+                "UPDATE Characters SET is_favorite = ? WHERE id = ?",
+                isFavorite, id
+        );
+    }
+
+
+    public void setOnline(String username, int id, boolean isOnline) throws WrongCredentialsException {
+        String owner = jdbc.queryForObject(
+                "SELECT owner FROM Characters WHERE id = ? LIMIT 1",
+                String.class,
+                id
+        );
+
+        // Если владелец персонажа не совпадает с отправителем запроса
+        if (!owner.equals(username)) {
+            throw new WrongCredentialsException(WrongCredentialsExceptionCause.PERMISSION_DENIED);
+        }
+
+        jdbc.update(
+                "UPDATE Characters SET is_online = ? WHERE id = ?",
+                isOnline, id
+        );
     }
 
 }
