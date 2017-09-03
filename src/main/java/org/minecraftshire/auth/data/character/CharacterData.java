@@ -16,6 +16,7 @@ public class CharacterData implements RowMapper<CharacterData> {
     private String owner;  // Username
     private boolean isOnline;
     private boolean isFavorite;
+    private boolean isDeleted;
     private String createdAt;
     private String skinUrl;
 
@@ -27,6 +28,7 @@ public class CharacterData implements RowMapper<CharacterData> {
             String owner,
             boolean isOnline,
             boolean isFavorite,
+            boolean isDeleted,
             String createdAt,
             String skinHash,
             String skinContentType
@@ -37,6 +39,7 @@ public class CharacterData implements RowMapper<CharacterData> {
         this.owner = owner;
         this.isOnline = isOnline;
         this.isFavorite = isFavorite;
+        this.isDeleted = isDeleted;
         this.createdAt = createdAt;
 
         if (skinHash != null) {
@@ -56,6 +59,7 @@ public class CharacterData implements RowMapper<CharacterData> {
                 resultSet.getString("owner"),
                 resultSet.getBoolean("is_online"),
                 resultSet.getBoolean("is_favorite"),
+                resultSet.getBoolean("deleted"),
                 resultSet.getString("created_at"),
                 resultSet.getString("skin_hash"),
                 resultSet.getString("skin_content_type")
@@ -101,4 +105,8 @@ public class CharacterData implements RowMapper<CharacterData> {
         return "character/" + String.valueOf(id) + "/" + UploadStorage.getUrl(hash, contentType);
     }
 
+    @JsonProperty("isDeleted")
+    public boolean isDeleted() {
+        return isDeleted;
+    }
 }
