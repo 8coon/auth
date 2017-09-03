@@ -94,9 +94,9 @@ public class CharacterRepository extends Repository {
             return jdbc.queryForObject(
                     "SELECT " +
                             "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                            " is_favorite FROM Characters WHERE first_name = ? AND last_name = ? AND deleted = FALSE LIMIT 1",
+                            " is_favorite FROM Characters WHERE lower(first_name) = ? AND lower(last_name) = ? AND deleted = FALSE LIMIT 1",
                     new CharacterData(),
-                    firstName, lastName
+                    firstName.toLowerCase(), lastName.toLowerCase()
             );
         } catch (EmptyResultDataAccessException e) {
             throw new ExceptionWithCause(GenericCause.CHARACTER_NOT_FOUND);
