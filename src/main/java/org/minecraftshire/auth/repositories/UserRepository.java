@@ -306,7 +306,7 @@ public class UserRepository extends Repository {
 
                 profile.setSessions(tokens.listAllSessions(username));
                 profile.setTokens(tokens.getHistory(username));
-                profile.setCharacters(characters.list(username));
+                profile.setCharacters(characters.list(username, username));
 
                 return profile;
             } else {
@@ -318,7 +318,8 @@ public class UserRepository extends Repository {
                         username
                 );
 
-                profile.setCharacters(characters.list(username));
+                // requestAuthor = "", такого пользователя всё равно не найдётся
+                profile.setCharacters(characters.list(username, ""));
 
                 return profile;
             }

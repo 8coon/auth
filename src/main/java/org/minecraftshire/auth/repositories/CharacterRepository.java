@@ -61,26 +61,28 @@ public class CharacterRepository extends Repository {
 
 
     @Transactional
-    public List<CharacterData> list(String username) {
+    public List<CharacterData> list(String username, String requestAuthor) {
         return jdbc.query(
                 "SELECT " +
                      "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                     " is_favorite FROM Characters WHERE owner = ? AND deleted = FALSE LIMIT 1000",
+                     " is_favorite FROM Characters WHERE owner = ? AND " +
+                        "((owner = ? && deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1000",
                 new CharacterData(),
-                username
+                username, requestAuthor
         );
     }
 
 
     @Transactional
-    public CharacterData get(int id) throws ExceptionWithCause {
+    public CharacterData get(int id, String requestAuthor) throws ExceptionWithCause {
         try {
             return jdbc.queryForObject(
                     "SELECT " +
                          "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                         " is_favorite FROM Characters WHERE id = ? AND deleted = FALSE LIMIT 1",
+                         " is_favorite FROM Characters WHERE id = ? AND " +
+                            "((owner = ? && deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
                     new CharacterData(),
-                    id
+                    id, requestAuthor
             );
         } catch (EmptyResultDataAccessException e) {
             throw new ExceptionWithCause(GenericCause.CHARACTER_NOT_FOUND);
@@ -89,14 +91,15 @@ public class CharacterRepository extends Repository {
 
 
     @Transactional
-    public CharacterData get(String firstName, String lastName) throws ExceptionWithCause {
+    public CharacterData get(String firstName, String lastName, String requestAuthor) throws ExceptionWithCause {
         try {
             return jdbc.queryForObject(
                     "SELECT " +
                             "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                            " is_favorite FROM Characters WHERE lower(first_name) = ? AND lower(last_name) = ? AND deleted = FALSE LIMIT 1",
+                            " is_favorite FROM Characters WHERE lower(first_name) = ? AND lower(last_name) = ? AND " +
+                            "((owner = ? && deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
                     new CharacterData(),
-                    firstName.toLowerCase(), lastName.toLowerCase()
+                    firstName.toLowerCase(), lastName.toLowerCase(), requestAuthor
             );
         } catch (EmptyResultDataAccessException e) {
             throw new ExceptionWithCause(GenericCause.CHARACTER_NOT_FOUND);
@@ -161,7 +164,8 @@ public class CharacterRepository extends Repository {
     public SkinData getSkin(int charId) {
         try {
             return jdbc.queryForObject(
-                    "SELECT skin, skin_content_type FROM Characters WHERE id = ? LIMIT 1",
+                    "SELECT skin, skin_content_type, owner FROM Characters WHERE id = ? AND " +
+                            "deleted = FALSE LIMIT 1",
                     new SkinData(),
                     charId
             );

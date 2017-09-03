@@ -3,10 +3,8 @@ package org.minecraftshire.auth.controllers;
 import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.aspects.UserAgent;
-import org.minecraftshire.auth.data.auth.AuthTokenData;
 import org.minecraftshire.auth.data.character.*;
 import org.minecraftshire.auth.data.session.SessionData;
-import org.minecraftshire.auth.data.user.AvatarData;
 import org.minecraftshire.auth.exceptions.ExceptionWithCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.CharacterRepository;
@@ -102,7 +100,7 @@ public class CharacterController {
         CharacterData character;
 
         try {
-            character = characters.get(data.getId());
+            character = characters.get(data.getId(), sessionData.getUsername());
         } catch (ExceptionWithCause exceptionWithCause) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -133,7 +131,7 @@ public class CharacterController {
     ) {
         try {
             return new ResponseEntity<>(
-                    characters.get(data.getFirstName(), data.getLastName()),
+                    characters.get(data.getFirstName(), data.getLastName(), sessionData.getUsername()),
                     HttpStatus.OK
             );
         } catch (ExceptionWithCause e) {
