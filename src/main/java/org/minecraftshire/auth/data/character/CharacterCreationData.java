@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class CharacterCreationData {
-    private int id;
     private String firstName;
     private String lastName;
     private String owner;  // Username
@@ -14,20 +13,13 @@ public class CharacterCreationData {
 
     @JsonCreator
     public CharacterCreationData(
-            @JsonProperty("id") int id,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
             String owner
     ) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.owner = owner;
-    }
-
-
-    public int getId() {
-        return id;
     }
 
     public String getFirstName() {

@@ -6,7 +6,6 @@ import org.minecraftshire.auth.data.character.CharacterData;
 import org.minecraftshire.auth.exceptions.ExceptionWithCause;
 import org.minecraftshire.auth.exceptions.GenericCause;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.*;
 
 import java.util.List;
 
