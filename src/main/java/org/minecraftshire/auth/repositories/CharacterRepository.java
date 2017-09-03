@@ -3,17 +3,34 @@ package org.minecraftshire.auth.repositories;
 
 import org.minecraftshire.auth.data.character.CharacterCreationData;
 import org.minecraftshire.auth.data.character.CharacterData;
+import org.minecraftshire.auth.data.character.SkinData;
 import org.minecraftshire.auth.exceptions.ExceptionWithCause;
 import org.minecraftshire.auth.exceptions.GenericCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.exceptions.WrongCredentialsExceptionCause;
+import org.minecraftshire.auth.utils.logging.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 
 
 @org.springframework.stereotype.Repository
 public class CharacterRepository extends Repository {
+
+    private MessageDigest md;
+
+
+    public CharacterRepository() {
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            Logger.getLogger().severe(e);
+        }
+    }
 
 
     public void create(CharacterCreationData data) throws ExceptionWithCause {
@@ -103,6 +120,33 @@ public class CharacterRepository extends Repository {
                 "UPDATE Characters SET is_online = ? WHERE id = ?",
                 isOnline, id
         );
+    }
+
+
+    @Transactional
+    public void setSkin(int charId, byte[] skin, String contentType) {
+        // Считаем хэш скина, преобразовываем в base64, убираем лишние символы, чтобы в урле было покрасивее.
+        String hash = Base64.getEncoder().encodeToString(md.digest(skin))
+                .replace("+", "").replace("/", "").replace("=", "").replace("%", "");
+
+        jdbc.update(
+                "UPDATE Characters SET skin = ?, skin_content_type = ?, skin_hash = ? WHERE id = ?",
+                skin, contentType, hash, charId
+        );
+    }
+
+
+    @Transactional
+    public SkinData getSkin(int charId) {
+        try {
+            return jdbc.queryForObject(
+                    "SELECT skin, skin_content_type FROM Characters WHERE id = ? LIMIT 1",
+                    new SkinData(),
+                    charId
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
 }

@@ -19,6 +19,7 @@ public class UploadInfo {
     private long token;
     private int status;
     private SessionData sessionData;
+    private Object arg;
 
 
     public UploadInfo(
@@ -30,6 +31,17 @@ public class UploadInfo {
         this.token = token;
         this.status = STATUS_AWAITING_CLIENT;
         this.sessionData = sessionData;
+    }
+
+
+    public UploadInfo(
+            WorkerDoneCallback<UploadProcessorWorkerPayload> onDone,
+            long token,
+            SessionData sessionData,
+            Object arg
+    ) {
+        this(onDone, token, sessionData);
+        this.arg = arg;
     }
 
 
@@ -55,5 +67,13 @@ public class UploadInfo {
 
     public SessionData getSessionData() {
         return sessionData;
+    }
+
+    public Object getArg() {
+        return arg;
+    }
+
+    public void setArg(Object arg) {
+        this.arg = arg;
     }
 }

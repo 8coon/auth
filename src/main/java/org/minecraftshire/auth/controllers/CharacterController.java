@@ -1,19 +1,29 @@
 package org.minecraftshire.auth.controllers;
 
+import org.minecraftshire.auth.Server;
 import org.minecraftshire.auth.aspects.AuthRequired;
 import org.minecraftshire.auth.aspects.UserAgent;
-import org.minecraftshire.auth.data.character.CharacterCreationData;
-import org.minecraftshire.auth.data.character.CharacterSetData;
+import org.minecraftshire.auth.data.auth.AuthTokenData;
+import org.minecraftshire.auth.data.character.*;
 import org.minecraftshire.auth.data.session.SessionData;
+import org.minecraftshire.auth.data.user.AvatarData;
 import org.minecraftshire.auth.exceptions.ExceptionWithCause;
 import org.minecraftshire.auth.exceptions.WrongCredentialsException;
 import org.minecraftshire.auth.repositories.CharacterRepository;
 import org.minecraftshire.auth.responses.ErrorWithCauseResponse;
+import org.minecraftshire.auth.responses.TokenResponse;
 import org.minecraftshire.auth.storages.UploadStorage;
+import org.minecraftshire.auth.utils.logging.Logger;
+import org.minecraftshire.auth.workers.WorkerDoneCallback;
+import org.minecraftshire.auth.workers.uploadProcessor.UploadProcessorWorkerPayload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 
 @RestController
@@ -80,5 +90,71 @@ public class CharacterController {
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+
+    @AuthRequired
+    @PostMapping("/upload_skin")
+    public ResponseEntity uploadAvatar(
+            @RequestBody UploadSkinData data,
+            UserAgent userAgent,
+            SessionData sessionData
+    ) {
+        CharacterData character;
+
+        try {
+            character = characters.get(data.getId());
+        } catch (ExceptionWithCause exceptionWithCause) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        if (!character.getOwner().equals(sessionData.getUsername())) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+        String token = String.valueOf(uploadStorage.requestToken(
+                CharacterController.onSkinUpload,
+                sessionData,
+                data.getId()
+        ));
+
+        return new ResponseEntity<>(
+                new TokenResponse(token),
+                HttpStatus.OK
+        );
+    }
+
+
+    @GetMapping("/{id}/{filename}")
+    public ResponseEntity getSkin(
+            @PathVariable("id") int id
+    ) {
+        SkinData skin = characters.getSkin(id);
+
+        if (skin == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(skin.getContentType()));
+
+        return new ResponseEntity<>(
+                skin.getData(),
+                headers,
+                HttpStatus.OK
+        );
+    }
+
+
+    private static WorkerDoneCallback<UploadProcessorWorkerPayload> onSkinUpload = (worker, payload) -> {
+        try {
+            Server.getContext().getBean(CharacterRepository.class).setSkin(
+                    (Integer) payload.getInfo().getArg(),
+                    payload.getFileInfo().getFile().getBytes(),
+                    payload.getFileInfo().getFile().getContentType()
+            );
+        } catch (IOException e) {
+            Logger.getLogger().severe(e);
+        }
+    };
 
 }

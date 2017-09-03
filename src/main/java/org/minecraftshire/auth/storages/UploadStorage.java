@@ -33,15 +33,25 @@ public class UploadStorage {
 
 
     // Generate unique token
-    public long requestToken(WorkerDoneCallback<UploadProcessorWorkerPayload> onDone, SessionData sessionData) {
+    public long requestToken(
+            WorkerDoneCallback<UploadProcessorWorkerPayload> onDone,
+            SessionData sessionData,
+            Object arg
+    ) {
         long token;
 
         do {
             // Генерируем новый токен, пока м не можем сложить его в словарь (putIfAbsent возвращает не null)
             token = random.nextLong();
-        } while (uploads.putIfAbsent(token, new UploadInfo(onDone, token, sessionData)) != null);
+        } while (uploads.putIfAbsent(token, new UploadInfo(onDone, token, sessionData, arg)) != null);
 
         return token;
+    }
+
+
+    // Generate unique token
+    public long requestToken(WorkerDoneCallback<UploadProcessorWorkerPayload> onDone, SessionData sessionData) {
+        return this.requestToken(onDone, sessionData, null);
     }
 
 
