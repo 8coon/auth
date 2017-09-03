@@ -1,6 +1,7 @@
 package org.minecraftshire.auth.data.character;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.minecraftshire.auth.storages.UploadStorage;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -78,6 +79,7 @@ public class CharacterData implements RowMapper<CharacterData> {
         return owner;
     }
 
+    @JsonProperty("isOnline")
     public boolean isOnline() {
         return isOnline;
     }
@@ -90,6 +92,7 @@ public class CharacterData implements RowMapper<CharacterData> {
         return skinUrl;
     }
 
+    @JsonProperty("isFavorite")
     public boolean isFavorite() {
         return isFavorite;
     }
