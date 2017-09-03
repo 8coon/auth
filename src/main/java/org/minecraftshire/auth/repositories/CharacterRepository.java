@@ -64,8 +64,8 @@ public class CharacterRepository extends Repository {
     public List<CharacterData> list(String username, String requestAuthor) {
         return jdbc.query(
                 "SELECT " +
-                     "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                     " is_favorite FROM Characters WHERE owner = ? AND " +
+                     "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type, " +
+                     " is_favorite, deleted FROM Characters WHERE owner = ? AND " +
                         "((owner = ? AND deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1000",
                 new CharacterData(),
                 username, requestAuthor
@@ -79,7 +79,7 @@ public class CharacterRepository extends Repository {
             return jdbc.queryForObject(
                     "SELECT " +
                          "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                         " is_favorite FROM Characters WHERE id = ? AND " +
+                         " is_favorite, deleted FROM Characters WHERE id = ? AND " +
                             "((owner = ? AND deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
                     new CharacterData(),
                     id, requestAuthor
@@ -96,7 +96,7 @@ public class CharacterRepository extends Repository {
             return jdbc.queryForObject(
                     "SELECT " +
                             "id, first_name, last_name, owner, is_online, created_at, skin_hash, skin_content_type," +
-                            " is_favorite FROM Characters WHERE lower(first_name) = ? AND lower(last_name) = ? AND " +
+                            " is_favorite, deleted FROM Characters WHERE lower(first_name) = ? AND lower(last_name) = ? AND " +
                             "((owner = ? AND deleted = FALSE) OR (deleted = FALSE OR deleted = TRUE)) LIMIT 1",
                     new CharacterData(),
                     firstName.toLowerCase(), lastName.toLowerCase(), requestAuthor
