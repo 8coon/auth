@@ -14,12 +14,10 @@ public class CharacterCreationData {
     @JsonCreator
     public CharacterCreationData(
             @JsonProperty("firstName") String firstName,
-            @JsonProperty("lastName") String lastName,
-            String owner
+            @JsonProperty("lastName") String lastName
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.owner = owner;
     }
 
     public String getFirstName() {

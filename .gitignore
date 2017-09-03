@@ -31,3 +31,5 @@ nbbuild/
 nbdist/
 .nb-gradle/
 .DS_Store
+/assets/minecraftshire-jsapi/
+/assets/minecraftshire-utils/
