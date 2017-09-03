@@ -170,4 +170,26 @@ public class CharacterRepository extends Repository {
         }
     }
 
+
+    @Transactional
+    public void delete(int charId, String username) throws WrongCredentialsException {
+        String owner;
+
+        try {
+            owner = jdbc.queryForObject(
+                    "SELECT owner FROM Characters WHERE id = ? LIMIT 1",
+                    String.class,
+                    charId
+            );
+        } catch (EmptyResultDataAccessException e) {
+            throw new WrongCredentialsException(GenericCause.CHARACTER_NOT_FOUND);
+        }
+
+        if (!owner.equals(username)) {
+            throw new WrongCredentialsException(GenericCause.PERMISSION_DENIED);
+        }
+
+        jdbc.update("UPDATE Characters SET deleted = true WHERE id = ?", charId);
+    }
+
 }

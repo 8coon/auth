@@ -145,6 +145,26 @@ public class CharacterController {
     }
 
 
+    @AuthRequired
+    @PostMapping("/delete")
+    public ResponseEntity delete(
+            @RequestBody UploadSkinData data,
+            UserAgent userAgent,
+            SessionData sessionData
+    ) {
+        try {
+            characters.delete(data.getId(), sessionData.getUsername());
+
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (WrongCredentialsException e) {
+            return new ResponseEntity<>(
+                    new ErrorWithCauseResponse("fail", e.getCausedBy()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+
     @GetMapping("/{id}/{filename}")
     public ResponseEntity getSkin(
             @PathVariable("id") int id
