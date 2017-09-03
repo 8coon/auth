@@ -34,7 +34,10 @@ public class CharacterData implements RowMapper<CharacterData> {
         this.owner = owner;
         this.isOnline = isOnline;
         this.createdAt = createdAt;
-        this.skinUrl = CharacterData.getSkinUrl(id, skinHash, skinContentType);
+
+        if (skinHash != null) {
+            this.skinUrl = CharacterData.getSkinUrl(id, skinHash, skinContentType);
+        }
     }
 
     public CharacterData() {}
